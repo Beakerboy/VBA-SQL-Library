@@ -15,7 +15,12 @@ Features
  Setup
 -----
 
- Copy and paste the code from each file into Excel VBA modules
+ Copy and paste the code from each file into Excel VBA modules. Edit the Database object to include your database authentication details.
+ 
+ Security
+-----
+Note that your database authentication details are saved in the Database object. Anyone that can read this code has open season on your database.
+
  
  Usage
 -----
