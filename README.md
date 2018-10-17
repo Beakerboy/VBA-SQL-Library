@@ -53,7 +53,7 @@ MyInsert.Fields = Array("account_number", "open_date", "user_id")
 
 'Create the SELECT Statement
 Set SQL = New SQLSelect
-Sql.Fields = Array(10, 5770000051, 'user_id')
+Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
 Sql.addWhere "username", "=", "admin"
 InSQL.setSelect = Sql
