@@ -10,7 +10,7 @@ Features
  * [Database](#database)
  * [Insert](#insert)
  * [Select](#select)
- * [Helper Functions](#helper functions)
+ * [Helpers](#helpers)
  
  Setup
 -----
@@ -29,5 +29,5 @@ This object is used by the SQL objects
 
 ### Select
 
-### Helper Functions
+### Helpers
 
