@@ -27,7 +27,7 @@ Add the proper values to the class_initialize function to connect to your databa
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
 
 For INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'secret'):
-'''
+```
 'Initialize the object and assign a table name
 Set MyInsert = new Insert
 MyInsert.table = "users"
@@ -40,10 +40,10 @@ MyInsert.Values = Array(str("admin"), str("Alice"), str("secret"))
 
 'Execute the query
 MyInsert.Insert
-'''
+```
 
 For an INSERT INTO bank_account (account_number, open_date, user_id) SELECT (10, 570000051, user_id) FROM users WHERE username = 'admin':
-'''
+```
 'Initialize the object and assign a table name
 Set MyInsert = new Insert
 MyInsert.table = "bank_account"
@@ -60,7 +60,7 @@ InSQL.setSelect = Sql
 
 'Execute the query
 MyInsert.Insert
-'''
+```
 
 
 ### Select
