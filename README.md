@@ -10,23 +10,26 @@ Features
  * [Database](#database)
  * [Insert](#insert)
  * [Select](#select)
- * [Helpers](#helpers)
+ * [Helper Functions](#helper-functions)
  
  Setup
 -----
 
- Copy and paste the code from each file into Excel VBA modules. Edit the Database object to include your database authentication details.
+ Copy and paste the code from each file into Excel VBA modules. Edit the Database object to
+ include your database authentication details.
  
  Security
 -----
-Note that your database authentication details are saved in the Database object. Anyone that can read this code has open season on your database.
+This Library currently does not use prepared statments or string sanitation to prevent SQL Injections.
+However, it does require users to authenticate to the database to perform any queries.
 
  
  Usage
 -----
 
 ### Database
-Add the proper values to the class_initialize function to connect to your database. This object is only used by the SQL objects.
+Add the proper values to the class_initialize function to connect to your database.
+This object is only used by the SQL objects.
 
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
@@ -77,5 +80,7 @@ MyInsert.Insert
 
 ### Select
 
-### Helpers
-
+### HelperFunctions
+The library includes a handful of helper functions. 
+* Date/Time manipulation, toIso() and toUnix().
+* String encapsulation str() to add single quotes around strings.
