@@ -10,17 +10,17 @@ Features
  * [Database](#database)
  * [Insert](#insert)
  * [Select](#select)
+ * [Update](#update)
  * [Helper Functions](#helper-functions)
  
  Setup
 -----
 
- Copy and paste the code from each file into Excel VBA modules. Edit the Database object to
- include your database authentication details.
+Import the files into a spreadsheet using Microsoft Visual Basic for Applications. Edit the database class to include the DSN and database type for your database. 
  
  Security
 -----
-This Library currently does not use prepared statments or string sanitation to prevent SQL Injections.
+This Library currently does not use prepared statements or string sanitation to prevent SQL Injections.
 However, it does require users to authenticate to the database to perform any queries.
 
  
@@ -79,6 +79,10 @@ MyInsert.Insert
 
 
 ### Select
+
+
+### Update
+Not Yet Implemented
 
 ### HelperFunctions
 The library includes a handful of helper functions. 
