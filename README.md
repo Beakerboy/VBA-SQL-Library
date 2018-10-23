@@ -34,8 +34,12 @@ Create a new database connection:
 Set MyDatabase = New SQLDatabase
 MyDatabase.DBType = "mssql"
 MyDatabase.DSN = "foodb"
-
 ```
+Several different types of database execution can occur:
+ * Execute(SQL) - Execute a statement (Insert or Update)
+ * InsertGetNewID(SQLInsert) - Insert a record, and return the new primary key
+ * Execute(SQLSelect, column) - Execute a statement and return a single value
+ * Execute(SQLSelect) Execute a statement and return an array of values
 
 ### Login Form
 This form can be displayed to ask for the database credentials. This avoids having to hard-code username and passwords in the scrips.
@@ -48,13 +52,6 @@ MyDatabase.UserName = Login.Username
 MyDatabase.Password = Login.Password
 Unload Login
 ```
-
-
-Several different types of database execution can occur:
- * Execute(SQL) - Execute a statement (Insert or Update)
- * InsertGetNewID(SQLInsert) - Insert a record, and return the new primary key
- * Execute(SQLSelect, column) - Execute a statement and return a single value
- * Execute(SQLSelect) Execute a statement and return an array of values
 
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
