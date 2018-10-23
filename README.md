@@ -30,7 +30,6 @@ However, it does require users to authenticate to the database to perform any qu
 ### Database
 Create a new database connection:
 ```vb
-'Initialize the object and assign a table name
 Set MyDatabase = New SQLDatabase
 MyDatabase.DBType = "mssql"
 MyDatabase.DSN = "foodb"
