@@ -28,6 +28,15 @@ However, it does require users to authenticate to the database to perform any qu
  Usage
 -----
 
+### Database
+Create a new database connection:
+```vb
+Set MyDatabase = New SQLDatabase
+MyDatabase.DBType = "mssql"
+MyDatabase.DSN = "foodb"
+
+```
+
 ### Login Form
 This form can be displayed to ask for the database credentials. This avoids having to hard-code username and passwords in the scrips.
 ```vb
@@ -40,21 +49,6 @@ MyDatabase.Password = Login.Password
 Unload Login
 ```
 
-### Database
-Create a new database connection:
-```vb
-Set MyDatabase = New SQLDatabase
-MyDatabase.DBType = "mssql"
-MyDatabase.DSN = "foodb"
-
-'Open UserForm
-Login.Show
-
-'After Button is pressed assign values
-MyDatabase.UserName = Login.Username
-MyDatabase.Password = Login.Password
-Unload Login
-```
 
 Several different types of database execution can occur:
  * Execute(SQL) - Execute a statement (Insert or Update)
