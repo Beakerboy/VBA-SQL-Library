@@ -7,8 +7,8 @@ Easily create SQL queries and execute them on a database
 
 Features
 --------
- * [Login Form](#login-form)
  * [Database](#database)
+ * [Login Form](#login-form)
  * [Insert](#insert)
  * [Select](#select)
  * [Update](#update)
