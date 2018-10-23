@@ -20,21 +20,27 @@ Private sType As String     'Type of Database (psql, mssql, mysql)
 '***************************CONSTRUCTOR****************************************
 
 '***************************LET PROPERTIES*************************************
+
+Public Property Let DSN(sValue As String)
+    sDSN = sValue
+End Property
+
+Public Property Let DBType(sValue As String)
+    sType = sValue
+End Property
+
+'**********************************METHODS*************************************
 Public Sub Authenticate(MyCredentials As SQLCredentials)
     sUid = MyCredentials.Name
     sPwd = MyCredentials.Pass
 End Sub
 Private Sub Class_Initialize()
-    sDSN = "SVRLIMS"
-    sType = "mssql"
+
 End Sub
 
 Private Function MakeConnectionString() As String
     MakeConnectionString = "DSN=" & sDSN & ";Uid=" & sUid & ";Pwd=" & sPwd & ";"
 End Function
-
-'**********************************METHODS*************************************
-
 'Custom Query
 '---------------------------------------------------------------
 'should there be multiple functions, one that resurs and one
