@@ -8,20 +8,5 @@ Public Function toISO(dt) As String
 End Function
 
 Public Function str(vValue) As String
-    str = "'" & vValue & "'"
-End Function
-
-' Given an array, join the elements together with a specified string between them.
-Public Function implode(ArrayOfValues, Optional glue = ", ") As String
-    initial = True
-    returnString = ""
-    For Each element In ArrayOfValues
-        If initial Then
-            initial = False
-        Else
-            returnString = returnString & glue
-        End If
-        returnString = returnString & element
-    Next element
-    implode = returnString
+    str = "'" & Replace(vValue, "'", "''") & "'"
 End Function
