@@ -7,6 +7,7 @@ Easily create SQL queries and execute them on a database
 
 Features
 --------
+ * [Login Form](#login-form)
  * [Database](#database)
  * [Insert](#insert)
  * [Select](#select)
@@ -27,6 +28,18 @@ However, it does require users to authenticate to the database to perform any qu
  Usage
 -----
 
+### Login Form
+This form can be displayed to ask for the database credentials. This avoids having to hard-code username and passwords in the scrips.
+```vb
+'Open UserForm
+Login.Show
+
+'After Button is pressed assign values
+MyDatabase.UserName = Login.Username
+MyDatabase.Password = Login.Password
+Unload Login
+```
+
 ### Database
 Create a new database connection:
 ```vb
@@ -41,8 +54,13 @@ Login.Show
 MyDatabase.UserName = Login.Username
 MyDatabase.Password = Login.Password
 Unload Login
-
 ```
+
+Several different types of database execution can occur:
+ * Execute(SQL) - Execute a statement (Insert or Update)
+ * InsertGetNewID(SQLInsert) - Insert a record, and return the new primary key
+ * Execute(SQLSelect, column) - Execute a statement and return a single value
+ * Execute(SQLSelect) Execute a statement and return an array of values
 
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
@@ -53,7 +71,7 @@ INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'se
 
 ```vb
 'Initialize the object and assign a table name
-Set MyInsert = new Insert
+Set MyInsert = new SQLInsert
 MyInsert.table = "users"
 
 'Set The Fields
@@ -63,7 +81,7 @@ MyInsert.Fields = Array("username", "first_name", "password")
 MyInsert.Values = Array(str("admin"), str("Alice"), str("secret"))
 
 'Execute the query
-MyInsert.Insert
+MyDatabase.Execute MyInsert 
 ```
 
 ```sql
@@ -73,7 +91,7 @@ INSERT INTO bank_account (account_number, open_date, user_id)
 
 ```vb
 'Initialize the object and assign a table name
-Set MyInsert = new Insert
+Set MyInsert = new SQLInsert
 MyInsert.table = "bank_account"
 
 'Set The Fields
@@ -84,10 +102,10 @@ Set SQL = New SQLSelect
 Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
 Sql.addWhere "username", "=", "admin"
-InSQL.setSelect = Sql
+MyInsertSQL.setSelect = Sql
 
-'Execute the query
-MyInsert.Insert
+'Execute the query, returning the newly created primary Key
+ID = MyDatabase.InsertGetNewID(MyInsert)
 ```
 
 
@@ -100,4 +118,4 @@ Not Yet Implemented
 ### HelperFunctions
 The library includes a handful of helper functions. 
 * Date/Time manipulation, toIso() and toUnix().
-* String encapsulation str() to add single quotes around strings.
+* String encapsulation str() to add single quotes around strings and escape contained single-quotes
