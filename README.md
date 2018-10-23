@@ -28,8 +28,22 @@ However, it does require users to authenticate to the database to perform any qu
 -----
 
 ### Database
-Add the proper values to the class_initialize function to connect to your database.
-This object is only used by the SQL objects.
+Create a new database connection:
+```vb
+'Initialize the object and assign a table name
+Set MyDatabase = New SQLDatabase
+MyDatabase.DBType = "mssql"
+MyDatabase.DSN = "foodb"
+
+'Open UserForm
+Login.Show
+
+'After Button is pressed assign values
+MyDatabase.UserName = Login.Username
+MyDatabase.Password = Login.Password
+Unload Login
+
+```
 
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
