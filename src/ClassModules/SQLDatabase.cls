@@ -29,6 +29,13 @@ Public Property Let DBType(sValue As String)
     sType = sValue
 End Property
 
+Public Property Let UserName(sValue As String)
+    sUid = sValue
+End Property
+
+Public Property Let Password(sValue As String)
+    sPwd = sValue
+End Property
 '**********************************METHODS*************************************
 Public Sub Authenticate(MyCredentials As SQLCredentials)
     sUid = MyCredentials.Name
