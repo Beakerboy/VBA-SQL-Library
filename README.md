@@ -90,9 +90,11 @@ MyInsert.Fields = Array("account_number", "open_date", "user_id")
 
 'Create the SELECT Statement
 Set SQL = New SQLSelect
+
+'We don't escape the "user_id" because it is a field name, not a string
 Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
-Sql.addWhere "username", "=", "admin"
+Sql.addWhere "username", "=", str("admin")
 MyInsertSQL.setSelect = Sql
 
 'Execute the query, returning the newly created primary Key
@@ -101,6 +103,21 @@ ID = MyDatabase.InsertGetNewID(MyInsert)
 
 
 ### Select
+We can execute a select statement and receive the results as a single value, or an array of values:
+```sql
+SELECT id FROM users WHERE username='admin';
+```
+
+```vb
+Set MySelect = New SQLSelect
+MySelect.Fields = Array("id")
+MySelect.Table = "users"
+
+'Need to escape the string
+MySelect.AddWhere "username" "=" str("admin") 
+
+ID = MyDatabase.Execute(MySelect, "id")
+```
 
 
 ### Update
