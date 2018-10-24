@@ -37,10 +37,6 @@ Public Property Let Password(sValue As String)
     sPwd = sValue
 End Property
 '**********************************METHODS*************************************
-Public Sub Authenticate(MyCredentials As SQLCredentials)
-    sUid = MyCredentials.Name
-    sPwd = MyCredentials.Pass
-End Sub
 Private Sub Class_Initialize()
 
 End Sub
@@ -54,7 +50,7 @@ End Function
 'that just executes? Return multiple values vs one value?
 '
 '===============================================================
-Public Function CustomQuery(stSQL, Optional return_column = "")
+Public Function Execute(stSQL, Optional return_column = "")
     Set cnt = New ADODB.Connection
     cnt.ConnectionString = MakeConnectionString()
     Set rst = New ADODB.Recordset
