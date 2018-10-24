@@ -44,23 +44,29 @@ End Sub
 Private Function MakeConnectionString() As String
     MakeConnectionString = "DSN=" & sDSN & ";Uid=" & sUid & ";Pwd=" & sPwd & ";"
 End Function
-'Custom Query
+'Execute
 '---------------------------------------------------------------
 'should there be multiple functions, one that resurs and one
 'that just executes? Return multiple values vs one value?
 '
 '===============================================================
-Public Function Execute(stSQL, Optional return_column = "")
+Public Function Execute(oSQL, Optional return_column = "")
+    If VarType(oSQL) = 9 Then
+        sSQL = oSQL.toString
+        If TypeOf oSQL Is SQLSelect Then SQLType = "select"
+        Else: SQLType = "insert"
+        End If
+    End If
     Set cnt = New ADODB.Connection
     cnt.ConnectionString = MakeConnectionString()
     Set rst = New ADODB.Recordset
     cnt.Open
     return_id = 0
 
-    rst.Open oSQL.ToString, cnt
+    rst.Open sSQL, cnt
     If return_column <> "" Then
         Execute = rst(return_column)
-    ElseIf TypeOf oSQL Is SQLSelect Then
+    ElseIf SQLType = "select" Then
         Execute = ToArray(rst)
     End If
     
@@ -70,10 +76,15 @@ Public Function Execute(stSQL, Optional return_column = "")
     Set cnt = Nothing
 End Function
 
-          Public Function ToArray(rst)
-          End Function
+Public Function InsertGetNewId(oSQL As SQLInsert)
+    InsertGetNewId = Execute(PrepareInsert(oSQL), "somelongcustomname")
+End Function
+
+Public Function ToArray(rst)
+End Function
           
-Public Function PrepareInsert(stSQL, return_column)
+Public Function PrepareInsert(oSQL, return_column)
+    stSQL = oSQL.toString
     Select Case sType
         Case Is = "mssql"
             PrepareInsert = "SET NOCOUNT ON;" & stSQL & ";" & "SELECT SCOPE_IDENTITY() as " & return_column & ";"
