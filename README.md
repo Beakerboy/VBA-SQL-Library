@@ -21,10 +21,8 @@ Import the files into a spreadsheet using Microsoft Visual Basic for Application
  
  Security
 -----
-This Library currently does not use prepared statements or string sanitation to prevent SQL Injections.
-However, it does require users to authenticate to the database to perform any queries.
+This Library currently does not use prepared statements but it does escape all single quotes. It also provides a login box to prevent hard-coding database autentication details.
 
- 
  Usage
 -----
 
