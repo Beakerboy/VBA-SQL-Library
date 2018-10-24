@@ -56,11 +56,13 @@ Unload Login
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
 
-#### Example 1
+#### Example 1 - Insert Values
+To produce this SQL Stament:
 ```sql
 INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'secret');
 ```
 
+Use the Following in VBA-SQL-Library
 ```vb
 'Initialize the object and assign a table name
 Set MyInsert = new SQLInsert
@@ -76,12 +78,13 @@ MyInsert.Values = Array(str("admin"), str("Alice"), str("secret"))
 MyDatabase.Execute MyInsert 
 ```
 
-#### Example 2
+#### Example 2 - Insert Select
+To produce this SQL Stament:
 ```sql
 INSERT INTO bank_account (account_number, open_date, user_id)
     SELECT (10, 570000051, user_id) FROM users WHERE username = 'admin';
 ````
-
+Use the Following in VBA-SQL-Library
 ```vb
 'Initialize the object and assign a table name
 Set MyInsert = new SQLInsert
