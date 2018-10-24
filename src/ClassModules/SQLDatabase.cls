@@ -56,22 +56,23 @@ Public Function Execute(stSQL, Optional return_column = "")
     Set rst = New ADODB.Recordset
     cnt.Open
     return_id = 0
-  
+
+    rst.Open oSQL.ToString, cnt
     If return_column <> "" Then
-        MsgBox stSQL
-        return_id = 5
-    Else
-        'If we do not want anything returned, we just submit the SQL
-        MsgBox stSQL
+        Execute = rst(return_column)
+    ElseIf TypeOf oSQL Is SQLSelect Then
+        Execute = ToArray(rst)
     End If
     
     If CBool(rst.State And adStateOpen) = True Then rst.Close
     Set rst = Nothing
     If CBool(cnt.State And adStateOpen) = True Then cnt.Close
     Set cnt = Nothing
-    If return_column <> "" Then CustomQuery = return_id
 End Function
 
+          Public Function ToArray(rst)
+          End Function
+          
 Public Function PrepareInsert(stSQL, return_column)
     Select Case sType
         Case Is = "mssql"
