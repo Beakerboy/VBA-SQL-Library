@@ -56,6 +56,7 @@ Unload Login
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements.
 
+#### Example 1
 ```sql
 INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'secret');
 ```
@@ -75,6 +76,7 @@ MyInsert.Values = Array(str("admin"), str("Alice"), str("secret"))
 MyDatabase.Execute MyInsert 
 ```
 
+#### Example 2
 ```sql
 INSERT INTO bank_account (account_number, open_date, user_id)
     SELECT (10, 570000051, user_id) FROM users WHERE username = 'admin';
