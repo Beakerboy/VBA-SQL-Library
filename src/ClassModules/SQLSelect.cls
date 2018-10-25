@@ -9,7 +9,11 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Private vFields As Variant
 Private sTable As String
-Private MyCredentials As Credentials
+Private bDistinct As Boolean
+Private aHaving() As String
+Private aWhere() As String
+Private aJoin() As String
+Private aOrder() As String
 
 'An array
 'DWhere['id']=[0=> '=', 1=>4] is equivalent to "WHERE id=2"
@@ -22,6 +26,7 @@ End Property
 
 Private Sub Class_Initialize()
     Set DWhere = New Dictionary
+    bDistinct = False
 End Sub
 
 'Add a WHERE clause to the SQL statement
@@ -33,19 +38,15 @@ End Sub
 'What if the field is used in two conditions? Can a dictionary handle two
 '  records with the same Key?
 
-Public Sub addWhere(Field, op, value)
+Public Sub addWhere(Field, op, Value)
     Dim arrayProp(1) As Variant
     arrayProp(0) = op
-    arrayProp(1) = value
+    arrayProp(1) = Value
     DWhere.Add Key:=Field, Item:=arrayProp
 End Sub
 
 Property Let Table(sValue As String)
   sTable = sValue
-End Property
-
-Property Let Credentials(Object As Credentials)
-    MyCredentials = Object
 End Property
 
 Public Function toString()
@@ -57,7 +58,7 @@ Public Function toString()
 End Function
 
 Private Function FieldList()
-    FieldList = implode(vFields)
+    FieldList = Join(vFields, ", ")
 End Function
 
 'Create a string of where clauses
@@ -78,20 +79,11 @@ End Function
 
 'Generate a query of the form
 '  SELECT sField FROM sTableValue WHERE sProperty = vValue
-Public Function getByProperty(sTableValue, sField, sProperty, vValue)
+Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
     sTable = sTableValue
     vFields = Array(sField)
     Dim arrayProp(1) As Variant
     arrayProp(0) = "="
     arrayProp(1) = vValue
     DWhere.Add Key:=sProperty, Item:=arrayProp
-    Set MyDatabase = New Database
-    MyDatabase.Authenticate (MyCredentials)
-    getByProperty = MyDatabase.CustomQuery(toString, sField)
-End Function
-
-Public Function Execute(sReturn As String)
-    Set MyDatabase = New Database
-    MyDatabase.Authenticate (MyCredentials)
-    Execute = MyDatabase.CustomQuery(toString(), sReturn)
-End Function
+End Sub
