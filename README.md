@@ -17,7 +17,7 @@ Features
  Setup
 -----
 
-Import the files into a spreadsheet using Microsoft Visual Basic for Applications. Edit the database class to include the DSN and database type for your database. 
+Import the files into a spreadsheet using Microsoft Visual Basic for Applications.
  
  Security
 -----
