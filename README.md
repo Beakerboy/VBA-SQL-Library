@@ -39,7 +39,7 @@ Several different types of database execution can occur:
  * Execute(SQLSelect, column) - Execute a statement and return a single value
  * Execute(SQLSelect) Execute a statement and return an array of values
  
-The Database can be place in "Test Mode" as well by setting ```vba MyDatabase.TestMode = True ```. This will print all queries to Message Boxes, and only execute Select queries. This allows a developer to inspect all the queries for accuracy without risking any changes to the database.
+The Database can be placed in "Test Mode" as well by setting ```vba MyDatabase.TestMode = True ```. This will print all queries to Message Boxes, and only execute Select queries. This allows a developer to inspect all the queries for accuracy without risking any changes to the database.
 
 ### Login Form
 This form can be displayed to ask for the database credentials. This avoids having to hard-code username and passwords in the scrips.
