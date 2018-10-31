@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "Database"
+Attribute VB_Name = "SQLDatabase"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -11,16 +11,18 @@ Attribute VB_Exposed = False
 'Generalizes multiple database types to allow one SQL library to
 'interact with them
 '
+Option Explicit
 '*********************************VARIABLES************************************
 Private sDSN As String      'DSN
 Private sUid As String      'User Name
 Private sPwd As String      'Password
+Private cnt                 'Connection
+Private rst                 'Recordset
 Private sType As String     'Type of Database (psql, mssql, mysql)
-Private bTestMode As Boolean
 
 '***************************CONSTRUCTOR****************************************
 Private Sub Class_Initialize()
-    bTestMode = False
+    Dim rst As New ADODB.Recordset
 End Sub
 '***************************LET PROPERTIES*************************************
 
@@ -42,6 +44,16 @@ End Property
 Public Property Let TestMode(bValue As Boolean)
     bTestMode = bValue
 End Property
+
+Public Property Set Connection(MyConnection)
+    Set cnt = MyConnection
+End Property
+
+Public Property Set Recordset(MyRecordset)
+    Set rst = Nothing
+    Set rst = MyRecordset
+End Property
+
 '**********************************METHODS*************************************
 
 Private Function MakeConnectionString() As String
@@ -53,8 +65,11 @@ End Function
 'Send a query to the database and return a result if needed
 '
 Public Function Execute(oSQL, Optional return_column = "")
+    Dim sSQL As String
+    Dim SQLType As String
     If VarType(oSQL) = 9 Then
-        sSQL = oSQL.toString
+        
+        sSQL = oSQL.ToString
         If TypeOf oSQL Is SQLSelect Then
             SQLType = "select"
         Else
@@ -63,37 +78,20 @@ Public Function Execute(oSQL, Optional return_column = "")
     Else
         sSQL = oSQL
     End If
+    Dim cnt As ADODB.Connection
     Set cnt = New ADODB.Connection
     cnt.ConnectionString = MakeConnectionString()
-    Set rst = New ADODB.Recordset
     cnt.Open
-    return_id = 0
     
-    If bTestMode Then
-        MsgBox sSQL
-        If SQLType = "select" Then
-            rst.Open sSQL, cnt
-            If return_column <> "" Then
-                return_value = rst(return_column)
-                MsgBox return_column & " = " & return_value
-                Execute = return_value
-            ElseIf SQLType = "select" Then
-                Execute = ToArray(rst)
-            End If
-        Else
-            Execute = 42
-        End If
-    Else
-        rst.Open sSQL, cnt
-        If return_column <> "" Then
-            Execute = rst(return_column)
-        ElseIf SQLType = "select" Then
-            Execute = ToArray(rst)
-        End If
+    rst.OpenRecordset sSQL, cnt              'Execute the query
+    If return_column <> "" Then
+        Execute = rst.GetValue(return_column)
+    ElseIf SQLType = "select" Then
+        Execute = ToArray(rst)
     End If
     
-    If CBool(rst.State And adStateOpen) = True Then rst.Close
-    Set rst = Nothing
+    'Bitwise And the State property with The adStateOpen constant
+    If CBool(rst.State And adStateOpen) = True Then rst.CloseRecordset
     If CBool(cnt.State And adStateOpen) = True Then cnt.Close
     Set cnt = Nothing
 End Function
@@ -111,7 +109,8 @@ Public Function ToArray(rst)
 End Function
           
 Public Function PrepareInsert(ByVal oSQL, return_column)
-    stSQL = oSQL.toString
+    Dim stSQL As String
+    stSQL = oSQL.ToString
     Select Case sType
         Case Is = "mssql"
             PrepareInsert = "SET NOCOUNT ON;" & stSQL & ";" & "SELECT SCOPE_IDENTITY() as " & return_column & ";"

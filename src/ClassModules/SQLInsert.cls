@@ -10,11 +10,11 @@ Attribute VB_Exposed = False
 'This Class provides means to insert data into an SQL database
 'Either vValues or mySelect must be set. The length of vFields must match the
 '  number of items in mySelect or vValues
-
+Option Explicit
 Private vFields As Variant     'An array of field names
 Private sTable As String       'The table name
 Private vValues As Variant     'An array of values - OPTIONAL
-Private mySelect As SQLSelect  'An SQL statement which can be used to create
+Private MySelect As SQLSelect  'An SQL statement which can be used to create
                                '  the values - OPTIONAL
 
 '***************************CONSTRUCTOR****************************************
@@ -35,7 +35,7 @@ Property Let Values(vValue)
 End Property
 
 Property Let setSelect(vValue)
-    Set mySelect = vValue
+    Set MySelect = vValue
 End Property
 
 '***************************FUNCTIONS******************************************
@@ -50,16 +50,16 @@ Private Function ImplodeFields()
 End Function
 
 ' Create an SQL statement from the object data
-Public Function toString()
-    returnString = "INSERT INTO " & sTable & ImplodeFields
-    If mySelect Is Nothing Then
+Public Function ToString()
+    Dim returnstring As String
+    returnstring = "INSERT INTO " & sTable & ImplodeFields
+    If MySelect Is Nothing Then
         'Should check that the length of vValues = length of vFields.
         
-        returnString = returnString & "VALUES" & ImplodeValues
+        returnstring = returnstring & "VALUES" & ImplodeValues
     Else
         'Should check that number of items returned matches vFields
-        returnString = returnString & "(" & mySelect.toString & ")"
+        returnstring = returnstring & "(" & MySelect.ToString & ")"
     End If
-    toString = returnString
+    ToString = returnstring
 End Function
-
