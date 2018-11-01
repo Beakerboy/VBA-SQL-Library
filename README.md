@@ -131,6 +131,25 @@ MySelect.AddWhere "username" "=" str("admin")
 
 ID = MyDatabase.Execute(MySelect, "id")
 ```
+WHERE clauses can be added and grouped together. The following changes the query to:
+```sql
+SELECT id FROM users WHERE username='admin' AND id < 10;
+```
+```vb
+MySelect.AddWhere "id", "<", 10, "AND"
+```
+A SQLWhereGroup can abe be added using SQLSELECT.AddWhereGroup. This is necessary fro a where clause like:
+```sql
+SELECT id FROM users WHERE (a=1 AND b=2) OR (c = 3 AND d = 4)
+```
+The SQLSelect Object can create Queries with "GROUP BY ... HAVING ..." sections.
+```sql
+... GROUP BY user_type HAVING age > 1;
+```
+```vb
+MySelect.GroupBy = Array("user_type")
+MySelect.AddHaving = "age", ">", "1"
+```
 
 
 ### Update
