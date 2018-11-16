@@ -127,7 +127,7 @@ MySelect.Fields = Array("id")
 MySelect.Table = "users"
 
 'Need to escape the string
-MySelect.AddWhere "username" "=" str("admin") 
+MySelect.AddWhere "username", "=", str("admin") 
 
 ID = MyDatabase.Execute(MySelect, "id")
 ```
@@ -166,7 +166,7 @@ With MyUpdate
     .Table = "users"
 
     'Need to escape the string
-    .AddWhere "username" "=" str("admin") 
+    .AddWhere "username", "=", str("admin") 
 End With
 
 ID = MyDatabase.Execute(MyUpdate)
