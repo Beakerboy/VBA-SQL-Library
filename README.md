@@ -156,7 +156,7 @@ MySelect.AddHaving = "age", ">", "1"
 #### Example 1 
 To produce this SQL Stament:
 ```sql
-UPDATE users SET username="old_admin" WHERE username="admin"
+UPDATE users SET username='old_admin' WHERE username='admin'
 ```
 ```vb
 Set MyUpdate = New SQLUpdate
