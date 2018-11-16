@@ -153,8 +153,24 @@ MySelect.AddHaving = "age", ">", "1"
 
 
 ### Update
-Not Yet Implemented
+#### Example 1 
+To produce this SQL Stament:
+```sql
+UPDATE users SET username="old_admin" WHERE username="admin"
+```
+```vb
+Set MyUpdate = New SQLUpdate
+With MyUpdate
+    .Fields = Array("username")
+    .Values = Array("old_admin")
+    .Table = "users"
 
+    'Need to escape the string
+    .AddWhere "username" "=" str("admin") 
+End With
+
+ID = MyDatabase.Execute(MyUpdate)
+```
 ### HelperFunctions
 The library includes a handful of helper functions. 
 * Date/Time manipulation, toIso() and toUnix().
