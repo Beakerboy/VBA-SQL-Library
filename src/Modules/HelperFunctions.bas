@@ -21,3 +21,16 @@ Function Join2D(ByVal vArray As Variant, _
   Next
   Join2D = Join(Lines, LineDelim)
 End Function
+
+Function getDimension(Var As Variant) As Long
+    On Error GoTo Err
+    Dim i As Long
+    Dim tmp As Long
+    i = 0
+    Do While True
+        i = i + 1
+        tmp = UBound(Var, i)
+    Loop
+Err:
+    getDimension = i - 1
+End Function
