@@ -15,8 +15,8 @@ Function Join2D(ByVal vArray As Variant, _
                 Optional ByVal WordDelim As String = " ", _
                 Optional ByVal LineDelim As String = vbNewLine) As String
   Dim R As Long, Lines() As String
-  ReDim Lines(0 To UBound(vArray) - 1)
-  For R = 0 To UBound(vArray) - 1
+  ReDim Lines(0 To UBound(vArray))
+  For R = 0 To UBound(vArray)
     Lines(R) = Join(Application.Index(vArray, R + 1, 0), WordDelim)
   Next
   Join2D = Join(Lines, LineDelim)
