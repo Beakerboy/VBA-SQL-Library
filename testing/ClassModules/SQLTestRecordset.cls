@@ -49,3 +49,4 @@ Private Sub GetQueryType(MyQuery)
         sQueryType = "Insert"
     End If
 End Sub
+
