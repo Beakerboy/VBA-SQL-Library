@@ -24,7 +24,7 @@ Property Let SelectAs(sValue As String)
 End Property
 
 Property Get SelectSQL() As SQLSelect
-    Set SQLSelect = MySelect
+    Set SelectSQL = MySelect
 End Property
 
 Property Get SelectAs() As String
@@ -32,5 +32,12 @@ Property Get SelectAs() As String
 End Property
 
 Public Function ToString() As String
-    ToString = "(" & MySelect.ToString & ") AS " & sAs
+    Dim MySQLQuery As iSQLQuery
+    Set MySQLQuery = MySelect
+    Dim return_string As String
+    return_string = "(" & MySQLQuery.ToString & ")"
+    If sAs <> "" Then
+        return_string = return_string & " AS " & sAs
+    End If
+    ToString = return_string
 End Function
