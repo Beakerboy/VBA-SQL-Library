@@ -19,7 +19,11 @@ Private Sub Class_Initialize()
     
 End Sub
 
-Public Sub SetGroup(oWhere1, oWhere2)
+Public Property Get Operator()
+    Operator = BoolOperator
+End Property
+
+Public Sub SetGroup(ByVal oWhere1, ByVal oWhere2, op As String)
     If TypeOf oWhere1 Is SQLWhere Then
         Set Where1 = oWhere1
     Else
@@ -31,6 +35,44 @@ Public Sub SetGroup(oWhere1, oWhere2)
     Else
         Set WhereGroup2 = oWhere2
     End If
+    If op = "AND" Or op = "OR" Then
+        BoolOperator = op
+    Else
+        MsgBox op & " is not a supprorted operator"
+    End If
+End Sub
+
+Public Sub AddWhere(oWhere, op As String)
+    
+    If Where1.Operator <> "" Then
+        Set WhereGroup1 = New SQLWhereGroup
+        If Where2.Operator <> "" Then
+            WhereGroup1.SetGroup Where1, Where2, BoolOperator
+            Set Where2 = New SQLWhere
+        Else
+            WhereGroup1.SetGroup Where1, WhereGroup2, BoolOperator
+            Set WhereGroup2 = New SQLWhereGroup
+        End If
+        Set Where1 = New SQLWhere
+    Else
+        If Where2.Operator <> "" Then
+            WhereGroup1.AddWhere Where2, BoolOperator
+            Set Where2 = New SQLWhere
+        Else
+            WhereGroup1.AddWhere WhereGroup2, BoolOperator
+            Set WhereGroup2 = New SQLWhereGroup
+        End If
+    End If
+    If TypeOf oWhere Is SQLWhere Then
+        Set Where2 = oWhere
+    Else
+        Set WhereGroup2 = oWhere
+    End If
+    If op = "AND" Or op = "OR" Then
+        BoolOperator = op
+    Else
+        MsgBox op & " is not a supprorted operator"
+    End If
 End Sub
 
 Public Function ToString()
@@ -38,15 +80,15 @@ Public Function ToString()
     If Where1.Operator <> "" Then
         sWhere1 = Where1.ToString
     Else
-        sWhere1 = WhereGroup1.ToString
+        sWhere1 = "(" & WhereGroup1.ToString & ")"
     End If
     
     Dim sWhere2 As String
     If Where2.Operator <> "" Then
-        sWhere2 = Where1.ToString
+        sWhere2 = Where2.ToString
     Else
-        sWhere2 = WhereGroup1.ToString
+        sWhere2 = "(" & WhereGroup2.ToString & ")"
     End If
     
-    ToString = "(" & sWhere1 & " " & BoolOperator & " " & sWhere2 & ")"
+    ToString = sWhere1 & " " & BoolOperator & " " & sWhere2
 End Function
