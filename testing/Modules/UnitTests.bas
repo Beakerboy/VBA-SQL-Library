@@ -49,6 +49,16 @@ Public Function RunUnitTests()
     MySubselect.SelectAs = "user_id"
     CheckValue MySubselect, "(SELECT id FROM users WHERE name = 'admin') AS user_id"
     
+    '*******************Check Distinct*****************************************
+    Set MySelect = New SQLSelect
+    With MySelect
+        .Table = "customers"
+        .Fields = Array("country")
+        .Distinct
+    End With
+    Set Interfaced = MySelect
+    CheckValue Interfaced, "SELECT DISTINCT country FROM customers"
+    
     '*********************Check Insert***********************
     Dim MyInsert As New SQLInsert
     MyInsert.Table = "users"
@@ -85,8 +95,8 @@ Public Function RunUnitTests()
 End Function
 
 Function CheckValue(MyObject, ExpectedValue)
-    If MyObject.ToString <> ExpectedValue Then
-        MsgBox "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyObject.ToString
+    If MyObject.toString <> ExpectedValue Then
+        MsgBox "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyObject.toString
     End If
 End Function
 
