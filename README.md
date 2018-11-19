@@ -168,7 +168,7 @@ SELECT id FROM users WHERE username='admin' AND id < 10;
 ```vb
 MySelect.AddWhere "id", "<", 10, "AND"
 ```
-A SQLWhereGroup can abe be added using SQLSELECT.AddWhereGroup. This is necessary fro a where clause like:
+A SQLWhereGroup can abe be added using SQLSELECT.AddWhereGroup. This is necessary for a where clause like:
 ```sql
 SELECT id FROM users WHERE (a=1 AND b=2) OR (c = 3 AND d = 4)
 ```
