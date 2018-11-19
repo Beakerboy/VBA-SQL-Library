@@ -68,6 +68,20 @@ Public Function RunUnitTests()
     Set MyInsert.setSelect = MySelect
     CheckValue Interfaced, "INSERT INTO users (name, type_id) (SELECT 'foo', id FROM account_types WHERE type = 'admin') RETURNING id"
     
+    '*********************Check Insert Multiple Values***********************
+    Set MyInsert = New SQLInsert
+    MyInsert.Table = "users"
+    MyInsert.Fields = Array("name", "type")
+    Dim Values2D(1, 1) As Variant
+    Values2D(0, 0) = "'foo'"
+    Values2D(0, 1) = "'admin'"
+    Values2D(1, 0) = "'bar'"
+    Values2D(1, 1) = "'editor'"
+    MyInsert.Values = Values2D
+    Set Interfaced = MyInsert
+    CheckValue Interfaced, "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
+    
+    
 End Function
 
 Function CheckValue(MyObject, ExpectedValue)
@@ -75,4 +89,5 @@ Function CheckValue(MyObject, ExpectedValue)
         MsgBox "Expected: " & ExpectedValue & vbNewLine & "Provided: " & MyObject.ToString
     End If
 End Function
+
 
