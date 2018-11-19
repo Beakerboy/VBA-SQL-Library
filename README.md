@@ -184,7 +184,7 @@ MySelect.AddHaving = "age", ">", "1"
 
 ### Update
 #### Example 1 
-To produce this SQL Stament:
+To produce this SQL Statement:
 ```sql
 UPDATE users SET username='old_admin' WHERE username='admin'
 ```
@@ -199,7 +199,7 @@ With MyUpdate
     .AddWhere "username", "=", str("admin") 
 End With
 
-ID = MyDatabase.Execute(MyUpdate)
+MyDatabase.Execute MyUpdate
 ```
 ### HelperFunctions
 The library includes a handful of helper functions. 
