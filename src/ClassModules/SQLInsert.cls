@@ -46,7 +46,11 @@ Private Function ImplodeValues()
 End Function
 
 Private Function ImplodeFields()
-    ImplodeFields = " (" & Join(vFields, ", ") & ") "
+    if getDimension (vValues) = 2 Then
+        ImplodeFields = "(" & Join2D(arr2, ", ", "), (") & ")"
+    else
+        ImplodeFields = " (" & Join(vFields, ", ") & ") "
+    end if
 End Function
 
 ' Create an SQL statement from the object data
