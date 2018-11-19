@@ -180,7 +180,10 @@ The SQLSelect Object can create Queries with "GROUP BY ... HAVING ..." sections.
 MySelect.GroupBy = Array("user_type")
 MySelect.AddHaving = "age", ">", "1"
 ```
-
+A query can be run as DISTINCT by flagging the Distinct property
+```vb
+MySelect.Distinct
+```
 
 ### Update
 #### Example 1 
