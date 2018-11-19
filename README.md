@@ -3,7 +3,7 @@ VBA SQL Library
 
 ### Object-Based Database Interaction for VBA
 
-Easily create SQL queries and execute them on a database. For an example on how to use this library with data objects, see the [VBA-Drupal-Library](https://github.com/Beakerboy/VBA-Drupal-Library) 
+Easily create SQL queries and execute them on a database. For an example on how to use this library with data objects, see the [VBA-Drupal-Library](https://github.com/Beakerboy/VBA-Drupal-Library). For other examples on using the library, refer to the unit tests.
 
 Features
 --------
@@ -13,6 +13,7 @@ Features
  * [Select](#select)
  * [Update](#update)
  * [Helper Functions](#helper-functions)
+ * [Unit Tests](#unit-tests)
  
  Setup
 -----
@@ -62,7 +63,7 @@ Unload Login
 ```
 
 ### Insert
-The Insert object can create both INSERT VALUES and INSERT SELECT statements.
+The Insert object can create both INSERT VALUES and INSERT SELECT statements. Multiple inserts can be performed in one statement if the values array is 2 Dimensional.
 
 #### Example 1 - Insert Values
 To produce this SQL Stament:
@@ -114,6 +115,35 @@ MyInsertSQL.setSelect = Sql
 ID = MyDatabase.InsertGetNewID(MyInsert)
 ```
 
+#### Example 3 - Insert Multiple Values
+
+To produce this SQL Stament:
+```sql
+INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'secret'), ('editor', 'Bob', 'super-secret');
+```
+
+Use the Following in VBA-SQL-Library
+```vb
+'Initialize the object and assign a table name
+Set MyInsert = new SQLInsert
+MyInsert.table = "users"
+
+'Set The Fields
+MyInsert.Fields = Array("username", "first_name", "password")
+
+'Set the Values
+Dim Values2D(1, 2) As Variant
+Values2D(0, 0) = "'admin'"
+Values2D(0, 1) = "'Alice'"
+Values2D(0, 2) = "'secret'"
+Values2D(1, 0) = "'editor'"
+Values2D(1, 1) = "'Bob'"
+Values2D(1, 2) = "'super-secret'"
+MyInsert.Values = Values2D
+
+'Execute the query
+MyDatabase.Execute MyInsert 
+```
 
 ### Select
 We can execute a select statement and receive the results as a single value, or an array of values:
@@ -175,3 +205,6 @@ ID = MyDatabase.Execute(MyUpdate)
 The library includes a handful of helper functions. 
 * Date/Time manipulation, toIso() and toUnix().
 * String encapsulation str() to add single quotes around strings and escape contained single-quotes
+
+### Unit Tests
+If you would like to run the unit tests, import all the library files including the files in "testing" into an Excel workbook. In some cell, type "=RunUnitTests()". Any failures will open a messagebox stating the expected output and what was actually received by the library.
