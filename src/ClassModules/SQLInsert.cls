@@ -11,9 +11,12 @@ Attribute VB_Exposed = False
 'Either vValues or mySelect must be set. The length of vFields must match the
 '  number of items in mySelect or vValues
 Option Explicit
-Private vFields As Variant     'An array of field names
-Private sTable As String       'The table name
-Private vValues As Variant     'An array of values - OPTIONAL
+Implements iSQLQuery
+
+Private vFields As Variant      'An array of field names
+Private sTable As String        'The table name
+Private sReturning As String
+Private vValues As Variant      'An array of values - OPTIONAL
 Private MySelect As SQLSelect  'An SQL statement which can be used to create
                                '  the values - OPTIONAL
 
@@ -34,8 +37,12 @@ Property Let Values(vValue)
     vValues = vValue
 End Property
 
-Property Let setSelect(vValue)
+Property Set setSelect(vValue As SQLSelect)
     Set MySelect = vValue
+End Property
+
+Property Let Returning(sValue As String)
+    sReturning = sValue
 End Property
 
 '***************************FUNCTIONS******************************************
@@ -46,15 +53,13 @@ Private Function ImplodeValues()
 End Function
 
 Private Function ImplodeFields()
-    if getDimension (vValues) = 2 Then
-        ImplodeFields = "(" & Join2D(arr2, ", ", "), (") & ")"
-    else
-        ImplodeFields = " (" & Join(vFields, ", ") & ") "
-    end if
+    ImplodeFields = " (" & Join(vFields, ", ") & ") "
 End Function
 
 ' Create an SQL statement from the object data
-Public Function ToString()
+Public Function iSQLQuery_ToString() As String
+    Dim MyQuery As iSQLQuery
+    Set MyQuery = MySelect
     Dim returnstring As String
     returnstring = "INSERT INTO " & sTable & ImplodeFields
     If MySelect Is Nothing Then
@@ -63,7 +68,10 @@ Public Function ToString()
         returnstring = returnstring & "VALUES" & ImplodeValues
     Else
         'Should check that number of items returned matches vFields
-        returnstring = returnstring & "(" & MySelect.ToString & ")"
+        returnstring = returnstring & "(" & MyQuery.ToString & ") "
     End If
-    ToString = returnstring
+    If sReturning <> "" Then
+        returnstring = returnstring & "RETURNING " & sReturning
+    End If
+    iSQLQuery_ToString = returnstring
 End Function
