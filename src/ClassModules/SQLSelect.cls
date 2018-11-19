@@ -20,6 +20,9 @@ Private aJoin() As String
 Private aOrder() As String
 Private oWhere As SQLWhere              'Can have either a SQLWhere or a SQLWhereGroup
 Private oWhereGroup As SQLWhereGroup
+Private sUnion() As Variant
+'Limit
+'Offset
 
 Property Let Fields(vValue)
     vFields = vValue
@@ -59,6 +62,41 @@ Public Sub AddHaving(Field, op As String, Value, Optional GroupType As String = 
 
 End Sub
 
+Public Sub AddJoin(sType, sTable, Optional sAlias = Null, Optional sCondition = Null)
+    Dim MyJoin As New SQLJoin
+    With MyJoin
+        .Type = sType
+        .Table = sTable
+        .Alias = sAlias
+        .Condition = sCondition
+    End With
+    'Add MyJoin to the Join Array
+End Sub
+
+Public Sub InnerJoin(sTable, sAlias, sCondition)
+    AddJoin "INNER", sTable, sAlias, sCondition
+End Sub
+
+Public Sub LeftJoin(sTable, sAlias, sCondition)
+    AddJoin "LEFT OUTER", sTable, sAlias, sCondition
+End Sub
+
+'Left Joins are prefered over Right. Please edit query to use a left join
+Public Sub RightJoin(sTable, sAlias, sCondition)
+    AddJoin "RIGHT OUTER", sTable, sAlias, sCondition
+End Sub
+
+'sType is either "", "ALL", or "DISTINCT"
+Public Sub Union(oSelect As SQLSelect, Optional sType = "")
+    Dim UnionArray(1) As Variant
+    UnionArray(0) = sType
+    UnionArray(1) = oSelect
+    'Add UnionArray to aUnion
+End Sub
+
+Public Sub Distinct(Optional bValue = True)
+    bDistinct = bValue
+End Sub
 
 'Add a single WHERE clause to the SQL statement
 ' op is the operation
@@ -104,36 +142,51 @@ End Property
 
 Public Function iSQLQuery_ToString() As String
     Dim return_string As String
+
     If UBound(vFields) < 0 Then
         return_string = ""
-     Else
-        return_string = "SELECT " & FieldList & " FROM " & sTable
-        If Not (oWhere Is Nothing And oWhereGroup Is Nothing) Then
-            return_string = return_string & " WHERE " & WhereString
-        End If
-        If UBound(vGroupBy) > -1 Then
-            return_string = return_string & " GROUP BY " & Join(vGroupBy, ", ")
-        End If
-        If Not (oHaving Is Nothing And oHavingGroup Is Nothing) Then
-            return_string = return_string & " HAVING " & HavingString
-        End If
+    Else
+        return_string = "SELECT " & DistinctString & FieldList & " FROM " & _
+            sTable & WhereString & GroupByString & HavingString
     End If
     iSQLQuery_ToString = return_string
 End Function
 
+Private Function DistinctString() As String
+    Dim sDistinct As String
+    sDistinct = ""
+    If bDistinct Then
+        sDistinct = "DISTINCT "
+    End If
+    DistinctString = sDistinct
+End Function
+
 Private Function WhereString() As String
-    If Not (oWhere Is Nothing) Then
-        WhereString = oWhere.ToString
-    Else
-        WhereString = oWhereGroup.ToString
+    Dim sWhere As String
+    If Not (oWhere Is Nothing And oWhereGroup Is Nothing) Then
+        If Not (oWhere Is Nothing) Then
+            sWhere = oWhere.toString
+        Else
+            sWhere = oWhereGroup.toString
+        End If
+        WhereString = " WHERE " & sWhere
     End If
 End Function
 
+Private Function GroupByString() As String
+    If UBound(vGroupBy) > -1 Then
+        GroupByString = " GROUP BY " & Join(vGroupBy, ", ")
+    End If
+End Function
 Private Function HavingString() As String
-    If Not (oHaving Is Nothing) Then
-        HavingString = oHaving.ToString
-    Else
-        HavingString = oHavingGroup.ToString
+    Dim sHaving As String
+    If Not (oHaving Is Nothing And oHavingGroup Is Nothing) Then
+        If Not (oHaving Is Nothing) Then
+            sHaving = oHaving.toString
+        Else
+            sHaving = oHavingGroup.toString
+        End If
+        HavingString = " HAVING " & sHaving
     End If
 End Function
 
