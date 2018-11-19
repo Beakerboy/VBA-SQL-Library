@@ -13,16 +13,16 @@ Attribute VB_Exposed = False
 '
 Option Explicit
 '*********************************VARIABLES************************************
-Private sDSN As String      'DSN
-Private sUid As String      'User Name
-Private sPwd As String      'Password
-Private cnt                 'Connection
-Private rst                 'Recordset
-Private sType As String     'Type of Database (psql, mssql, mysql)
+Private sDSN As String          'DSN
+Private sUid As String          'User Name
+Private sPwd As String          'Password
+Private cnt                     'Connection
+Private rst As iSQLRecordset    'Recordset
+Private sType As String         'Type of Database (psql, mssql, mysql)
 
 '***************************CONSTRUCTOR****************************************
 Private Sub Class_Initialize()
-    Dim rst As New ADODB.Recordset
+    Set rst = New SQLRecordset
 End Sub
 '***************************LET PROPERTIES*************************************
 
@@ -45,11 +45,7 @@ Public Property Let TestMode(bValue As Boolean)
     bTestMode = bValue
 End Property
 
-Public Property Set Connection(MyConnection)
-    Set cnt = MyConnection
-End Property
-
-Public Property Set Recordset(MyRecordset)
+Public Property Set Recordset(MyRecordset As iSQLRecordset)
     Set rst = Nothing
     Set rst = MyRecordset
 End Property
@@ -64,20 +60,12 @@ End Function
 '
 'Send a query to the database and return a result if needed
 '
-Public Function Execute(oSQL, Optional return_column = "")
+Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     Dim sSQL As String
     Dim SQLType As String
-    If VarType(oSQL) = 9 Then
-        
-        sSQL = oSQL.ToString
-        If TypeOf oSQL Is SQLSelect Then
-            SQLType = "select"
-        Else
-            SQLType = "insert"
-        End If
-    Else
-        sSQL = oSQL
-    End If
+    
+    sSQL = oSQL.ToString
+
     Dim cnt As ADODB.Connection
     Set cnt = New ADODB.Connection
     cnt.ConnectionString = MakeConnectionString()
@@ -86,8 +74,8 @@ Public Function Execute(oSQL, Optional return_column = "")
     rst.OpenRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
         Execute = rst.GetValue(return_column)
-    ElseIf SQLType = "select" Then
-        Execute = ToArray(rst)
+    Else
+        'If it is a select Query, return the recordset as an array
     End If
     
     'Bitwise And the State property with The adStateOpen constant
@@ -108,15 +96,24 @@ End Function
 Public Function ToArray(rst)
 End Function
           
-Public Function PrepareInsert(ByVal oSQL, return_column)
+Public Function PrepareInsert(ByVal oSQL As SQLInsert, return_column)
     Dim stSQL As String
-    stSQL = oSQL.ToString
+    Dim MyQuery As iSQLQuery
+    Set MyQuery = oSQL
+    stSQL = MyQuery.ToString
+    Dim MySQLGroup As New SQLQueryGroup
     Select Case sType
         Case Is = "mssql"
-            PrepareInsert = "SET NOCOUNT ON;" & stSQL & ";" & "SELECT SCOPE_IDENTITY() as " & return_column & ";"
+            MySQLGroup.AddQuery "SET NOCOUNT ON"
+            MySQLGroup.AddQuery stSQL
+            MySQLGroup.AddQuery "SELECT SCOPE_IDENTITY() as " & return_column
+            Set PrepareInsert = MySQLGroup
         Case Is = "psql"
-            PrepareInsert = stSQL & " RETURNING " & return_column
+            oSQL.Returning = return_column
+            Set PrepareInsert = oSQL
         Case Is = "mysql"
-            PrepareInsert = stSQL & ";SELECT LAST_INSERT_ID() AS " & return_column
+            MySQLGroup.AddQuery stSQL
+            MySQLGroup.AddQuery "SELECT LAST_INSERT_ID() AS " & return_column
+            Set PrepareInsert = MySQLGroup
     End Select
 End Function
