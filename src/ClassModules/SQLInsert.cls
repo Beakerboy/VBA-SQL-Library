@@ -48,30 +48,36 @@ End Property
 '***************************FUNCTIONS******************************************
 
 'Join the array of values into a string
-Private Function ImplodeValues()
-    ImplodeValues = " (" & Join(vValues, ", ") & ") "
+Private Function ImplodeValues() As String
+    If getDimension(vValues) = 2 Then
+        ImplodeValues = " (" & Join2D(vValues, ", ", "), (") & ")"
+    Else
+        ImplodeValues = " (" & Join(vValues, ", ") & ") "
+    End If
 End Function
 
-Private Function ImplodeFields()
-    ImplodeFields = " (" & Join(vFields, ", ") & ") "
+Private Function ImplodeFields() As String
+    Dim ReturnString As String
+    ReturnString = " (" & Join(vFields, ", ") & ") "
+    ImplodeFields = ReturnString
 End Function
 
 ' Create an SQL statement from the object data
 Public Function iSQLQuery_ToString() As String
     Dim MyQuery As iSQLQuery
     Set MyQuery = MySelect
-    Dim returnstring As String
-    returnstring = "INSERT INTO " & sTable & ImplodeFields
+    Dim ReturnString As String
+    ReturnString = "INSERT INTO " & sTable & ImplodeFields
     If MySelect Is Nothing Then
         'Should check that the length of vValues = length of vFields.
         
-        returnstring = returnstring & "VALUES" & ImplodeValues
+        ReturnString = ReturnString & "VALUES" & ImplodeValues
     Else
         'Should check that number of items returned matches vFields
-        returnstring = returnstring & "(" & MyQuery.ToString & ") "
+        ReturnString = ReturnString & "(" & MyQuery.ToString & ") "
     End If
     If sReturning <> "" Then
-        returnstring = returnstring & "RETURNING " & sReturning
+        ReturnString = ReturnString & "RETURNING " & sReturning
     End If
-    iSQLQuery_ToString = returnstring
+    iSQLQuery_ToString = ReturnString
 End Function
