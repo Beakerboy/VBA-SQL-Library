@@ -189,14 +189,13 @@ We can add table aliases and joins as well
 ```sql
 SELECT u.id, c.hex FROM users u INNER JOIN colors c ON u.favorite=c.name
 ```
-``vb
+```vb
 Set MySelect = New SQLSelect
 With MySelect
     .Fields = Array("u.id", "c.hex")
     .addTable "users", "u"
     .innerJoin "colors", "c", "u.favorite=c.name"
 End With
-
 ```
 
 ### Update
