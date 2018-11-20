@@ -132,7 +132,7 @@ MyInsert.table = "users"
 MyInsert.Fields = Array("username", "first_name", "password")
 
 'Set the Values
-Dim Values2D(1, 2) As Variant
+Dim Values2D(1) As Variant
 Values2D(0) = Array("'admin'", "'Alice'", "'secret'")
 Values2D(1) = Array("'editor'","'Bob'", "'super-secret'")
 MyInsert.Values = Values2D
