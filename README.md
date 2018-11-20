@@ -133,12 +133,8 @@ MyInsert.Fields = Array("username", "first_name", "password")
 
 'Set the Values
 Dim Values2D(1, 2) As Variant
-Values2D(0, 0) = "'admin'"
-Values2D(0, 1) = "'Alice'"
-Values2D(0, 2) = "'secret'"
-Values2D(1, 0) = "'editor'"
-Values2D(1, 1) = "'Bob'"
-Values2D(1, 2) = "'super-secret'"
+Values2D(0) = Array("'admin'", "'Alice'", "'secret'")
+Values2D(1) = Array("'editor'","'Bob'", "'super-secret'")
 MyInsert.Values = Values2D
 
 'Execute the query

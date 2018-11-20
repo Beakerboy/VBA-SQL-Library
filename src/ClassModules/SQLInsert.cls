@@ -49,8 +49,8 @@ End Property
 
 'Join the array of values into a string
 Private Function ImplodeValues() As String
-    If getDimension(vValues) = 2 Then
-        ImplodeValues = " (" & Join2D(vValues, ", ", "), (") & ")"
+    If IsArray(vValues(0)) Then
+        ImplodeValues = " (" & JoinArrayofArrays(vValues, ", ", "), (") & ")"
     Else
         ImplodeValues = " (" & Join(vValues, ", ") & ") "
     End If
@@ -74,7 +74,7 @@ Public Function iSQLQuery_ToString() As String
         ReturnString = ReturnString & "VALUES" & ImplodeValues
     Else
         'Should check that number of items returned matches vFields
-        ReturnString = ReturnString & "(" & MyQuery.ToString & ") "
+        ReturnString = ReturnString & "(" & MyQuery.toString & ") "
     End If
     If sReturning <> "" Then
         ReturnString = ReturnString & "RETURNING " & sReturning

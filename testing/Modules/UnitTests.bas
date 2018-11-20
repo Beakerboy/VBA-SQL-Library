@@ -91,11 +91,10 @@ Public Function RunUnitTests()
     Set MyInsert = New SQLInsert
     MyInsert.Table = "users"
     MyInsert.Fields = Array("name", "type")
-    Dim Values2D(1, 1) As Variant
-    Values2D(0, 0) = "'foo'"
-    Values2D(0, 1) = "'admin'"
-    Values2D(1, 0) = "'bar'"
-    Values2D(1, 1) = "'editor'"
+    Dim Values2D(1) As Variant
+    
+    Values2D(0) = Array("'foo'", "'admin'")
+    Values2D(1) = Array("'bar'", "'editor'")
     MyInsert.Values = Values2D
     Set Interfaced = MyInsert
     CheckValue Interfaced, "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
