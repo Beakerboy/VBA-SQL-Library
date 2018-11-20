@@ -11,12 +11,11 @@ Attribute VB_Exposed = False
 Implements iSQLQuery
 
 Private vFields As Variant
-Private sTable As String
 Private bDistinct As Boolean
 Private vGroupBy As Variant
 Private oHaving As SQLWhere
 Private oHavingGroup As SQLWhereGroup
-Private aJoin() As String
+Private aJoin() As Variant
 Private aOrder() As String
 Private oWhere As SQLWhere              'Can have either a SQLWhere or a SQLWhereGroup
 Private oWhereGroup As SQLWhereGroup
@@ -33,8 +32,13 @@ Property Let GroupBy(vValue)
 End Property
 
 Private Sub Class_Initialize()
+    ReDim aJoin(0)
     bDistinct = False
     vGroupBy = Array()
+End Sub
+
+Public Sub addTable(sName As String, Optional sAlias As String = "")
+    aJoin(0) = Array("", sName, sAlias, "")
 End Sub
 
 'Add a single WHERE clause to the SQL statement
@@ -62,18 +66,15 @@ Public Sub AddHaving(Field, op As String, Value, Optional GroupType As String = 
 
 End Sub
 
-Public Sub AddJoin(sType, sTable, Optional sAlias = Null, Optional sCondition = Null)
-    Dim MyJoin As New SQLJoin
-    With MyJoin
-        .Type = sType
-        .Table = sTable
-        .Alias = sAlias
-        .Condition = sCondition
-    End With
-    'Add MyJoin to the Join Array
+Public Sub AddJoin(sType As String, sTable As String, Optional sAlias As String = "", Optional sCondition As String = "")
+    'Should Check that sType is either "INNER", "LEFT OUTER", or "RIGHT OUTER"
+    Dim JoinLen As Integer
+    JoinLen = UBound(aJoin)
+    ReDim Preserve aJoin(0 To JoinLen + 1)
+    aJoin(JoinLen + 1) = Array(sType, sTable, sAlias, sCondition)
 End Sub
 
-Public Sub InnerJoin(sTable, sAlias, sCondition)
+Public Sub InnerJoin(sTable As String, sAlias As String, Optional sCondition As String = "")
     AddJoin "INNER", sTable, sAlias, sCondition
 End Sub
 
@@ -137,7 +138,7 @@ Public Sub AddWhereGroup(NewWhereGroup As SQLWhereGroup, Optional GroupType As S
 End Sub
 
 Property Let Table(sValue As String)
-  sTable = sValue
+    addTable sValue, ""
 End Property
 
 Public Function iSQLQuery_ToString() As String
@@ -147,7 +148,7 @@ Public Function iSQLQuery_ToString() As String
         return_string = ""
     Else
         return_string = "SELECT " & DistinctString & FieldList & " FROM " & _
-            sTable & WhereString & GroupByString & HavingString
+            JoinString & WhereString & GroupByString & HavingString
     End If
     iSQLQuery_ToString = return_string
 End Function
@@ -159,6 +160,29 @@ Private Function DistinctString() As String
         sDistinct = "DISTINCT "
     End If
     DistinctString = sDistinct
+End Function
+
+Private Function JoinString()
+    Dim R As Long
+    Dim Lines() As String
+    Dim Line As String
+    ReDim Lines(0 To UBound(aJoin))
+    For R = 0 To UBound(aJoin)
+        Linearray = aJoin(R)
+        Line = ""
+        If Linearray(0) <> "" Then
+            Line = Linearray(0) & " JOIN "
+        End If
+        Line = Line & Linearray(1)
+        If Linearray(2) <> "" Then
+            Line = Line & " " & Linearray(2)
+        End If
+        If Linearray(3) <> "" Then
+            Line = Line & " ON " & Linearray(3)
+        End If
+        Lines(R) = Line
+    Next R
+    JoinString = Join(Lines, " ")
 End Function
 
 Private Function WhereString() As String
@@ -198,7 +222,7 @@ End Function
 '  SELECT sField FROM sTableValue WHERE sProperty = vValue
 Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
     Set oWhere = New SQLWhere
-    sTable = sTableValue
+    addTable sTableValue, ""
     vFields = Array(sField)
     oWhere.Create sProperty, "=", vValue
 End Sub

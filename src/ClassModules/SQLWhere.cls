@@ -20,6 +20,12 @@ Public Function Create(Expression1, Operator As String, Expression2)
     sOperator = Operator
 End Function
 
-Public Function ToString() As String
-    ToString = sExpression1 & " " & sOperator & " " & sExpression2
+Public Function toString() As String
+    Dim OperatorString As String
+    If sOperator = "IS" Then
+        OperatorString = " " & sOperator & " "
+    Else
+        OperatorString = sOperator
+    End If
+    toString = sExpression1 & OperatorString & sExpression2
 End Function

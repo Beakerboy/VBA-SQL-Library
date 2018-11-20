@@ -32,7 +32,7 @@ Property Let Values(vValue)
     vValues = vValue
 End Property
 
-Public Function FieldsAndValues() As String
+Private Function FieldsAndValues() As String
     Dim numfields As Integer
     numfields = UBound(vFields)
     
@@ -48,7 +48,7 @@ Public Function FieldsAndValues() As String
 End Function
 
 Public Function iSQLQuery_ToString() As String
-    iSQLQuery_ToString = "UPDATE " & sTable & " SET " & FieldsAndValues & " WHERE " & WhereString
+    iSQLQuery_ToString = "UPDATE " & sTable & " SET " & FieldsAndValues & WhereString
 End Function
 
 Public Sub AddWhere(Field, op As String, Value, Optional GroupType As String = "AND")
@@ -67,9 +67,13 @@ Public Sub AddWhere(Field, op As String, Value, Optional GroupType As String = "
 End Sub
 
 Private Function WhereString() As String
-    If oWhere.Operator <> "" Then
-        WhereString = oWhere.ToString
-    Else
-        WhereString = oWhereGroup.ToString
+    Dim sWhere As String
+    If Not (oWhere Is Nothing And oWhereGroup Is Nothing) Then
+        If Not (oWhere Is Nothing) Then
+            sWhere = oWhere.toString
+        Else
+            sWhere = oWhereGroup.toString
+        End If
+        WhereString = " WHERE " & sWhere
     End If
 End Function
