@@ -149,11 +149,13 @@ SELECT id FROM users WHERE username='admin';
 
 ```vb
 Set MySelect = New SQLSelect
-MySelect.Fields = Array("id")
-MySelect.Table = "users"
+With MySelect
+    .Fields = Array("id")
+    .Table = "users"
 
-'Need to escape the string
-MySelect.AddWhere "username", "=", str("admin") 
+    'Need to escape the string
+    .AddWhere "username", "=", str("admin")
+End With
 
 ID = MyDatabase.Execute(MySelect, "id")
 ```
@@ -183,7 +185,7 @@ MySelect.Distinct
 #### Example 2
 We can add table aliases and joins as well
 ```sql
-SELECT u.id, c.hex FROM users u INNER JOIN colors c ON u.favorite=c.name
+SELECT u.id, c.hex FROM users u INNER JOIN colors c ON u.favorite=c.name ORDER BY u.id DESC
 ```
 ```vb
 Set MySelect = New SQLSelect
@@ -191,6 +193,7 @@ With MySelect
     .Fields = Array("u.id", "c.hex")
     .addTable "users", "u"
     .innerJoin "colors", "c", "u.favorite=c.name"
+    .OrderBy "u.id", "DESC"
 End With
 ```
 
