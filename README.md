@@ -22,7 +22,7 @@ Import the files into a spreadsheet using Microsoft Visual Basic for Application
  
  Security
 -----
-This Library currently does not use prepared statements but it does escape all single quotes. It also provides a login box to discourage hard-coding database authentication details.
+This Library currently does not use prepared statements but it does provide a function to escape all single quotes. It also provides a login box to discourage hard-coding database authentication details. This library should be used within a larger system that provides data integrety checks which ensure SQL injection can not occur. For example, a developer creates an object in VBA with a hard-coded table name to prevent a malicious user from injecting into the MySelect.Table Property. Similarly, they would develop methods to ensure that the MyInsert.Values array has numeric data where it is expected, and escaped string data where it is expected. 
 
  Usage
 -----
