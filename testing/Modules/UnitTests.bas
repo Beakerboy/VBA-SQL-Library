@@ -52,6 +52,10 @@ Public Function RunUnitTests()
     End With
     Set Interfaced = MySelect
     CheckValue Interfaced, "SELECT u.uname, c.capital FROM users u INNER JOIN countries c ON u.country=c.country"
+    
+    MySelect.AddField "t.zone"
+    MySelect.InnerJoin "timezones", "t", "c.capital=t.city"
+    CheckValue Interfaced, "SELECT u.uname, c.capital, t.zone FROM users u INNER JOIN countries c ON u.country=c.country INNER JOIN timezones t ON c.capital=t.city"
     '*******************Check SubSelect********************
     Dim MySubselect As New SQLSubselect
     Set MySubselect.SelectSQL = MyOtherSelect
@@ -64,9 +68,10 @@ Public Function RunUnitTests()
         .addTable "customers", "c"
         .Fields = Array("c.country")
         .Distinct
+        .OrderBy ("c.country")
     End With
     Set Interfaced = MySelect
-    CheckValue Interfaced, "SELECT DISTINCT c.country FROM customers c"
+    CheckValue Interfaced, "SELECT DISTINCT c.country FROM customers c ORDER BY c.country ASC"
     
     '*********************Check Insert***********************
     Dim MyInsert As New SQLInsert

@@ -75,20 +75,20 @@ Public Sub AddWhere(oWhere, op As String)
     End If
 End Sub
 
-Public Function ToString()
+Public Function toString()
     Dim sWhere1 As String
     If Where1.Operator <> "" Then
-        sWhere1 = Where1.ToString
+        sWhere1 = Where1.toString
     Else
-        sWhere1 = "(" & WhereGroup1.ToString & ")"
+        sWhere1 = "(" & WhereGroup1.toString & ")"
     End If
     
     Dim sWhere2 As String
     If Where2.Operator <> "" Then
-        sWhere2 = Where2.ToString
+        sWhere2 = Where2.toString
     Else
-        sWhere2 = "(" & WhereGroup2.ToString & ")"
+        sWhere2 = "(" & WhereGroup2.toString & ")"
     End If
     
-    ToString = sWhere1 & " " & BoolOperator & " " & sWhere2
+    toString = sWhere1 & " " & BoolOperator & " " & sWhere2
 End Function
