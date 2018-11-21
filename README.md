@@ -172,17 +172,17 @@ With MySelect
     .Table = "users"
 
     'Need to escape the string
-    .AddWhere "username", "=", str("admin")
+    .AddWhere "username", str("admin")
 End With
 
 ID = MyDatabase.Execute(MySelect, "id")
 ```
 WHERE clauses can be added and grouped together. The following changes the query to:
 ```sql
-SELECT id FROM users WHERE username='admin' AND id < 10;
+SELECT id FROM users WHERE username='admin' AND id<10;
 ```
 ```vb
-MySelect.AddWhere "id", "<", 10, "AND"
+MySelect.AddWhere "id", 10, "<", "AND"
 ```
 A SQLWhereGroup can abe be added using SQLSELECT.AddWhereGroup. This is necessary for a where clause like:
 ```sql
@@ -190,11 +190,11 @@ SELECT id FROM users WHERE (a=1 AND b=2) OR (c = 3 AND d = 4)
 ```
 The SQLSelect Object can create Queries with "GROUP BY ... HAVING ..." sections.
 ```sql
-... GROUP BY user_type HAVING age > 1;
+... GROUP BY user_type HAVING age>1;
 ```
 ```vb
 MySelect.GroupBy = Array("user_type")
-MySelect.AddHaving = "age", ">", "1"
+MySelect.AddHaving = "age", "1", ">"
 ```
 A query can be run as DISTINCT by flagging the Distinct property
 ```vb
@@ -229,7 +229,7 @@ With MyUpdate
     .Table = "users"
 
     'Need to escape the string
-    .AddWhere "username", "=", str("admin") 
+    .AddWhere "username", str("admin") 
 End With
 
 MyDatabase.Execute MyUpdate
