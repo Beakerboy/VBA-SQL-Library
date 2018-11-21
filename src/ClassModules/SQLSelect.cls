@@ -10,13 +10,13 @@ Attribute VB_Exposed = False
 'Option Explicit
 Implements iSQLQuery
 
-Private vFields As Variant
+Private vFields() As Variant
 Private bDistinct As Boolean
 Private vGroupBy As Variant
 Private oHaving As SQLWhere
 Private oHavingGroup As SQLWhereGroup
-Private aJoin() As Variant
-Private aOrder() As String
+Private aJoin() As Variant              'An array of arrays. Each array is a 'from_item'
+Private aOrder() As Variant
 Private oWhere As SQLWhere              'Can have either a SQLWhere or a SQLWhereGroup
 Private oWhereGroup As SQLWhereGroup
 Private sUnion() As Variant
@@ -24,7 +24,9 @@ Private sUnion() As Variant
 'Offset
 
 Property Let Fields(vValue)
-    vFields = vValue
+    For Each element In vValue
+        AddField element
+    Next
 End Property
 
 Property Let GroupBy(vValue)
@@ -36,6 +38,18 @@ Private Sub Class_Initialize()
     bDistinct = False
     vGroupBy = Array()
 End Sub
+
+Public Function AddField(sField, Optional sAlias As String = "")
+    Dim ArrLen As Integer
+    If Not IsArrayAllocated(vFields) Then
+        ReDim vFields(0)
+        ArrLen = -1
+    Else
+        ArrLen = UBound(vFields)
+        ReDim Preserve vFields(0 To ArrLen + 1)
+    End If
+    vFields(ArrLen + 1) = Array(sField, sAlias)
+End Function
 
 Public Sub addTable(sName As String, Optional sAlias As String = "")
     aJoin(0) = Array("", sName, sAlias, "")
@@ -74,24 +88,23 @@ Public Sub AddJoin(sType As String, sTable As String, Optional sAlias As String 
     aJoin(JoinLen + 1) = Array(sType, sTable, sAlias, sCondition)
 End Sub
 
-Public Sub InnerJoin(sTable As String, sAlias As String, Optional sCondition As String = "")
+Public Sub InnerJoin(sTable As String, sAlias As String, sCondition As String)
     AddJoin "INNER", sTable, sAlias, sCondition
 End Sub
 
-Public Sub LeftJoin(sTable, sAlias, sCondition)
+Public Sub LeftJoin(sTable, sAlias, Optional sCondition As String = "")
     AddJoin "LEFT OUTER", sTable, sAlias, sCondition
 End Sub
 
 'Left Joins are prefered over Right. Please edit query to use a left join
-Public Sub RightJoin(sTable, sAlias, sCondition)
+Public Sub RightJoin(sTable, sAlias, Optional sCondition As String = "")
     AddJoin "RIGHT OUTER", sTable, sAlias, sCondition
 End Sub
 
 'sType is either "", "ALL", or "DISTINCT"
 Public Sub Union(oSelect As SQLSelect, Optional sType = "")
-    Dim UnionArray(1) As Variant
-    UnionArray(0) = sType
-    UnionArray(1) = oSelect
+    Dim UnionArray() As Variant
+    UnionArray = Array(SQLSelect, sType)
     'Add UnionArray to aUnion
 End Sub
 
@@ -137,6 +150,23 @@ Public Sub AddWhereGroup(NewWhereGroup As SQLWhereGroup, Optional GroupType As S
     End If
 End Sub
 
+Public Sub OrderBy(sField As String, Optional sDirection As String = "ASC")
+    If sDirection = "DESC" Then
+        sDirection = "DESC"
+    Else
+        sDirection = "ASC"
+    End If
+    Dim ArrLen As Integer
+    If Not IsArrayAllocated(aOrder) Then
+        ReDim aOrder(0)
+        ArrLen = -1
+    Else
+        ArrLen = UBound(aOrder)
+    End If
+    ReDim Preserve aOrder(0 To ArrLen + 1)
+    aOrder(ArrLen + 1) = Array(sField, sDirection)
+End Sub
+
 Property Let Table(sValue As String)
     addTable sValue, ""
 End Property
@@ -148,7 +178,7 @@ Public Function iSQLQuery_ToString() As String
         return_string = ""
     Else
         return_string = "SELECT " & DistinctString & FieldList & " FROM " & _
-            JoinString & WhereString & GroupByString & HavingString
+            JoinString & WhereString & GroupByString & HavingString & OrderByString
     End If
     iSQLQuery_ToString = return_string
 End Function
@@ -214,8 +244,34 @@ Private Function HavingString() As String
     End If
 End Function
 
+Private Function OrderByString() As String
+    OrderByString = ""
+    If IsArrayAllocated(aOrder) Then
+        OrderByString = " ORDER BY " & JoinArrayofArrays(aOrder)
+    End If
+End Function
+
 Private Function FieldList()
-    FieldList = Join(vFields, ", ")
+    Dim R As Long
+    Dim Lines() As String
+    Dim Line As String
+    ReDim Lines(0 To UBound(vFields))
+    For R = 0 To UBound(vFields)
+        Linearray = vFields(R)
+        Line = Linearray(0)
+        If Linearray(1) <> "" Then
+            Line = Line & " AS " & Linearray(1)
+        End If
+        Lines(R) = Line
+    Next R
+    FieldList = Join(Lines, ", ")
+End Function
+
+Public Function UnionString()
+    Dim NewSelect As iSQLQuery
+    aUnion = UnionArray(0)
+    Set NewSelect = aUnion(0)
+    UnionString = " UNION " & NewSelect.toString()
 End Function
 
 'Generate a query of the form
@@ -223,6 +279,6 @@ End Function
 Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
     Set oWhere = New SQLWhere
     addTable sTableValue, ""
-    vFields = Array(sField)
+    AddField sField
     oWhere.Create sProperty, "=", vValue
 End Sub

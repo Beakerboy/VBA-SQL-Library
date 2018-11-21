@@ -31,13 +31,13 @@ Property Get SelectAs() As String
     SelectAs = aAs
 End Property
 
-Public Function ToString() As String
+Public Function toString() As String
     Dim MySQLQuery As iSQLQuery
     Set MySQLQuery = MySelect
     Dim return_string As String
-    return_string = "(" & MySQLQuery.ToString & ")"
+    return_string = "(" & MySQLQuery.toString & ")"
     If sAs <> "" Then
         return_string = return_string & " AS " & sAs
     End If
-    ToString = return_string
+    toString = return_string
 End Function
