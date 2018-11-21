@@ -108,7 +108,7 @@ Set SQL = New SQLSelect
 'We don't escape the "user_id" because it is a field name, not a string
 Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
-Sql.addWhere "username", "=", str("admin")
+Sql.addWhere "username", str("admin")
 MyInsertSQL.setSelect = Sql
 
 'Execute the query, returning the newly created primary Key
