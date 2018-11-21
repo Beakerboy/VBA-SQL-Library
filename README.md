@@ -142,6 +142,24 @@ MyDatabase.Execute MyInsert
 ```
 
 ### Select
+The Select Object has many options. Items in bold are required
+ * .Table = __table__
+ * .addTable __table__, _alias_
+ * .Fields = Array(__field1__, _field2_, ...)
+ * .AddField __field__, _alias_
+ * .AddExpression __expression__, _alias_, _arguments_     
+ * .Distinct
+ * .InnerJoin __table__, _alias_, _condition_
+ * .LeftJoin __table__, _alias_, _condition_
+ * .RightJoin __table__, _alias_, _condition_
+ * .AddJoin __joinType__, __table__, _alias_, _condition_
+ * .OrderBy __field__, _direction_
+ * .AddWhere __field__, __value__, _operation_, _groupType_
+ * .GroupBy __field_
+ * .AddHaving __field__, __value__, _operation_, _groupType_
+ * .Union __query__, _type_
+
+#### Example 1
 We can execute a select statement and receive the results as a single value, or an array of values:
 ```sql
 SELECT id FROM users WHERE username='admin';
