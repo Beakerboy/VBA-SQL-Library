@@ -18,19 +18,24 @@ Features
  Setup
 -----
 
-Import the files into a spreadsheet using Microsoft Visual Basic for Applications.
+Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual Basic For Applications, select Tools>References and ensure SQLlib is selected.
  
  Security
 -----
 This Library currently does not use prepared statements but it does provide a function to escape all single quotes. It also provides a login box to discourage hard-coding database authentication details. This library should be used within a larger system that provides data integrety checks which ensure SQL injection can not occur. For example, a developer creates an object in VBA with a hard-coded table name to prevent a malicious user from injecting into the MySelect.Table Property. Similarly, they would develop methods to ensure that the MyInsert.Values array has numeric data where it is expected, and escaped string data where it is expected. 
 
+ Testing
+ -----
+The unit tests demonstrate many ways to use each of the classes. To run the tests, Inmport all the modules from the testing directory into a spreadsheet, and run the SQL_RunUnitTests function. Ensure the Setup steps have all been successfully completed.
+ 
  Usage
 -----
 
 ### Database
 Create a new database connection:
 ```vb
-Set MyDatabase = New SQLDatabase
+Dim MyDatabase As SQLDatabase
+Set MyDatabase = Create_SQLDatabase
 MyDatabase.DBType = "mssql"
 MyDatabase.DSN = "foodb"
 ```
@@ -39,16 +44,6 @@ Several different types of database execution can occur:
  * InsertGetNewID(SQLInsert) - Insert a record, and return the new primary key
  * Execute(SQLSelect, column) - Execute a statement and return a single value
  * Execute(SQLSelect) Execute a statement and return an array of values
- 
-The Codebase provides a SQLTestRecordset object to test queries without altering any data. If you pass this object to the SQLDatabase, all queries will be printed to a msgBox. Select Queries will be executed, and the results will also be printed to a msgbox.
-```vb
-Dim MyDatabase As New SQLDatabase
-Dim MyTestRecordset As New SQLTestRecordset
-MyDatabase.DBType = "mssql"
-MyDatabase.DSN = "foodb"
-Set MyDatabase.Recordset = MyTestRecordset
-```
-A Custom Testing Recordset can be created as long as it implements the same Public Properties, Subs, and Functions as the SQLRecordset object
 
 ### Login Form
 This form can be displayed to ask for the database credentials. This avoids having to hard-code username and passwords in the scrips.
@@ -74,7 +69,7 @@ INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'se
 Use the Following in VBA-SQL-Library
 ```vb
 'Initialize the object and assign a table name
-Set MyInsert = new SQLInsert
+Set MyInsert = Create_SQLInsert
 MyInsert.table = "users"
 
 'Set The Fields
@@ -96,14 +91,14 @@ INSERT INTO bank_account (account_number, open_date, user_id)
 Use the Following in VBA-SQL-Library
 ```vb
 'Initialize the object and assign a table name
-Set MyInsert = new SQLInsert
+Set MyInsert = Create_SQLInsert
 MyInsert.table = "bank_account"
 
 'Set The Fields
 MyInsert.Fields = Array("account_number", "open_date", "user_id")
 
 'Create the SELECT Statement
-Set SQL = New SQLSelect
+Set SQL = Ceate_SQLSelect
 
 'We don't escape the "user_id" because it is a field name, not a string
 Sql.Fields = Array(10, 5770000051, "user_id")
@@ -125,7 +120,7 @@ INSERT INTO users (username, first_name, password) VALUES ('admin', 'Alice', 'se
 Use the Following in VBA-SQL-Library
 ```vb
 'Initialize the object and assign a table name
-Set MyInsert = new SQLInsert
+Set MyInsert = Create_SQLInsert
 MyInsert.table = "users"
 
 'Set The Fields
@@ -166,7 +161,7 @@ SELECT id FROM users WHERE username='admin';
 ```
 
 ```vb
-Set MySelect = New SQLSelect
+Set MySelect = Create_SQLSelect
 With MySelect
     .Fields = Array("id")
     .Table = "users"
@@ -206,7 +201,7 @@ We can add table aliases and joins as well
 SELECT u.id, c.hex FROM users u INNER JOIN colors c ON u.favorite=c.name ORDER BY u.id DESC
 ```
 ```vb
-Set MySelect = New SQLSelect
+Set MySelect = Create_SQLSelect
 With MySelect
     .Fields = Array("u.id", "c.hex")
     .addTable "users", "u"
@@ -222,7 +217,7 @@ To produce this SQL Statement:
 UPDATE users SET username='old_admin' WHERE username='admin'
 ```
 ```vb
-Set MyUpdate = New SQLUpdate
+Set MyUpdate = Create_SQLUpdate
 With MyUpdate
     .Fields = Array("username")
     .Values = Array("old_admin")

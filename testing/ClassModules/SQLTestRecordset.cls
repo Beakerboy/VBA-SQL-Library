@@ -7,46 +7,23 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
-Private orst As ADODB.Recordset
-Private sQueryType As String
+Implements iSQLRecordset
 
-Private Sub Class_Initialize()
-    Set orst = New ADODB.Recordset
-End Sub
+Private sQuery As String
 
-Public Property Get State()
-    State = orst.State
-End Property
+Public Function iSQLRecordset_State()
 
-Public Sub OpenRecordset(MyQuery As String, Connection)
-    GetQueryType MyQuery
-    MsgBox MyQuery
-    If sQueryType = "Select" Then
-        orst.Open MyQuery, Connection
-    End If
-End Sub
-
-Public Sub CloseRecordset()
-    orst.Close
-End Sub
-Public Function GetValue(MyFieldname)
-    Dim iResult As Variant
-    If sQueryType = "Select" Then
-        iResult = orst(MyFieldname)
-    Else
-        iResult = Int(101 * Rnd + 1)       'Random Number from 1 to 100
-    End If
-    MsgBox MyFieldname & "=" & iResult
-    GetValue = iResult
 End Function
 
-Private Sub GetQueryType(MyQuery)
-    Dim FirstChars As String
-    FirstChars = Left(MyQuery, 3)
-    If FirstChars = "SEL" Then
-        sQueryType = "Select"
-    ElseIf FirstChars = "INS" Or FirstChar = "SET" Then
-        sQueryType = "Insert"
-    End If
+Public Sub iSQLRecordset_OpenRecordset(MyQuery As String, Connection)
+    sQuery = MyQuery
 End Sub
+
+Public Sub iSQLRecordset_CloseRecordset()
+
+End Sub
+
+Public Function iSQLRecordset_GetValue(MyFieldname)
+    iSQLRecordset_GetValue = sQuery
+End Function
 
