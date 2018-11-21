@@ -18,7 +18,7 @@ Features
  Setup
 -----
 
-Download the Addin and enable it in MSExcel. Open Microsoft Visual Basic For Applications, select Tools>References and ensure SQLlib is selected.
+Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual Basic For Applications, select Tools>References and ensure SQLlib is selected.
  
  Security
 -----
