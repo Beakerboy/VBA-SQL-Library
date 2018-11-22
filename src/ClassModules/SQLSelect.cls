@@ -6,24 +6,25 @@ Attribute VB_Name = "SQLSelect"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
-'Option Explicit
+Attribute VB_Exposed = True
+Option Explicit
 Implements iSQLQuery
 
 Private vFields() As Variant
 Private bDistinct As Boolean
 Private vGroupBy As Variant
-Private oHaving As SQLWhere
+Private oHaving As SQLCondition
 Private oHavingGroup As SQLWhereGroup
 Private aJoin() As Variant              'An array of arrays. Each array is a 'from_item'
 Private aOrder() As Variant
-Private oWhere As SQLWhere              'Can have either a SQLWhere or a SQLWhereGroup
+Private oWhere As SQLCondition              'Can have either a SQLWhere or a SQLWhereGroup
 Private oWhereGroup As SQLWhereGroup
 Private sUnion() As Variant
 'Limit
 'Offset
 
 Property Let Fields(vValue)
+    Dim element As Variant
     For Each element In vValue
         AddField element
     Next
@@ -61,8 +62,8 @@ End Sub
 ' EXAMPLE: addwhere 'id' '=', 2
 '   is equivalent to "WHERE id=2"
 '
-Public Sub AddHaving(Field, op As String, Value, Optional GroupType As String = "AND")
-    Dim NewHaving As New SQLWhere
+Public Sub AddHaving(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
+    Dim NewHaving As New SQLCondition
     If Not (oHaving Is Nothing) Then
         NewHaving.Create Field, op, Value
         Set oHavingGroup = New SQLWhereGroup
@@ -71,7 +72,7 @@ Public Sub AddHaving(Field, op As String, Value, Optional GroupType As String = 
         'Clear SQLWhere since we are using SQLWhereGroup instead
         Set oHaving = Nothing
     ElseIf oHavingGroup Is Nothing Then
-        Set oHaving = New SQLWhere
+        Set oHaving = New SQLCondition
         oHaving.Create Field, op, Value
     Else
         NewHaving.Create Field, op, Value
@@ -118,20 +119,20 @@ End Sub
 ' EXAMPLE: addwhere 'id' '=', 2
 '   is equivalent to "WHERE id=2"
 '
-Public Sub AddWhere(Field, op As String, Value, Optional GroupType As String = "AND")
-    Dim NewWhere As New SQLWhere
+Public Sub AddWhere(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
+    Dim NewWhere As New SQLCondition
     If Not (oWhere Is Nothing) Then
-        NewWhere.Create Field, op, Value
+        NewWhere.Create Field, Value, op
         Set oWhereGroup = New SQLWhereGroup
         oWhereGroup.SetGroup oWhere, NewWhere, GroupType
         
         'Clear SQLWhere since we are using SQLWhereGroup instead
         Set oWhere = Nothing
     ElseIf oWhereGroup Is Nothing Then
-        Set oWhere = New SQLWhere
-        oWhere.Create Field, op, Value
+        Set oWhere = New SQLCondition
+        oWhere.Create Field, Value, op
     Else
-        NewWhere.Create Field, op, Value
+        NewWhere.Create Field, Value, op
         oWhereGroup.AddWhere NewWhere, GroupType
     End If
 End Sub
@@ -196,19 +197,20 @@ Private Function JoinString()
     Dim R As Long
     Dim Lines() As String
     Dim Line As String
+    Dim LineArray As Variant
     ReDim Lines(0 To UBound(aJoin))
     For R = 0 To UBound(aJoin)
-        Linearray = aJoin(R)
+        LineArray = aJoin(R)
         Line = ""
-        If Linearray(0) <> "" Then
-            Line = Linearray(0) & " JOIN "
+        If LineArray(0) <> "" Then
+            Line = LineArray(0) & " JOIN "
         End If
-        Line = Line & Linearray(1)
-        If Linearray(2) <> "" Then
-            Line = Line & " " & Linearray(2)
+        Line = Line & LineArray(1)
+        If LineArray(2) <> "" Then
+            Line = Line & " " & LineArray(2)
         End If
-        If Linearray(3) <> "" Then
-            Line = Line & " ON " & Linearray(3)
+        If LineArray(3) <> "" Then
+            Line = Line & " ON " & LineArray(3)
         End If
         Lines(R) = Line
     Next R
@@ -255,12 +257,13 @@ Private Function FieldList()
     Dim R As Long
     Dim Lines() As String
     Dim Line As String
+    Dim LineArray As Variant
     ReDim Lines(0 To UBound(vFields))
     For R = 0 To UBound(vFields)
-        Linearray = vFields(R)
-        Line = Linearray(0)
-        If Linearray(1) <> "" Then
-            Line = Line & " AS " & Linearray(1)
+        LineArray = vFields(R)
+        Line = LineArray(0)
+        If LineArray(1) <> "" Then
+            Line = Line & " AS " & LineArray(1)
         End If
         Lines(R) = Line
     Next R
@@ -277,8 +280,8 @@ End Function
 'Generate a query of the form
 '  SELECT sField FROM sTableValue WHERE sProperty = vValue
 Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
-    Set oWhere = New SQLWhere
+    Set oWhere = New SQLCondition
     addTable sTableValue, ""
     AddField sField
-    oWhere.Create sProperty, "=", vValue
+    oWhere.Create sProperty, vValue
 End Sub

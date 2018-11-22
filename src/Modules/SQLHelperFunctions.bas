@@ -1,4 +1,4 @@
-Attribute VB_Name = "HelperFunctions"
+Attribute VB_Name = "SQLHelperFunctions"
 Public Function toUnix(dt) As Long
     toUnix = DateDiff("s", "1/1/1970", dt)
 End Function

@@ -6,7 +6,7 @@ Attribute VB_Name = "SQLInsert"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
+Attribute VB_Exposed = True
 'This Class provides means to insert data into an SQL database
 'Either vValues or mySelect must be set. The length of vFields must match the
 '  number of items in mySelect or vValues
@@ -52,13 +52,13 @@ Private Function ImplodeValues() As String
     If IsArray(vValues(0)) Then
         ImplodeValues = " (" & JoinArrayofArrays(vValues, ", ", "), (") & ")"
     Else
-        ImplodeValues = " (" & Join(vValues, ", ") & ") "
+        ImplodeValues = " (" & Join(vValues, ", ") & ")"
     End If
 End Function
 
 Private Function ImplodeFields() As String
     Dim ReturnString As String
-    ReturnString = " (" & Join(vFields, ", ") & ") "
+    ReturnString = " (" & Join(vFields, ", ") & ")"
     ImplodeFields = ReturnString
 End Function
 
@@ -71,13 +71,14 @@ Public Function iSQLQuery_ToString() As String
     If MySelect Is Nothing Then
         'Should check that the length of vValues = length of vFields.
         
-        ReturnString = ReturnString & "VALUES" & ImplodeValues
+        ReturnString = ReturnString & " VALUES" & ImplodeValues
     Else
         'Should check that number of items returned matches vFields
-        ReturnString = ReturnString & "(" & MyQuery.toString & ") "
+        ReturnString = ReturnString & " (" & MyQuery.toString & ")"
     End If
     If sReturning <> "" Then
-        ReturnString = ReturnString & "RETURNING " & sReturning
+        ReturnString = ReturnString & " RETURNING " & sReturning
     End If
     iSQLQuery_ToString = ReturnString
 End Function
+

@@ -6,7 +6,7 @@ Attribute VB_Name = "SQLDatabase"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
-Attribute VB_Exposed = False
+Attribute VB_Exposed = True
 '******************************DATABASE CLASS**********************************
 'Generalizes multiple database types to allow one SQL library to
 'interact with them
@@ -16,13 +16,14 @@ Option Explicit
 Private sDSN As String          'DSN
 Private sUid As String          'User Name
 Private sPwd As String          'Password
-Private cnt                     'Connection
+Private cnt As iSQLConnection   'Connection
 Private rst As iSQLRecordset    'Recordset
 Private sType As String         'Type of Database (psql, mssql, mysql)
 
 '***************************CONSTRUCTOR****************************************
 Private Sub Class_Initialize()
     Set rst = New SQLRecordset
+    Set cnt = New SQLConnection
 End Sub
 '***************************LET PROPERTIES*************************************
 
@@ -41,8 +42,10 @@ End Property
 Public Property Let Password(sValue As String)
     sPwd = sValue
 End Property
-Public Property Let TestMode(bValue As Boolean)
-    bTestMode = bValue
+
+Public Property Set Connection(MyConnection As iSQLConnection)
+    Set cnt = Nothing
+    Set cnt = MyConnection
 End Property
 
 Public Property Set Recordset(MyRecordset As iSQLRecordset)
@@ -64,12 +67,10 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     Dim sSQL As String
     Dim SQLType As String
     
-    sSQL = oSQL.ToString
+    sSQL = oSQL.toString
 
-    Dim cnt As ADODB.Connection
-    Set cnt = New ADODB.Connection
     cnt.ConnectionString = MakeConnectionString()
-    cnt.Open
+    cnt.OpenConnection
     
     rst.OpenRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
@@ -80,7 +81,7 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     
     'Bitwise And the State property with The adStateOpen constant
     If CBool(rst.State And adStateOpen) = True Then rst.CloseRecordset
-    If CBool(cnt.State And adStateOpen) = True Then cnt.Close
+    If CBool(cnt.State And adStateOpen) = True Then cnt.CloseConnection
     Set cnt = Nothing
 End Function
 
@@ -96,11 +97,11 @@ End Function
 Public Function ToArray(rst)
 End Function
           
-Public Function PrepareInsert(ByVal oSQL As SQLInsert, return_column)
+Private Function PrepareInsert(ByVal oSQL As SQLInsert, return_column)
     Dim stSQL As String
     Dim MyQuery As iSQLQuery
     Set MyQuery = oSQL
-    stSQL = MyQuery.ToString
+    stSQL = MyQuery.toString
     Dim MySQLGroup As New SQLQueryGroup
     Select Case sType
         Case Is = "mssql"
