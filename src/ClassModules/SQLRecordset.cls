@@ -7,24 +7,30 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+Implements iSQLRecordset
+
+'A wrapper for the ADODB.Recordset Object.
+'This allows unit testing without an active database implementation
+'The native Recordset uses several function names which are reserved keywords
+
 Private orst As ADODB.Recordset
 
 Private Sub Class_Initialize()
     Set orst = New ADODB.Recordset
 End Sub
 
-Public Property Get State()
-    State = orst.State
-End Property
+Public Function iSQLRecordset_State()
+    iSQLRecordset_State = orst.State
+End Function
 
-Public Sub OpenRecordset(MyQuery As String, Connection)
+Public Sub iSQLRecordset_OpenRecordset(MyQuery As String, Connection)
     orst.Open MyQuery, Connection
 End Sub
 
-Public Sub CloseRecordset()
+Public Sub iSQLRecordset_CloseRecordset()
     orst.Close
 End Sub
 
-Public Function GetValue(MyFieldname As String)
+Public Function iSQLRecordset_GetValue(MyFieldname)
     GetValue = orst(MyFieldname)
 End Function

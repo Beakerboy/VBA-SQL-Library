@@ -2,7 +2,7 @@ VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "SQLUpdate"
+Attribute VB_Name = "SQLDelete"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
@@ -10,62 +10,43 @@ Attribute VB_Exposed = True
 Option Explicit
 Implements iSQLQuery
 
-Private vFields As Variant
-Private vValues As Variant
 Private sTable As String
-Private oWhere As SQLCondition
+Private oWhere As SQLCondition              'Can have either a SQLWhere or a SQLWhereGroup
 Private oWhereGroup As SQLWhereGroup
-
-Private Sub Class_Initialize()
-    Set oWhere = New SQLCondition
-    Set oWhereGroup = New SQLWhereGroup
-End Sub
 
 Property Let Table(sValue As String)
     sTable = sValue
 End Property
 
-Property Let Fields(vValue)
-    vFields = vValue
-End Property
-
-Property Let Values(vValue)
-    vValues = vValue
-End Property
-
-Private Function FieldsAndValues() As String
-    Dim numfields As Integer
-    numfields = UBound(vFields)
-    
-    Dim vFieldsAndValues() As Variant
-    ReDim vFieldsAndValues(numfields)
-    
-    Dim counter As Integer
-    counter = 0
-    For counter = 0 To numfields
-        vFieldsAndValues(counter) = vFields(counter) & "=" & vValues(counter)
-    Next counter
-    FieldsAndValues = Join(vFieldsAndValues, ", ")
-End Function
-
-Public Function iSQLQuery_ToString() As String
-    iSQLQuery_ToString = "UPDATE " & sTable & " SET " & FieldsAndValues & WhereString
-End Function
-
+'Add a single WHERE clause to the SQL statement
+' op is the operation
+' value is the value
+' EXAMPLE: addwhere 'id', 2
+'   is equivalent to "WHERE id=2"
+'
 Public Sub AddWhere(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
-    If oWhere.Operator <> "" Then
-        Dim NewWhere As SQLCondition
-        Set NewWhere = New SQLCondition
+    Dim NewWhere As New SQLCondition
+    If Not (oWhere Is Nothing) Then
         NewWhere.Create Field, Value, op
+        Set oWhereGroup = New SQLWhereGroup
         oWhereGroup.SetGroup oWhere, NewWhere, GroupType
         
         'Clear SQLWhere since we are using SQLWhereGroup instead
+        Set oWhere = Nothing
+    ElseIf oWhereGroup Is Nothing Then
         Set oWhere = New SQLCondition
-    Else
         oWhere.Create Field, Value, op
+    Else
+        NewWhere.Create Field, Value, op
+        oWhereGroup.AddWhere NewWhere, GroupType
     End If
-
 End Sub
+
+Public Function iSQLQuery_ToString() As String
+    Dim return_string As String
+    return_string = "DELETE FROM " & sTable & WhereString
+    iSQLQuery_ToString = return_string
+End Function
 
 Private Function WhereString() As String
     Dim sWhere As String
