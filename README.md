@@ -9,6 +9,7 @@ Features
 --------
  * [Database](#database)
  * [Login Form](#login-form)
+ * [Static Queries] (#static-queries)
  * [Insert](#insert)
  * [Select](#select)
  * [Update](#update)
@@ -56,7 +57,14 @@ MyDatabase.UserName = Login.Username
 MyDatabase.Password = Login.Password
 Unload Login
 ```
-
+### Static Queries
+Developer can create static queries, while ensuring that user inputed data will interact with the database successfully.
+```vb
+Dim MyStaic as SQLStaticQuery
+Set MyStatic = Create_SQLStaticQuery
+MyStatic.Query = "SELECT name FROM users WHERE id=:id"
+MYStatic.addArgument ":id", 4
+```
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements. Multiple inserts can be performed in one statement if the values array is 2 Dimensional.
 
