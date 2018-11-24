@@ -23,7 +23,7 @@ Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual
  
  Security
 -----
-This Library currently does not use prepared statements but it does provide a function to escape all single quotes. It also provides a login box to discourage hard-coding database authentication details. This library should be used within a larger system that provides data integrety checks which ensure SQL injection can not occur. For example, a developer creates an object in VBA with a hard-coded table name to prevent a malicious user from injecting into the MySelect.Table Property. Similarly, they would develop methods to ensure that the MyInsert.Values array has numeric data where it is expected, and escaped string data where it is expected. 
+This Library allows developers to create static or dynamic SQL statement using VBA objects. If the tabe names and field names are all known by the developer, and only field values, and conditional values will be supplied by the user, an SQLStaticQuery might be the best option. All user-supplied information will be sanitized before being added to the query. It also provides a login box to discourage hard-coding database authentication details. The dynamic query generating objects are best for cases where table names and field names are part of larger data objects, and the queries themselves are created by a larger system. This system sould provide data sanitizing systems to ensure malicious data does make it into a query.
 
  Testing
  -----
@@ -65,6 +65,12 @@ Set MyStatic = Create_SQLStaticQuery
 MyStatic.Query = "SELECT name FROM users WHERE id=:id"
 MYStatic.addArgument ":id", 4
 ```
+Will produce the SQL
+```sql
+SELECT name FROM users WHERE id=4;
+```
+The SQL statement can be easily reused wil different user-supplied values for the ID without the need to recreate the object.
+
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements. Multiple inserts can be performed in one statement if the values array is 2 Dimensional.
 
