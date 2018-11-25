@@ -59,6 +59,12 @@ Unload Login
 ```
 ### Static Queries
 Developers can create static queries, while ensuring that user inputed data will interact with the database successfully.
+Items in bold are required
+ * .Query = __query__
+ * .AddArgument __placeholder__, __value__
+ * .ClearArguments
+ 
+#### Example 1
 ```vb
 Dim MyStaic as SQLStaticQuery
 Set MyStatic = Create_SQLStaticQuery
