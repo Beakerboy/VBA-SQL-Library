@@ -9,7 +9,7 @@ Features
 --------
  * [Database](#database)
  * [Login Form](#login-form)
- * [Static Queries] (#static-queries)
+ * [Static Queries](#static-queries)
  * [Insert](#insert)
  * [Select](#select)
  * [Update](#update)
