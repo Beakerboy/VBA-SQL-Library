@@ -7,6 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
+Option Explicit
 Implements iSQLQuery
 
 Private sQuery As String
@@ -21,19 +22,15 @@ Public Property Let Query(sValue)
 End Property
 
 Public Function iSQLQuery_ToString() As String
-    Dim ReturnString As String
-    ReturnString = sQuery
-    Dim sKey As Variant
-    For Each sKey In oSQL.Arguments.Keys
-        sValue = oSQL.Arguments(sKey)
-        ReturnString = Replace(sQuery, sKey, sValue)
-    Next sKey
-    iSQLQuery_ToString = ReturnString
+    iSQLQuery_ToString = oSQL.ReplaceArguments(sQuery)
 End Function
 
 Public Sub AddArgument(sName As String, vValue)
     oSQL.AddArgument sName, vValue
 End Sub
 
+Public Sub ClearArguments()
+    oSQL.ClearArguments
+End Sub
 
 

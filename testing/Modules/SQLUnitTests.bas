@@ -134,17 +134,39 @@ Public Function SQL_RunUnitTests()
     Set Interfaced = MyStatic
     CheckSQLValue Interfaced, "DELETE FROM users"
     
+    'Name missing ":"
     MyStatic.Query = "SELECT name FROM users WHERE id=:id"
-    MyStatic.addArgument ":id", 4
+    MyStatic.AddArgument "id", 4
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=:id"
+    
+    'Proper function
+    MyStatic.AddArgument ":id", 4
     CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=4"
     
-    MyStatic.addArgument ":id", 40
+    'Can Change value
+    MyStatic.AddArgument ":id", 40
     CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=40"
     
-    MyStatic.addArgument ":id", "text"
+    'Text is escaped
+    MyStatic.AddArgument ":id", "text"
     CheckSQLValue Interfaced, "SELECT name FROM users WHERE id='text'"
     
+    'Multiple arguments
+    MyStatic.Query = "SELECT name FROM users WHERE id=:id AND type=:type"
+    MyStatic.ClearArguments
+    MyStatic.AddArgument ":type", "admin"
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=:id AND type='admin'"
+    MyStatic.ClearArguments
+    MyStatic.AddArgument ":id", 4
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=4 AND type=:type"
     
+    MyStatic.AddArgument ":type", "admin"
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=4 AND type='admin'"
+    
+    'Can not place an argument in a value
+    MyStatic.AddArgument ":id", "4:type"
+    MyStatic.AddArgument ":type", ";DELETE FROM users;:id"
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id='4:type' AND type=';DELETE FROM users;:id'"
     '*******************Check SubSelect****************************************
     'Dim MySubselect As New SQLSubselect
     'Set MySubselect.SelectSQL = MyOtherSelect
