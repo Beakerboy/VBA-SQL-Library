@@ -34,7 +34,7 @@ Public Function SQL_RunUnitTests()
         .Fields = Array("id")
         .Values = Array(1)
     End With
-    CheckPrimativeValue MyDatabase.InsertGetNewId(SimpleInsert), "SET NOCOUNT ON;INSERT INTO users (id) VALUES (1) ;SELECT SCOPE_IDENTITY() as somethingunique"
+    CheckPrimativeValue MyDatabase.InsertGetNewId(SimpleInsert), "SET NOCOUNT ON;INSERT INTO users (id) VALUES (1);SELECT SCOPE_IDENTITY() as somethingunique"
     
     '******************************Check Delete********************************
     Dim MyDelete As SQLDelete
@@ -126,6 +126,24 @@ Public Function SQL_RunUnitTests()
     End With
     Set Interfaced = MySelect
     CheckSQLValue Interfaced, "SELECT DISTINCT c.country FROM customers c ORDER BY c.country ASC"
+    
+    '*******************Check Static****************************************
+    Dim MyStatic As SQLStaticQuery
+    Set MyStatic = Create_SQLStaticQuery
+    MyStatic.Query = "DELETE FROM users"
+    Set Interfaced = MyStatic
+    CheckSQLValue Interfaced, "DELETE FROM users"
+    
+    MyStatic.Query = "SELECT name FROM users WHERE id=:id"
+    MyStatic.addArgument ":id", 4
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=4"
+    
+    MyStatic.addArgument ":id", 40
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id=40"
+    
+    MyStatic.addArgument ":id", "text"
+    CheckSQLValue Interfaced, "SELECT name FROM users WHERE id='text'"
+    
     
     '*******************Check SubSelect****************************************
     'Dim MySubselect As New SQLSubselect
