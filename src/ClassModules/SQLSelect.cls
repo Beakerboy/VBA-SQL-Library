@@ -36,19 +36,23 @@ End Property
 
 Private Sub Class_Initialize()
     ReDim aJoin(0)
+    ReDim vFields(0)
+    ReDim aOrder(0)
+    vFields(0) = ""
+    aOrder(0) = ""
     bDistinct = False
     vGroupBy = Array()
 End Sub
 
 Public Function AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
-    If Not IsArrayAllocated(vFields) Then
-        ReDim vFields(0)
-        ArrLen = -1
-    Else
-        ArrLen = UBound(vFields)
-        ReDim Preserve vFields(0 To ArrLen + 1)
+    ArrLen = UBound(vFields)
+    If ArrLen = 0 Then
+        If Not IsArray(vFields(0)) Then
+            ArrLen = -1
+        End If
     End If
+    ReDim Preserve vFields(0 To ArrLen + 1)
     vFields(ArrLen + 1) = Array(sField, sAlias)
 End Function
 
@@ -158,11 +162,11 @@ Public Sub OrderBy(sField As String, Optional sDirection As String = "ASC")
         sDirection = "ASC"
     End If
     Dim ArrLen As Integer
-    If Not IsArrayAllocated(aOrder) Then
-        ReDim aOrder(0)
-        ArrLen = -1
-    Else
-        ArrLen = UBound(aOrder)
+    ArrLen = UBound(aOrder)
+    If ArrLen = 0 Then
+        If aOrder(0) = "" Then
+            ArrLen = -1
+        End If
     End If
     ReDim Preserve aOrder(0 To ArrLen + 1)
     aOrder(ArrLen + 1) = Array(sField, sDirection)
@@ -248,7 +252,7 @@ End Function
 
 Private Function OrderByString() As String
     OrderByString = ""
-    If IsArrayAllocated(aOrder) Then
+    If IsArray(aOrder(0)) Then
         OrderByString = " ORDER BY " & JoinArrayofArrays(aOrder)
     End If
 End Function
