@@ -10,6 +10,7 @@ Attribute VB_Exposed = True
 Option Explicit
 Implements iSQLQuery
 
+Private oSQL As SQLQuery
 Private vFields() As Variant
 Private bDistinct As Boolean
 Private vGroupBy As Variant
@@ -23,6 +24,17 @@ Private sUnion() As Variant
 'Limit
 'Offset
 
+Private Sub Class_Initialize()
+    ReDim aJoin(0)
+    ReDim vFields(0)
+    ReDim aOrder(0)
+    vFields(0) = ""
+    aOrder(0) = ""
+    bDistinct = False
+    vGroupBy = Array()
+    Set oSQL = New SQLQuery
+End Sub
+
 Property Let Fields(vValue)
     Dim element As Variant
     For Each element In vValue
@@ -34,15 +46,7 @@ Property Let GroupBy(vValue)
     vGroupBy = vValue
 End Property
 
-Private Sub Class_Initialize()
-    ReDim aJoin(0)
-    ReDim vFields(0)
-    ReDim aOrder(0)
-    vFields(0) = ""
-    aOrder(0) = ""
-    bDistinct = False
-    vGroupBy = Array()
-End Sub
+
 
 Public Function AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
@@ -83,6 +87,10 @@ Public Sub AddHaving(Field, Value, Optional op As String = "=", Optional GroupTy
         oHavingGroup.AddWhere NewHaving, GroupType
     End If
 
+End Sub
+
+Public Sub AddArgument(sName As String, vValue)
+    oSQL.AddArgument sName, vValue
 End Sub
 
 Public Sub AddJoin(sType As String, sTable As String, Optional sAlias As String = "", Optional sCondition As String = "")
