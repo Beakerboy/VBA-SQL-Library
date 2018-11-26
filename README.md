@@ -64,7 +64,7 @@ Items in bold are required
  * .AddArgument __placeholder__, __value__
  * .ClearArguments
  
-#### Example 1
+#### Example
 ```vb
 Dim MyStaic as SQLStaticQuery
 Set MyStatic = Create_SQLStaticQuery
@@ -79,7 +79,12 @@ The SQL statement can be easily reused with different user-supplied values for t
 
 ### Insert
 The Insert object can create both INSERT VALUES and INSERT SELECT statements. Multiple inserts can be performed in one statement if the values array is 2 Dimensional.
-
+Items in bold are required
+ * .Table = __table__
+ * .Fields = Array(__field1__, _field2_, ...)
+ * .Values = Array(__value1__, _value2_, ...)
+ * .From = __query__
+ 
 #### Example 1 - Insert Values
 To produce this SQL Stament:
 ```sql
@@ -124,7 +129,7 @@ Set SQL = Ceate_SQLSelect
 Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
 Sql.addWhere "username", str("admin")
-MyInsertSQL.setSelect = Sql
+MyInsertSQL.Frome = Sql
 
 'Execute the query, returning the newly created primary Key
 ID = MyDatabase.InsertGetNewID(MyInsert)
@@ -147,10 +152,10 @@ MyInsert.table = "users"
 MyInsert.Fields = Array("username", "first_name", "password")
 
 'Set the Values
-Dim Values2D(1) As Variant
-Values2D(0) = Array("'admin'", "'Alice'", "'secret'")
-Values2D(1) = Array("'editor'","'Bob'", "'super-secret'")
-MyInsert.Values = Values2D
+Dim Values(1) As Variant
+Values(0) = Array("'admin'", "'Alice'", "'secret'")
+Values(1) = Array("'editor'","'Bob'", "'super-secret'")
+MyInsert.Values = Values
 
 'Execute the query
 MyDatabase.Execute MyInsert 
