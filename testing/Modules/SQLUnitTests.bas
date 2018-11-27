@@ -36,6 +36,9 @@ Public Function SQL_RunUnitTests()
     End With
     CheckPrimativeValue MyDatabase.InsertGetNewId(SimpleInsert), "SET NOCOUNT ON;INSERT INTO users (id) VALUES (1);SELECT SCOPE_IDENTITY() as somethingunique"
     
+    MyDatabase.DBType = "psql"
+    CheckPrimativeValue MyDatabase.InsertGetNewId(SimpleInsert, "id"), "INSERT INTO users (id) VALUES (1) RETURNING id"
+    
     '******************************Check Delete********************************
     Dim MyDelete As SQLDelete
     Set MyDelete = Create_SQLDelete()
@@ -44,7 +47,8 @@ Public Function SQL_RunUnitTests()
     Set Interfaced = MyDelete
     CheckSQLValue Interfaced, "DELETE FROM users"
     
-    MyDelete.AddWhere "age", 13, "<"
+    MyDelete.AddWhere "age", ":age", "<"
+    MyDelete.AddArgument ":age", 13
     CheckSQLValue Interfaced, "DELETE FROM users WHERE age<13"
     
     '*********************Check Insert*****************************************
@@ -57,26 +61,30 @@ Public Function SQL_RunUnitTests()
     Set Interfaced = MyInsert
     CheckSQLValue Interfaced, "INSERT INTO users (name, type) VALUES ('foo', 'admin') RETURNING id"
     
-    MyInsert.Fields = Array("name", "type_id")
-    MyInsert.Values = Array()
-    
     Dim MySelect As SQLSelect
     Set MySelect = Create_SQLSelect
-    MySelect.Table = "account_types"
-    MySelect.Fields = Array("'foo'", "id")
-    MySelect.AddWhere "type", "'admin'"
-    Set MyInsert.setSelect = MySelect
+    With MySelect
+        .Table = "account_types"
+        .Fields = Array("'foo'", "id")
+        .AddWhere "type", ":type"
+        .AddArgument ":type", "admin"
+    End With
+    With MyInsert
+        .Fields = Array("name", "type_id")
+        .Values = Array()
+        Set .From = MySelect
+    End With
     CheckSQLValue Interfaced, "INSERT INTO users (name, type_id) (SELECT 'foo', id FROM account_types WHERE type='admin') RETURNING id"
     
     'Insert Multiple Values
     Set MyInsert = Create_SQLInsert
     MyInsert.Table = "users"
     MyInsert.Fields = Array("name", "type")
-    Dim Values2D(1) As Variant
+    Dim Values(1) As Variant
     
-    Values2D(0) = Array("'foo'", "'admin'")
-    Values2D(1) = Array("'bar'", "'editor'")
-    MyInsert.Values = Values2D
+    Values(0) = Array("'foo'", "'admin'")
+    Values(1) = Array("'bar'", "'editor'")
+    MyInsert.Values = Values
     Set Interfaced = MyInsert
     CheckSQLValue Interfaced, "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
     '*******************Check Recordset****************************************
@@ -98,7 +106,8 @@ Public Function SQL_RunUnitTests()
 
     Dim MyOtherSelect As SQLSelect
     Set MyOtherSelect = Create_SQLSelect
-    MyOtherSelect.getByProperty "users", "id", "name", "'admin'"
+    MyOtherSelect.getByProperty "users", "id", "name", ":name"
+    MyOtherSelect.AddArgument ":name", "admin"
     Set Interfaced = MyOtherSelect
     CheckSQLValue Interfaced, "SELECT id FROM users WHERE name='admin'"
     

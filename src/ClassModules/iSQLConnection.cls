@@ -25,4 +25,4 @@ End Function
 
 Public Property Get Connection()
 
-End Function
+End Property

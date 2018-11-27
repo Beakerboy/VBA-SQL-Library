@@ -18,8 +18,6 @@ Private oHaving As SQLCondition
 Private oHavingGroup As SQLWhereGroup
 Private aJoin() As Variant              'An array of arrays. Each array is a 'from_item'
 Private aOrder() As Variant
-Private oWhere As SQLCondition              'Can have either a SQLWhere or a SQLWhereGroup
-Private oWhereGroup As SQLWhereGroup
 Private sUnion() As Variant
 'Limit
 'Offset
@@ -45,8 +43,6 @@ End Property
 Property Let GroupBy(vValue)
     vGroupBy = vValue
 End Property
-
-
 
 Public Function AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
@@ -125,42 +121,12 @@ Public Sub Distinct(Optional bValue = True)
     bDistinct = bValue
 End Sub
 
-'Add a single WHERE clause to the SQL statement
-' op is the operation
-' value is the value
-' EXAMPLE: addwhere 'id' '=', 2
-'   is equivalent to "WHERE id=2"
-'
 Public Sub AddWhere(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
-    Dim NewWhere As New SQLCondition
-    If Not (oWhere Is Nothing) Then
-        NewWhere.Create Field, Value, op
-        Set oWhereGroup = New SQLWhereGroup
-        oWhereGroup.SetGroup oWhere, NewWhere, GroupType
-        
-        'Clear SQLWhere since we are using SQLWhereGroup instead
-        Set oWhere = Nothing
-    ElseIf oWhereGroup Is Nothing Then
-        Set oWhere = New SQLCondition
-        oWhere.Create Field, Value, op
-    Else
-        NewWhere.Create Field, Value, op
-        oWhereGroup.AddWhere NewWhere, GroupType
-    End If
+    oSQL.AddWhere Field, Value, op, GroupType
 End Sub
 
 Public Sub AddWhereGroup(NewWhereGroup As SQLWhereGroup, Optional GroupType As String = "AND")
-    If oWhere Is Nothing Then
-        If oWhereGroup Is Nothing Then
-            Set oWhereGroup = NewWhereGroup
-        Else
-            oWhereGroup.AddWhere NewWhereGroup, GroupType
-        End If
-    Else
-        Set oWhereGroup = New SQLWhereGroup
-        oWhereGroup.SetGroup oWhere, NewWhereGroup, GroupType
-        Set oWhere = Nothing
-    End If
+    oSQL.AddWhereGroup NewWhereGroup, GroupType
 End Sub
 
 Public Sub OrderBy(sField As String, Optional sDirection As String = "ASC")
@@ -191,9 +157,9 @@ Public Function iSQLQuery_ToString() As String
         return_string = ""
     Else
         return_string = "SELECT " & DistinctString & FieldList & " FROM " & _
-            JoinString & WhereString & GroupByString & HavingString & OrderByString
+            JoinString & oSQL.WhereString & GroupByString & HavingString & OrderByString
     End If
-    iSQLQuery_ToString = return_string
+    iSQLQuery_ToString = oSQL.ReplaceArguments(return_string)
 End Function
 
 Private Function DistinctString() As String
@@ -227,18 +193,6 @@ Private Function JoinString()
         Lines(R) = Line
     Next R
     JoinString = Join(Lines, " ")
-End Function
-
-Private Function WhereString() As String
-    Dim sWhere As String
-    If Not (oWhere Is Nothing And oWhereGroup Is Nothing) Then
-        If Not (oWhere Is Nothing) Then
-            sWhere = oWhere.toString
-        Else
-            sWhere = oWhereGroup.toString
-        End If
-        WhereString = " WHERE " & sWhere
-    End If
 End Function
 
 Private Function GroupByString() As String
@@ -292,8 +246,7 @@ End Function
 'Generate a query of the form
 '  SELECT sField FROM sTableValue WHERE sProperty = vValue
 Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
-    Set oWhere = New SQLCondition
     addTable sTableValue, ""
     AddField sField
-    oWhere.Create sProperty, vValue
+    AddWhere sProperty, vValue
 End Sub

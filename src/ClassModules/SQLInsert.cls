@@ -37,7 +37,7 @@ Property Let Values(vValue)
     vValues = vValue
 End Property
 
-Property Set setSelect(vValue As SQLSelect)
+Property Set From(vValue As SQLSelect)
     Set MySelect = vValue
 End Property
 
