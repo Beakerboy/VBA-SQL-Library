@@ -82,7 +82,6 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     'Bitwise And the State property with The adStateOpen constant
     If CBool(rst.State And adStateOpen) = True Then rst.CloseRecordset
     If CBool(cnt.State And adStateOpen) = True Then cnt.CloseConnection
-    Set cnt = Nothing
 End Function
 
 'InsertGetNewID
