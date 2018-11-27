@@ -13,7 +13,11 @@ Implements iSQLConnection
 'This allows unit testing without an active database implementation
 'The native Connection uses several function names which are reserved keywords
 
-Private orst As ADODB.Connection
+Private ocnt As ADODB.Connection
+
+Public Property Get iSQLConnection_Connection()
+  Set iSQLConnection_Connection = ocnt
+End Property
 
 Public Sub iSQLConnection_OpenConnection()
     ocnt.Open

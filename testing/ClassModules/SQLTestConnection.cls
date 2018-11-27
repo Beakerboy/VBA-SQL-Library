@@ -9,6 +9,10 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Implements iSQLConnection
 
+Public Property Get iSQLConnection_Connection()
+  
+End Property
+
 Public Sub iSQLConnection_OpenConnection()
 
 End Sub

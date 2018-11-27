@@ -22,3 +22,7 @@ End Property
 Public Function State()
 
 End Function
+
+Public Property Get Connection()
+
+End Function

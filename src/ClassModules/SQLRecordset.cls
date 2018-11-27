@@ -23,8 +23,8 @@ Public Function iSQLRecordset_State()
     iSQLRecordset_State = orst.State
 End Function
 
-Public Sub iSQLRecordset_OpenRecordset(MyQuery As String, Connection)
-    orst.Open MyQuery, Connection
+Public Sub iSQLRecordset_OpenRecordset(MyQuery As String, MyConnection)
+  orst.Open MyQuery, MyConnection.Connection
 End Sub
 
 Public Sub iSQLRecordset_CloseRecordset()
