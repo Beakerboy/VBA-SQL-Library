@@ -24,7 +24,7 @@ Public Function iSQLRecordset_State()
 End Function
 
 Public Sub iSQLRecordset_OpenRecordset(MyQuery As String, MyConnection)
-  orst.Open MyQuery, MyConnection.Connection
+    orst.Open MyQuery, MyConnection.Connection
 End Sub
 
 Public Sub iSQLRecordset_CloseRecordset()
@@ -32,5 +32,5 @@ Public Sub iSQLRecordset_CloseRecordset()
 End Sub
 
 Public Function iSQLRecordset_GetValue(MyFieldname)
-    GetValue = orst(MyFieldname)
+    iSQLRecordset_GetValue = orst(MyFieldname)
 End Function

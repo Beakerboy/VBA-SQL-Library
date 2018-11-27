@@ -15,8 +15,12 @@ Implements iSQLConnection
 
 Private ocnt As ADODB.Connection
 
+Private Sub Class_Initialize()
+    Set ocnt = New ADODB.Connection
+End Sub
+
 Public Property Get iSQLConnection_Connection()
-  Set iSQLConnection_Connection = ocnt
+    Set iSQLConnection_Connection = ocnt
 End Property
 
 Public Sub iSQLConnection_OpenConnection()

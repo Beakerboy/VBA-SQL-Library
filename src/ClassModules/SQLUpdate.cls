@@ -13,12 +13,10 @@ Implements iSQLQuery
 Private vFields As Variant
 Private vValues As Variant
 Private sTable As String
-Private oWhere As SQLCondition
-Private oWhereGroup As SQLWhereGroup
+Private oSQL As SQLQuery
 
 Private Sub Class_Initialize()
-    Set oWhere = New SQLCondition
-    Set oWhereGroup = New SQLWhereGroup
+    Set oSQL = New SQLQuery
 End Sub
 
 Property Let Table(sValue As String)
@@ -49,32 +47,13 @@ Private Function FieldsAndValues() As String
 End Function
 
 Public Function iSQLQuery_ToString() As String
-    iSQLQuery_ToString = "UPDATE " & sTable & " SET " & FieldsAndValues & WhereString
+    iSQLQuery_ToString = "UPDATE " & sTable & " SET " & FieldsAndValues & oSQL.WhereString
 End Function
 
 Public Sub AddWhere(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
-    If oWhere.Operator <> "" Then
-        Dim NewWhere As SQLCondition
-        Set NewWhere = New SQLCondition
-        NewWhere.Create Field, Value, op
-        oWhereGroup.SetGroup oWhere, NewWhere, GroupType
-        
-        'Clear SQLWhere since we are using SQLWhereGroup instead
-        Set oWhere = New SQLCondition
-    Else
-        oWhere.Create Field, Value, op
-    End If
-
+    oSQL.AddWhere Field, Value, op, GroupType
 End Sub
 
-Private Function WhereString() As String
-    Dim sWhere As String
-    If Not (oWhere Is Nothing And oWhereGroup Is Nothing) Then
-        If Not (oWhere Is Nothing) Then
-            sWhere = oWhere.toString
-        Else
-            sWhere = oWhereGroup.toString
-        End If
-        WhereString = " WHERE " & sWhere
-    End If
-End Function
+Public Sub AddWhereGroup(NewWhereGroup As SQLWhereGroup, Optional GroupType As String = "AND")
+    oSQL.AddWhereGroup NewWhereGroup, GroupType
+End Sub
