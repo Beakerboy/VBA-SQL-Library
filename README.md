@@ -23,7 +23,7 @@ Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual
  
  Security
 -----
-This Library allows developers to create static or dynamic SQL statements using VBA objects. If the table names and field names are all known by the developer, and only field values, and conditional values will be supplied by the user, an SQLStaticQuery might be the best option. All user-supplied information will be sanitized before being added to the query. It also provides a login box to discourage hard-coding database authentication details. The dynamic query generating objects are best for cases where table names and field names are part of larger data objects, and the queries themselves are created by a larger system. This system sould provide data sanitizing systems to ensure malicious data does make it into a query.
+This Library allows developers to create static or dynamic SQL statements using VBA objects. If the table names and field names are all known by the developer, and only field values, and conditional values will be supplied by the user, an SQLStaticQuery might be the best option. All user-supplied information will be sanitized before being added to the query. It also provides a login box to discourage hard-coding database authentication details. The dynamic query generating objects are best for cases where table names and field names are part of larger data objects, and the queries themselves are created by a larger system. This larger system should provide data sanitizing options to ensure malicious data does make it into a query. the [VBA-Drupal-Library](https://github.com/Beakerboy/VBA-Drupal-Library) is an example of such a system.
 
  Testing
  -----
