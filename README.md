@@ -78,6 +78,13 @@ SELECT name FROM users WHERE id=4;
 The SQL statement can be easily reused with different user-supplied values for the ID without the need to recreate the object.
 
 ### Insert
+The SQLInsert Object has many options. Items in bold are required
+ * .Table     = __table__
+ * .Fields    = Array(__field1__, _field2_, ...)
+ * .Values    = Array(__value1__, _value2_, ...)
+ * .From      = __SQLSelect__
+ * .Returning = __field__
+
 The Insert object can create both INSERT VALUES and INSERT SELECT statements. Multiple inserts can be performed in one statement if the values array is 2 Dimensional.
 
 #### Example 1 - Insert Values
@@ -110,13 +117,6 @@ INSERT INTO bank_account (account_number, open_date, user_id)
 ````
 Use the Following in VBA-SQL-Library
 ```vb
-'Initialize the object and assign a table name
-Set MyInsert = Create_SQLInsert
-MyInsert.table = "bank_account"
-
-'Set The Fields
-MyInsert.Fields = Array("account_number", "open_date", "user_id")
-
 'Create the SELECT Statement
 Set SQL = Ceate_SQLSelect
 
@@ -124,7 +124,14 @@ Set SQL = Ceate_SQLSelect
 Sql.Fields = Array(10, 5770000051, "user_id")
 Sql.Table = "users"
 Sql.addWhere "username", str("admin")
-MyInsertSQL.setSelect = Sql
+
+'Initialize the object and assign a table name
+Set MyInsert = Create_SQLInsert
+With MyInsert
+    .table = "bank_account"
+    .Fields = Array("account_number", "open_date", "user_id")
+    Set .From = Sql
+End With
 
 'Execute the query, returning the newly created primary Key
 ID = MyDatabase.InsertGetNewID(MyInsert)
