@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Beakerboy/VBA-SQL-Library.svg?branch=master)](https://travis-ci.org/Beakerboy/VBA-SQL-Library)
+
 VBA SQL Library
 =====================
 
