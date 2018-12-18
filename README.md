@@ -78,7 +78,7 @@ SELECT name FROM users WHERE id=4;
 The SQL statement can be easily reused with different user-supplied values for the ID without the need to recreate the object.
 
 ### Insert
-The SQLInsert Object has many options. Items in bold are required
+The SQLInsert Object has many options. Items in bold are required.
  * .Table     = __table__
  * .Fields    = Array(__field1__, _field2_, ...)
  * .Values    = Array(__value1__, _value2_, ...)
