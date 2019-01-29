@@ -15,6 +15,7 @@ Features
  * [Insert](#insert)
  * [Select](#select)
  * [Update](#update)
+ * [Delete](#delete)
  * [Helper Functions](#helper-functions)
  * [Unit Tests](#unit-tests)
  
@@ -258,6 +259,24 @@ End With
 
 MyDatabase.Execute MyUpdate
 ```
+
+### Delete
+#### Example 1 
+To produce this SQL Statement:
+```sql
+DELETE FROM users WHERE username='admin'
+```
+```vb
+Set MyDelete = Create_SQLDelete
+With MyUpdate
+    .Table = "users"
+    'Need to escape the string
+    .AddWhere "username", str("admin") 
+End With
+
+MyDatabase.Execute MyDelete
+```
+
 ### HelperFunctions
 The library includes a handful of helper functions. 
 * Date/Time manipulation, toIso() and toUnix().
