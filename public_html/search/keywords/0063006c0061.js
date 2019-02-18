@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("cla",["Function"],[["Class_Initialize",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.Class_Initialize","VisualBasicClass:SQLStatic:Class_Initialize"]]]]);

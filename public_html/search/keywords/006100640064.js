@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("add",["Function"],[["AddArgument",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.AddArgument","VisualBasicClass:SQLStatic:AddArgument"]]]]);

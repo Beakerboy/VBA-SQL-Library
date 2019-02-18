@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("cle",["Function"],[["ClearArguments",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.ClearArguments","VisualBasicClass:SQLStatic:ClearArguments"]]]]);

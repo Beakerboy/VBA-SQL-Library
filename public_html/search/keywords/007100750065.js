@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("que",["Property"],[["Query",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.Query","VisualBasicClass:SQLStatic:Query"]]]]);
