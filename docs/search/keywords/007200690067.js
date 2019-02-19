@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("rig",["Function"],[["RightJoin",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.RightJoin","VisualBasicClass:SQLSelect:RightJoin"]]]]);

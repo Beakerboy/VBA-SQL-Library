@@ -7,7 +7,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
-' Class: SQLStatic
+' Class: SQLStaticQuery
 ' A class to reuse an SQL query with multiple values.
 Option Explicit
 Implements iSQLQuery

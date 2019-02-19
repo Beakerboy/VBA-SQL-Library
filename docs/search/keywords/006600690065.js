@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("fie",["Property"],[["Fields",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.Fields","VisualBasicClass:SQLSelect:Fields"]]]]);

@@ -1,1 +1,1 @@
-NDSearch.OnPrefixIndexLoaded(["add","cla","cle","que","sql","tos"]);
+NDSearch.OnPrefixIndexLoaded(["add","cla","cle","dis","fie","gro","inn","lef","que","rig","sql","tos","uni"]);

@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("cla",["Function"],[["Class_Initialize",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.Class_Initialize","VisualBasicClass:SQLStatic:Class_Initialize"]]]]);
+NDSearch.OnPrefixDataLoaded("cla",["Function"],[["Class_Initialize",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.Class_Initialize","VisualBasicClass:SQLSelect:Class_Initialize"],["SQLStaticQuery",,,,0,"File:SQLStaticQuery.cls:SQLStaticQuery.Class_Initialize","VisualBasicClass:SQLStaticQuery:Class_Initialize"]]]]);

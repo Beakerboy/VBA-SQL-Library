@@ -1,1 +1,1 @@
-NDSearch.OnPrefixDataLoaded("tos",["Function"],[["ToString",,[["SQLStatic",,,,0,"File:SQLStaticQuery.cls:SQLStatic.ToString","VisualBasicClass:SQLStatic:ToString"]]]]);
+NDSearch.OnPrefixDataLoaded("tos",["Function"],[["ToString",,[["SQLStaticQuery",,,,0,"File:SQLStaticQuery.cls:SQLStaticQuery.ToString","VisualBasicClass:SQLStaticQuery:ToString"]]]]);

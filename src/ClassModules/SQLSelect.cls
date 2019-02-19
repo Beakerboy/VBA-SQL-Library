@@ -8,6 +8,9 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
 Option Explicit
+
+' Class: SQLSelect
+' A SQL Select query
 Implements iSQLQuery
 
 Private oSQL As SQLQuery
@@ -22,6 +25,8 @@ Private sUnion() As Variant
 'Limit
 'Offset
 
+' Constructor: Class_Initialize
+' Initializes class members
 Private Sub Class_Initialize()
     ReDim aJoin(0)
     ReDim vFields(0)
@@ -33,6 +38,8 @@ Private Sub Class_Initialize()
     Set oSQL = New SQLQuery
 End Sub
 
+' Property: Fields
+' The fields in the query
 Property Let Fields(vValue)
     Dim element As Variant
     For Each element In vValue
@@ -40,10 +47,14 @@ Property Let Fields(vValue)
     Next
 End Property
 
+' Property: GroupBy
+' The field to use for aggregration
 Property Let GroupBy(vValue)
     vGroupBy = vValue
 End Property
 
+' Function: addField
+' Add a field to the query statement
 Public Function AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
     ArrLen = UBound(vFields)
@@ -56,16 +67,14 @@ Public Function AddField(sField, Optional sAlias As String = "")
     vFields(ArrLen + 1) = Array(sField, sAlias)
 End Function
 
+' Sub: addTable
+' Add a table to the query statement
 Public Sub addTable(sName As String, Optional sAlias As String = "")
     aJoin(0) = Array("", sName, sAlias, "")
 End Sub
 
-'Add a single WHERE clause to the SQL statement
-' op is the operation
-' value is the value
-' EXAMPLE: addwhere 'id' '=', 2
-'   is equivalent to "WHERE id=2"
-'
+' Sub: AddHaving
+' Add a having clause o the SQL statement
 Public Sub AddHaving(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
     Dim NewHaving As New SQLCondition
     If Not (oHaving Is Nothing) Then
@@ -85,10 +94,15 @@ Public Sub AddHaving(Field, Value, Optional op As String = "=", Optional GroupTy
 
 End Sub
 
+' Sub: AddArgument
+' Add an argument to the SQL Statement.
+' An argument is a value for a placeholder.
 Public Sub AddArgument(sName As String, vValue)
     oSQL.AddArgument sName, vValue
 End Sub
 
+' Sub: AddJoin
+' Add a join condition to the SQL query
 Public Sub AddJoin(sType As String, sTable As String, Optional sAlias As String = "", Optional sCondition As String = "")
     'Should Check that sType is either "INNER", "LEFT OUTER", or "RIGHT OUTER"
     Dim JoinLen As Integer
@@ -97,30 +111,42 @@ Public Sub AddJoin(sType As String, sTable As String, Optional sAlias As String 
     aJoin(JoinLen + 1) = Array(sType, sTable, sAlias, sCondition)
 End Sub
 
+' Sub: InnerJoin
+' Add an inner join to the SQL query
 Public Sub InnerJoin(sTable As String, sAlias As String, sCondition As String)
     AddJoin "INNER", sTable, sAlias, sCondition
 End Sub
 
+' Sub: LeftJoin 
+' Add a left join to the SQL query
 Public Sub LeftJoin(sTable, sAlias, Optional sCondition As String = "")
     AddJoin "LEFT OUTER", sTable, sAlias, sCondition
 End Sub
 
-'Left Joins are prefered over Right. Please edit query to use a left join
+' Sub: RightJoin
+' Add a right join to the SQL query
+' Left Joins are prefered over Right. Please edit query to use a left join
 Public Sub RightJoin(sTable, sAlias, Optional sCondition As String = "")
     AddJoin "RIGHT OUTER", sTable, sAlias, sCondition
 End Sub
 
-'sType is either "", "ALL", or "DISTINCT"
+' Sub: Union
+' Join two SQLSelect objects together with a union
+' sType is either "", "ALL", or "DISTINCT"
 Public Sub Union(oSelect As SQLSelect, Optional sType = "")
     Dim UnionArray() As Variant
     UnionArray = Array(SQLSelect, sType)
     'Add UnionArray to aUnion
 End Sub
 
+' Sub: Distinct
+' Set the distict flag to true or false
 Public Sub Distinct(Optional bValue = True)
     bDistinct = bValue
 End Sub
 
+' Sub: AddWhere
+' Add a where clause to the SQL query
 Public Sub AddWhere(Field, Value, Optional op As String = "=", Optional GroupType As String = "AND")
     oSQL.AddWhere Field, Value, op, GroupType
 End Sub
@@ -200,6 +226,7 @@ Private Function GroupByString() As String
         GroupByString = " GROUP BY " & Join(vGroupBy, ", ")
     End If
 End Function
+
 Private Function HavingString() As String
     Dim sHaving As String
     If Not (oHaving Is Nothing And oHavingGroup Is Nothing) Then
@@ -236,7 +263,8 @@ Private Function FieldList()
     FieldList = Join(Lines, ", ")
 End Function
 
-Public Function UnionString()
+
+Private Function UnionString()
     Dim NewSelect As iSQLQuery
     aUnion = UnionArray(0)
     Set NewSelect = aUnion(0)

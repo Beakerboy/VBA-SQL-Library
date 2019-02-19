@@ -1,1 +1,1 @@
-NDMenu.OnSectionLoaded("classes.js",[[1,"SQLStatic"]]);
+NDMenu.OnSectionLoaded("classes.js",[[1,"SQLSelect"],[1,"SQLStaticQuery"]]);

@@ -1,1 +1,1 @@
-NDMenu.OnSectionLoaded("files.js",[[1,"SQLStaticQuery.cls"]]);
+NDMenu.OnSectionLoaded("files.js",[[1,"SQLSelect.cls"],[1,"SQLStaticQuery.cls"]]);
