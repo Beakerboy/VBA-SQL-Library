@@ -7,22 +7,32 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
-Public Sub OpenConnection()
 
-End Sub
+' Interface: iSQLConnection
+' Defines a wrapper for a cusom connection or ADODB.Connection
 
-Public Sub CloseConnection()
+' Property: Connection 
+Public Property Get Connection()
 
-End Sub
+End Property
 
+' Property: ConnectionString 
 Public Property Let ConnectionString(sConnection As String)
 
 End Property
 
+' Sub: OpenConnection
+Public Sub OpenConnection()
+
+End Sub
+
+' Sub: CloseConnection
+Public Sub CloseConnection()
+
+End Sub
+
+' Function: State 
 Public Function State()
 
 End Function
 
-Public Property Get Connection()
-
-End Property

@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("sta",["Function"],[["State",,[["iSQLConnection",,,,0,"File:iSQLConnection.cls:iSQLConnection.State","VisualBasicClass:iSQLConnection:State"],["iSQLRecordset",,,,0,"File:iSQLRecordset.cls:iSQLRecordset.State","VisualBasicClass:iSQLRecordset:State"]]]]);

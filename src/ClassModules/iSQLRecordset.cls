@@ -7,18 +7,26 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = True
+
+' Interface: iSQLRecordset
+' Defines a wrapper for custom recordsets or ADODB.Recordset
+
+' Sub: OpenRecordset
 Public Sub OpenRecordset(MyQuery As String, Connection)
 
 End Sub
 
+' Sub: CloseRecordset
 Public Sub CloseRecordset()
 
 End Sub
 
+' Function: GetValue
 Public Function GetValue(MyFieldname)
 
 End Function
 
+' Function: State
 Public Function State()
 
 End Function

@@ -1,1 +1,1 @@
-NDMenu.OnSectionLoaded("classes.js",[[1,"SQLSelect"],[1,"SQLStaticQuery"]]);
+NDMenu.OnSectionLoaded("classes.js",[[1,"iSQLConnection"],[1,"iSQLQuery"],[1,"iSQLRecordset"],[1,"SQLSelect"],[1,"SQLStaticQuery"]]);
