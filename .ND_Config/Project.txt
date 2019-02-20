@@ -86,7 +86,7 @@ Source Folder 2: ../src/Modules
 # Generated Documentation
 # ------------------------------------------------------------------------
 
-HTML Output Folder: ../public_html
+HTML Output Folder: ../docs
 
 
 # This is where you specify what kind of documentation you want Natural Docs
