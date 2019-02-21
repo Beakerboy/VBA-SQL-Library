@@ -40,6 +40,7 @@ End Property
 
 ' Property: From
 ' Set the SELECT query that is used in the INSERT statement.
+'
 ' Parameter:
 '   vValue - A <SQLSelect> Object to use as in the INSERT query
 Property Set From(vValue As SQLSelect)
