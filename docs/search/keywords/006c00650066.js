@@ -1,1 +1,0 @@
-NDSearch.OnPrefixDataLoaded("lef",["Function"],[["LeftJoin",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.LeftJoin","VisualBasicClass:SQLSelect:LeftJoin"]]]]);

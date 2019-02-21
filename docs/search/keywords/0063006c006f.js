@@ -1,1 +1,0 @@
-NDSearch.OnPrefixDataLoaded("clo",["Function"],[["CloseConnection",,[["iSQLConnection",,,,0,"File:iSQLConnection.cls:iSQLConnection.CloseConnection","VisualBasicClass:iSQLConnection:CloseConnection"]]],["CloseRecordset",,[["iSQLRecordset",,,,0,"File:iSQLRecordset.cls:iSQLRecordset.CloseRecordset","VisualBasicClass:iSQLRecordset:CloseRecordset"]]]]);

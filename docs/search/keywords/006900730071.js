@@ -1,1 +1,0 @@
-NDSearch.OnPrefixDataLoaded("isq",["Interface"],[["iSQLConnection",,[[,,,,0,"File:iSQLConnection.cls:iSQLConnection","VisualBasicClass:iSQLConnection"]]],["iSQLQuery",,[[,,,,0,"File:iSQLQuery.cls:iSQLQuery","VisualBasicClass:iSQLQuery"]]],["iSQLRecordset",,[[,,,,0,"File:iSQLRecordset.cls:iSQLRecordset","VisualBasicClass:iSQLRecordset"]]]]);

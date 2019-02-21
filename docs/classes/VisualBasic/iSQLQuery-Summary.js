@@ -1,1 +1,0 @@
-NDFramePage.OnPageTitleLoaded("VisualBasicClass:iSQLQuery","iSQLQuery");NDSummary.OnSummaryLoaded("VisualBasicClass:iSQLQuery",[["Visual Basic","VisualBasic"]],[["Functions","Function"],["Groups","Group"],["Interfaces","Interface"]],[[28,0,2,"iSQLQuery"],[29,0,1,"Functions","Functions"],[30,0,0,"toString","toString"]]);

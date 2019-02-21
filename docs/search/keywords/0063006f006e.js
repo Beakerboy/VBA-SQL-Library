@@ -1,1 +1,0 @@
-NDSearch.OnPrefixDataLoaded("con",["Property"],[["Connection",,[["iSQLConnection",,,,0,"File:iSQLConnection.cls:iSQLConnection.Connection","VisualBasicClass:iSQLConnection:Connection"]]],["ConnectionString",,[["iSQLConnection",,,,0,"File:iSQLConnection.cls:iSQLConnection.ConnectionString","VisualBasicClass:iSQLConnection:ConnectionString"]]]]);

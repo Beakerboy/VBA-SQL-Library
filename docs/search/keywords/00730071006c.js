@@ -1,1 +1,0 @@
-NDSearch.OnPrefixDataLoaded("sql",["Class"],[["SQLSelect",,[[,,,,0,"File:SQLSelect.cls:SQLSelect","VisualBasicClass:SQLSelect"]]],["SQLStaticQuery",,[[,,,,0,"File:SQLStaticQuery.cls:SQLStaticQuery","VisualBasicClass:SQLStaticQuery"]]]]);
