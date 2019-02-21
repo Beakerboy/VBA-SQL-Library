@@ -1,6 +1,6 @@
 language: vba
 before_script:
-  - sudo apt-get install mono-runtime
+  - sudo apt-get install mono-runtime libmono-system.data2.0-cil libmono2.0-cil libmono-system-net2.0-cil
   - wget https://github.com/NaturalDocs/NaturalDocs/archive/Version_2.0.2.tar.gz -O /tmp/naturaldocs.tar.gz
   - tar -xvf /tmp/naturaldocs.tar.gz
 script:
