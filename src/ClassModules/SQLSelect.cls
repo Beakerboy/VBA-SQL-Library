@@ -25,18 +25,10 @@ Private sUnion() As Variant
 'Limit
 'Offset
 
-' Constructor: Class_Initialize
-' Initializes class members
-Private Sub Class_Initialize()
-    ReDim aJoin(0)
-    ReDim vFields(0)
-    ReDim aOrder(0)
-    vFields(0) = ""
-    aOrder(0) = ""
-    bDistinct = False
-    vGroupBy = Array()
-    Set oSQL = New SQLQuery
-End Sub
+' Property: Table
+Property Let Table(sValue As String)
+    addTable sValue, ""
+End Property
 
 ' Property: Fields
 ' The fields in the query
@@ -53,7 +45,20 @@ Property Let GroupBy(vValue)
     vGroupBy = vValue
 End Property
 
-' Function: addField
+' Constructor: Class_Initialize
+' Initializes class members
+Private Sub Class_Initialize()
+    ReDim aJoin(0)
+    ReDim vFields(0)
+    ReDim aOrder(0)
+    vFields(0) = ""
+    aOrder(0) = ""
+    bDistinct = False
+    vGroupBy = Array()
+    Set oSQL = New SQLQuery
+End Sub
+
+' Sub: addField
 ' Add a field to the query statement
 Public Function AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
@@ -65,7 +70,7 @@ Public Function AddField(sField, Optional sAlias As String = "")
     End If
     ReDim Preserve vFields(0 To ArrLen + 1)
     vFields(ArrLen + 1) = Array(sField, sAlias)
-End Function
+End Sub
 
 ' Sub: addTable
 ' Add a table to the query statement
@@ -172,10 +177,23 @@ Public Sub OrderBy(sField As String, Optional sDirection As String = "ASC")
     aOrder(ArrLen + 1) = Array(sField, sDirection)
 End Sub
 
-Property Let Table(sValue As String)
-    addTable sValue, ""
-End Property
+' Function: getByProperty
+' Generate a query of the form
+'  SELECT sField FROM sTableValue WHERE sProperty = vValue
+' Parameters:
+'
+'    sTableValue - The table to select the data from
+'    sField - The field name
+'    sProperty - The field to filter by
+'    vValue - The value to filter by
+Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
+    addTable sTableValue, ""
+    AddField sField
+    AddWhere sProperty, vValue
+End Sub
 
+' Function: iSQLQuery_ToString
+' Create the query string
 Public Function iSQLQuery_ToString() As String
     Dim return_string As String
 
@@ -263,18 +281,9 @@ Private Function FieldList()
     FieldList = Join(Lines, ", ")
 End Function
 
-
 Private Function UnionString()
     Dim NewSelect As iSQLQuery
     aUnion = UnionArray(0)
     Set NewSelect = aUnion(0)
     UnionString = " UNION " & NewSelect.toString()
 End Function
-
-'Generate a query of the form
-'  SELECT sField FROM sTableValue WHERE sProperty = vValue
-Public Sub getByProperty(sTableValue As String, sField As String, sProperty As String, vValue)
-    addTable sTableValue, ""
-    AddField sField
-    AddWhere sProperty, vValue
-End Sub
