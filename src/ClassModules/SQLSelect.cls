@@ -179,7 +179,8 @@ End Sub
 
 ' Function: getByProperty
 ' Generate a query of the form
-'  SELECT sField FROM sTableValue WHERE sProperty = vValue
+' SELECT sField FROM sTableValue WHERE sProperty = vValue
+'
 ' Parameters:
 '
 '    sTableValue - The table to select the data from
