@@ -31,7 +31,7 @@ Public Function Create_SQLCreate() As SQLCreate
     Set Create_SQLCreate = New SQLCreate
 End Function
 
-' Function: Create_SQLUpdat
+' Function: Create_SQLUpdate
 ' Factory method to create a new SQLUpdate object
 Public Function Create_SQLUpdate() As SQLUpdate
     Set Create_SQLUpdate = New SQLUpdate
