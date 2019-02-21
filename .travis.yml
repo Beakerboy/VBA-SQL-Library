@@ -1,8 +1,9 @@
 language: vba
 before_script:
-  - sudo apt-get install mono-complete
+  - sudo apt-get install -qq mono-complete
   - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
   - unzip /tmp/ND.zip -d /tmp
+  - mkdir $TRAVIS_BUILD_DIR/docs
 script:
   - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
   
