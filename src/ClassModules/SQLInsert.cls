@@ -11,6 +11,9 @@ Attribute VB_Exposed = True
 'Either vValues or mySelect must be set. The length of vFields must match the
 '  number of items in mySelect or vValues
 Option Explicit
+
+' Class: SQLInsert
+' A SQL Insert query
 Implements iSQLQuery
 
 Private vFields As Variant      'An array of field names
@@ -20,48 +23,40 @@ Private vValues As Variant      'An array of values - OPTIONAL
 Private MySelect As SQLSelect  'An SQL statement which can be used to create
                                '  the values - OPTIONAL
 
-'***************************CONSTRUCTOR****************************************
-Private Sub Class_Initialize()
-End Sub
-
-'***************************LET PROPERTIES*************************************
+' Property: Table
 Property Let Table(sValue As String)
     sTable = sValue
 End Property
 
+' Property: Fields
 Property Let Fields(vValue)
     vFields = vValue
 End Property
 
+' Property: Values
 Property Let Values(vValue)
     vValues = vValue
 End Property
 
+' Property: From
+' Set the SELECT query that is used in the INSERT statement.
+' Parameter:
+'   vValue - A <SQLSelect> Object to use as in the INSERT query
 Property Set From(vValue As SQLSelect)
     Set MySelect = vValue
 End Property
 
+' Property: Returning
 Property Let Returning(sValue As String)
     sReturning = sValue
 End Property
 
-'***************************FUNCTIONS******************************************
-
-'Join the array of values into a string
-Private Function ImplodeValues() As String
-    If IsArray(vValues(0)) Then
-        ImplodeValues = " (" & JoinArrayofArrays(vValues, ", ", "), (") & ")"
-    Else
-        ImplodeValues = " (" & Join(vValues, ", ") & ")"
-    End If
-End Function
-
-Private Function ImplodeFields() As String
-    Dim ReturnString As String
-    ReturnString = " (" & Join(vFields, ", ") & ")"
-    ImplodeFields = ReturnString
-End Function
-
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+End Sub
+  
+' Function: iSQLQuery_ToString
 ' Create an SQL statement from the object data
 Public Function iSQLQuery_ToString() As String
     Dim MyQuery As iSQLQuery
@@ -82,3 +77,18 @@ Public Function iSQLQuery_ToString() As String
     iSQLQuery_ToString = ReturnString
 End Function
 
+    
+'Join the array of values into a string
+Private Function ImplodeValues() As String
+    If IsArray(vValues(0)) Then
+        ImplodeValues = " (" & JoinArrayofArrays(vValues, ", ", "), (") & ")"
+    Else
+        ImplodeValues = " (" & Join(vValues, ", ") & ")"
+    End If
+End Function
+
+Private Function ImplodeFields() As String
+    Dim ReturnString As String
+    ReturnString = " (" & Join(vFields, ", ") & ")"
+    ImplodeFields = ReturnString
+End Function
