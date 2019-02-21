@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Beakerboy/VBA-SQL-Library.svg?branch=master)](https://travis-ci.org/Beakerboy/VBA-SQL-Library)
 <a href="https://beakerboy.github.io/VBA-SQL-Library/"><img src="https://codedocs.xyz/doxygen/doxygen.svg"/></a>
+
 VBA SQL Library
 =====================
 
