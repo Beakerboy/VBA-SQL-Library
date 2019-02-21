@@ -1,2 +1,16 @@
-language: csharp
-solution: VBA-SQL-LIBRARY.sln
+language: vba
+mono:
+  - latest
+before-script:
+  - wget https://github.com/NaturalDocs/NaturalDocs/archive/Version_2.0.2.tar.gz -O /tmp/naturaldocs.tar.gz
+  - tar -xvf /tmp/naturaldocs.tar.gz
+script:
+  - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
+  
+deploy:
+  provider: pages
+  skip_cleanup: true
+  local_dir: $TRAVIS_BUILD_DIR/docs
+  github_token: $GH_REPO_TOKEN
+  on:
+    branch: master
