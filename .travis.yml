@@ -1,8 +1,8 @@
 language: vba
 before_script:
   - sudo apt-get install mono-runtime libmono-system.data2.0-cil libmono2.0-cil libmono-system-net2.0-cil
-  - wget https://github.com/NaturalDocs/NaturalDocs/archive/Version_2.0.2.tar.gz -O /tmp/naturaldocs.tar.gz
-  - tar -xvf /tmp/naturaldocs.tar.gz
+  - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
+  - unzip /tmp/ND.zip -d /tmp
 script:
   - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
   
