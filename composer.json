@@ -1,0 +1,15 @@
+{
+  "name": "Beakerboy/VBA-SQL-Libraryr",
+  "homepage": "https://github.com/Beakerboy/VBA-SQL-Library/",
+  "require-dev": {
+    "php": ">=7.0.0"
+    "squizlabs/php_codesniffer": "2.*",
+  },
+  "authors": [
+    {
+      "name": "Kevin Nowaczyk",
+      "homepage": "https://github.com/Beakerboy",
+      "role": "Lead developer"
+    }
+  ]
+}
