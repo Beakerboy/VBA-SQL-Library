@@ -3,7 +3,7 @@
   "homepage": "https://github.com/Beakerboy/VBA-SQL-Library/",
   "require-dev": {
     "php": ">=7.0.0",
-    "squizlabs/php_codesniffer": "2.*",
+    "squizlabs/php_codesniffer": "2.*"
   },
   "authors": [
     {
