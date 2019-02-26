@@ -68,6 +68,10 @@ Public Sub QuickSort(vArray As Variant, inLow As Long, inHi As Long)
         tmpHi = tmpHi - 1
      End If
   Wend
-  If (inLow < tmpHi) Then QuickSort vArray, inLow, tmpHi
-  If (tmpLow < inHi) Then QuickSort vArray, tmpLow, inHi
+  If (inLow < tmpHi) Then
+     QuickSort vArray, inLow, tmpHi
+  End If
+  If (tmpLow < inHi) Then
+     QuickSort vArray, tmpLow, inHi
+  End If
 End Sub
