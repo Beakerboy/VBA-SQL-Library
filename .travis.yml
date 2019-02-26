@@ -1,4 +1,8 @@
 language: vba
+install:
+  - composer install
+  # Fetch VBA_Tokenizer
+  # Move tokenizer files
 before_script:
   - sudo apt-get install -qq mono-complete
   - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
@@ -7,6 +11,7 @@ before_script:
   - mkdir $TRAVIS_BUILD_DIR/.ND_Config
   - cp .nd_project.txt $TRAVIS_BUILD_DIR/.ND_Config/Project.txt
 script:
+  #- vendor/phpcs --extensions=cls/vba,bas/vba --standard=VBA $TRAVIS_BUILD_DIR/src
   - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
 deploy:
   provider: pages
