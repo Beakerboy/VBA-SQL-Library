@@ -1,4 +1,6 @@
 language: vba
+php:
+  - 7.0
 install:
   - composer install
   - git clone https://github.com/Beakerboy/VBA_Tokenizer.git
