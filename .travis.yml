@@ -1,6 +1,5 @@
 language: vba
 install:
-  - sudo apt-get install php7.0
   - composer install
   - git clone https://github.com/Beakerboy/VBA_Tokenizer.git
   # Move tokenizer files
