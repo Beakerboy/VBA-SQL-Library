@@ -2,8 +2,8 @@ language: vba
 install:
   - composer install
   - git clone https://github.com/Beakerboy/VBA_Tokenizer.git
-  - cd vendor
-  - find
+  - cp -r VBA_Tokenizer/src/Standards/VBA/ vendor/squizlabs/php_codesniffer/CodeSniffer/Standards/
+  - cp VBA_Tokenizer/src/Tokenizers/VBA.php vendor/squizlabs/php_codesniffer/CodeSniffer/Tokenizers/
 before_script:
   - cd $TRAVIS_BUILD_DIR
   - sudo apt-get install -qq mono-complete
