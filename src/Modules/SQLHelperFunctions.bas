@@ -33,8 +33,9 @@ Function getDimension(Var As Variant) As Long
         i = i + 1
         tmp = UBound(Var, i)
     Loop
-Err:
-    getDimension = i - 1
+
+    Err:
+        getDimension = i - 1
 End Function
 
 Public Sub QuickSort(vArray As Variant, inLow As Long, inHi As Long)
@@ -66,10 +67,7 @@ Public Sub QuickSort(vArray As Variant, inLow As Long, inHi As Long)
         tmpLow = tmpLow + 1
         tmpHi = tmpHi - 1
      End If
-
   Wend
-
   If (inLow < tmpHi) Then QuickSort vArray, inLow, tmpHi
   If (tmpLow < inHi) Then QuickSort vArray, tmpLow, inHi
-
 End Sub
