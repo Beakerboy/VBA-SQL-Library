@@ -1,9 +1,8 @@
 language: vba
 install:
   - composer install
-  - cp -r vendor/beakerboy/vba_tokenizer/src/Standards/VBA vendor/squizlabs/php_codesniffer/src/Standards/
 script:
-  - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=VBA $TRAVIS_BUILD_DIR/src
+  - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA $TRAVIS_BUILD_DIR/src
 after_success:
   - sudo apt-get install -qq mono-complete
   - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
