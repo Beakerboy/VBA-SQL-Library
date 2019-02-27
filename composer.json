@@ -2,8 +2,14 @@
   "name": "Beakerboy/VBA-SQL-Libraryr",
   "homepage": "https://github.com/Beakerboy/VBA-SQL-Library/",
   "require-dev": {
-    "squizlabs/php_codesniffer": "3.4"
+    "beakerboy/vba_tokenizer": "dev-master"
   },
+  "repositories": [
+    {
+        "type": "git",
+        "url": "https://github.com/Beakerboy/VBA_Tokenizer"
+    }
+  ],
   "authors": [
     {
       "name": "Kevin Nowaczyk",
