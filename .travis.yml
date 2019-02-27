@@ -1,19 +1,15 @@
 language: vba
 install:
   - composer install
-  - git clone https://github.com/Beakerboy/VBA_Tokenizer.git
-  - cp -r VBA_Tokenizer/src/Standards/VBA/ vendor/squizlabs/php_codesniffer/src/Standards/
-  - cp VBA_Tokenizer/src/Tokenizers/VBA.php vendor/squizlabs/php_codesniffer/src/Tokenizers/
-before_script:
-  - cd $TRAVIS_BUILD_DIR
+script:
+  - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=VBA $TRAVIS_BUILD_DIR/src
+after_success:
   - sudo apt-get install -qq mono-complete
   - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
   - unzip /tmp/ND.zip -d /tmp
   - mkdir $TRAVIS_BUILD_DIR/docs
   - mkdir $TRAVIS_BUILD_DIR/.ND_Config
   - cp .nd_project.txt $TRAVIS_BUILD_DIR/.ND_Config/Project.txt
-script:
-  - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=VBA $TRAVIS_BUILD_DIR/src
   - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
 deploy:
   provider: pages
