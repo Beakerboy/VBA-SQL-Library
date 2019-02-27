@@ -1,6 +1,7 @@
 language: vba
 install:
   - composer install
+  - cp -r vendor/beakerboy/vba_tokenizer/src/Standards/VBA vendor/squizlabs/php_codesniffer/src/Standards/
 script:
   - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=VBA $TRAVIS_BUILD_DIR/src
 after_success:
