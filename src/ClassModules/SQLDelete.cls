@@ -18,6 +18,10 @@ Private oSQL As SQLQuery
 
 ' Property: Table
 ' The database table whose data is to be deleted.
+'
+' Parameters:
+'
+'    vValue - The table name.
 Property Let Table(sValue As String)
     sTable = sValue
 End Property
