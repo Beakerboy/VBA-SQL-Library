@@ -2,7 +2,7 @@ language: vba
 install:
   - composer install
   - sudo apt-get install -qq mono-complete
-  - sudo apt-get install -qq python3
+  - sudo apt-get install -qq python3.5
   - git clone https://github.com/Beakerboy/Excel-Addin-Generator.git
 script:
   - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA $TRAVIS_BUILD_DIR/src
