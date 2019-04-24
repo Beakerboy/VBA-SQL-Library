@@ -1,7 +1,8 @@
 language: vba
 install:
   - composer install
-  - sudo apt-get install -qq mono-complete python3
+  - sudo apt-get install -qq mono-complete
+  - sudo apt-get install -qq python3
   - git clone https://github.com/Beakerboy/Excel-Addin-Generator.git
 script:
   - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA $TRAVIS_BUILD_DIR/src
@@ -12,7 +13,7 @@ after_success:
   - mkdir $TRAVIS_BUILD_DIR/.ND_Config
   - cp .nd_project.txt $TRAVIS_BUILD_DIR/.ND_Config/Project.txt
   - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
-  - python Excel-Addin-Generator/excelAddinGenerator/main.py $TRAVIS_BUILD_DIR/bin/vbaProject.bin SQLlib.xlam
+  - python3 Excel-Addin-Generator/excelAddinGenerator/main.py $TRAVIS_BUILD_DIR/bin/vbaProject.bin SQLlib.xlam
 deploy:
   - provider: pages
     skip_cleanup: true
