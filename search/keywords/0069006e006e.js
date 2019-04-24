@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("inn",["Function"],[["InnerJoin",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.InnerJoin","VisualBasicClass:SQLSelect:InnerJoin"]]]]);

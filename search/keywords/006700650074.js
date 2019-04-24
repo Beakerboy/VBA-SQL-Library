@@ -1,0 +1,1 @@
+NDSearch.OnPrefixDataLoaded("get",["Function"],[["getByProperty",,[["SQLSelect",,,,0,"File:SQLSelect.cls:SQLSelect.getByProperty","VisualBasicClass:SQLSelect:getByProperty"]]],["GetValue",,[["iSQLRecordset",,,,0,"File:iSQLRecordset.cls:iSQLRecordset.GetValue","VisualBasicClass:iSQLRecordset:GetValue"]]]]);

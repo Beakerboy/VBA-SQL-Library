@@ -1,0 +1,1 @@
+NDContentPage.OnToolTipsLoaded({46:"<div class=\"NDToolTip TClass LVisualBasic\"><div class=\"TTSummary\">A SQL Select query</div></div>"});
