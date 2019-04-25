@@ -6,25 +6,20 @@ install:
   - git clone https://github.com/Beakerboy/Excel-Addin-Generator.git
 script:
   - vendor/bin/phpcs --extensions=cls/vba,bas/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA $TRAVIS_BUILD_DIR/src
-after_success:
-  - wget https://www.naturaldocs.org/download/natural_docs/2.0.2/Natural_Docs_2.0.2.zip -O /tmp/ND.zip
-  - unzip /tmp/ND.zip -d /tmp
-  - mkdir $TRAVIS_BUILD_DIR/docs
-  - mkdir $TRAVIS_BUILD_DIR/.ND_Config
-  - cp .nd_project.txt $TRAVIS_BUILD_DIR/.ND_Config/Project.txt
-  - mono /tmp/Natural\ Docs/NaturalDocs.exe $TRAVIS_BUILD_DIR/.ND_Config
-  - python3.5 Excel-Addin-Generator/excelAddinGenerator/main.py $TRAVIS_BUILD_DIR/bin/vbaProject.bin SQLlib.xlam
 deploy:
+  - provider: script
+    script: bash deploy.sh
+    on:
+      tags: true
   - provider: pages
     skip_cleanup: true
     local_dir: $TRAVIS_BUILD_DIR/docs
     github_token: $GH_REPO_TOKEN
     on:
-      branch: master
+      tags: true
   - provider: releases
     api_key: $GH_REPO_TOKEN
     file: SQLlib.xlam
     skip_cleanup: true
     on:
-      # tags: true
-      branch: master
+      tags: true
