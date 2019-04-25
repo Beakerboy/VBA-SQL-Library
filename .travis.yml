@@ -19,7 +19,7 @@ deploy:
       tags: true
   - provider: releases
     api_key: $GH_REPO_TOKEN
-    file: SQLlib.xlam
+    file: bin/SQLlib.xlam
     skip_cleanup: true
     on:
       tags: true
