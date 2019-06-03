@@ -60,7 +60,7 @@ End Sub
 
 ' Sub: addField
 ' Add a field to the query statement
-Public Function AddField(sField, Optional sAlias As String = "")
+Public Sub AddField(sField, Optional sAlias As String = "")
     Dim ArrLen As Integer
     ArrLen = UBound(vFields)
     If ArrLen = 0 Then
