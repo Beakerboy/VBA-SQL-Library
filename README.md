@@ -23,7 +23,7 @@ Features
  Setup
 -----
 
-Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual Basic For Applications, select Tools>References and ensure that both "Microsoft ActiveX Data Objects x.x Library", and SQLlib is selected.
+Download the Addin (SQLlib.xlam) and enable it in MSExcel. Open Microsoft Visual Basic For Applications, select Tools>References and ensure that both "Microsoft ActiveX Data Objects x.x Library", "Microsoft Scripting Runtime", and SQLlib is selected.
  
  Security
 -----
