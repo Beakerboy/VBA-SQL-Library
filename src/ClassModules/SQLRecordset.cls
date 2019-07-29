@@ -34,3 +34,7 @@ End Sub
 Public Function iSQLRecordset_GetValue(MyFieldname)
     iSQLRecordset_GetValue = orst(MyFieldname)
 End Function
+
+Public Function iSQLRecordset_GetRows(num As Integer)
+  iSQLRecordset_GetRows = orst.GetRows(num)
+End Function
