@@ -76,7 +76,9 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     If return_column <> "" Then
         Execute = rst.GetValue(return_column)
     Else
-        'If it is a select Query, return the recordset as an array
+        If Left(sSQL, 6) = "SELECT" Then
+            Execute = rst.GetRows(1)
+        End If
     End If
     
     'Bitwise And the State property with The adStateOpen constant
