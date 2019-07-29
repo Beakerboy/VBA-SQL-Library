@@ -26,6 +26,11 @@ Public Function GetValue(MyFieldname)
 
 End Function
 
+' Function: GetValue
+Public Function GetRows(num as Integer)
+
+End Function
+
 ' Function: State
 Public Function State()
 
