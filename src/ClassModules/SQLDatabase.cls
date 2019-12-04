@@ -47,11 +47,11 @@ Public Property Set Connection(MyConnection As iSQLConnection)
     Set cnt = Nothing
     Set cnt = MyConnection
 End Property
-
+        
 Public Property Set Recordset(MyRecordset As iSQLRecordset)
     Set rst = Nothing
     Set rst = MyRecordset
-End Properwsty
+End Property
 
 '**********************************METHODS*************************************
 
