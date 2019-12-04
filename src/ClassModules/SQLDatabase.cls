@@ -74,7 +74,11 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     
     rst.OpenRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
-        Execute = rst.GetValue(return_column)
+        If rst.EOF Then
+						Execute = False
+				Else			
+        		Execute = rst.GetValue(return_column)
+				EndIf
     Else
         If Left(sSQL, 6) = "SELECT" Then
             Execute = rst.GetRows(1)
