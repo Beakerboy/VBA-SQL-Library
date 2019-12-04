@@ -1,5 +1,5 @@
 {
-  "name": "Beakerboy/VBA-SQL-Libraryr",
+  "name": "beakerboy/vba-sql-library",
   "homepage": "https://github.com/Beakerboy/VBA-SQL-Library/",
   "require-dev": {
     "beakerboy/vba_tokenizer": "dev-master"
