@@ -78,7 +78,7 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
             Execute = False
         Else			
             Execute = rst.GetValue(return_column)
-        EndIf
+        End If
     Else
         If Left(sSQL, 6) = "SELECT" Then
             Execute = rst.GetRows(1)
