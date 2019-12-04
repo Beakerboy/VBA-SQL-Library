@@ -75,8 +75,8 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     rst.OpenwsRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
         If rst.EOF Then
-	Execute = False
-				Else			
+            Execute = False
+        Else			
             Execute = rst.GetValue(return_column)
         EndIf
     Else
