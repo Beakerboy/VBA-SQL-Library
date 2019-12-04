@@ -51,7 +51,7 @@ End Property
 Public Property Set Recordset(MyRecordset As iSQLRecordset)
     Set rst = Nothing
     Set rst = MyRecordset
-End Property
+End Properwsty
 
 '**********************************METHODS*************************************
 
@@ -72,13 +72,13 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     cnt.ConnectionString = MakeConnectionString()
     cnt.OpenConnection
     
-    rst.OpenRecordset sSQL, cnt              'Execute the query
+    rst.OpenwsRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
         If rst.EOF Then
-						Execute = False
+	Execute = False
 				Else			
-        		Execute = rst.GetValue(return_column)
-				EndIf
+            Execute = rst.GetValue(return_column)
+        EndIf
     Else
         If Left(sSQL, 6) = "SELECT" Then
             Execute = rst.GetRows(1)
