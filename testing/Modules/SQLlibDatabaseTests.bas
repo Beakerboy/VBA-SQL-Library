@@ -1,4 +1,5 @@
 Function SQLlib_SQLDatabase_RunAllTests()
+    Result = True
     Dim MyDatabase As SQLDatabase
     Set MyDatabase = Create_SQLDatabase()
     Dim MyRecordset As New SQLTestRecordset
@@ -21,9 +22,10 @@ Function SQLlib_SQLDatabase_RunAllTests()
     End With
     Actual = MyDatabase.InsertGetNewId(SimpleInsert)
     Expected = "SET NOCOUNT ON;INSERT INTO users (id) VALUES (1);SELECT SCOPE_IDENTITY() as somethingunique"
-    AssertEquals Actual, Expected
+    Result = Result And AssertEquals(Actual, Expected)
     
     MyDatabase.DBType = "psql"
-    AssertEquals MyDatabase.InsertGetNewId(SimpleInsert, "id"), "INSERT INTO users (id) VALUES (1) RETURNING id"
-    
+    Result = Result And AssertEquals(MyDatabase.InsertGetNewId(SimpleInsert, "id"), "INSERT INTO users (id) VALUES (1) RETURNING id")
+    SQLlib_SQLDatabase_RunAllTests = Result
 End Function
+
