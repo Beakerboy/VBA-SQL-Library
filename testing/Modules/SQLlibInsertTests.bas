@@ -1,4 +1,5 @@
 Function SQLlib_SQLInsert_RunAllTests()
+    SQLlib_SQLInsert_RunAllTests = True
     Dim Interfaced As iSQLQuery
     Dim MyInsert As SQLInsert
     Set MyInsert = Create_SQLInsert
@@ -8,7 +9,7 @@ Function SQLlib_SQLInsert_RunAllTests()
     MyInsert.Returning = "id"
     Set Interfaced = MyInsert
     Expected = "INSERT INTO users (name, type) VALUES ('foo', 'admin') RETURNING id"
-    AssertEquals Interfaced.toString, Expected
+    SQLlib_SQLInsert_RunAllTests = SQLlib_SQLInsert_RunAllTests And AssertEquals(Interfaced.toString, Expected)
     
     Dim MySelect As SQLSelect
     Set MySelect = Create_SQLSelect
@@ -23,7 +24,8 @@ Function SQLlib_SQLInsert_RunAllTests()
         .Values = Array()
         Set .From = MySelect
     End With
-    AssertEquals Interfaced.toString, "INSERT INTO users (name, type_id) (SELECT 'foo', id FROM account_types WHERE type='admin') RETURNING id"
+    Expected = "INSERT INTO users (name, type_id) (SELECT 'foo', id FROM account_types WHERE type='admin') RETURNING id"
+    SQLlib_SQLInsert_RunAllTests = SQLlib_SQLInsert_RunAllTests And AssertEquals(Interfaced.toString, Expected)
     
     'Insert Multiple Values
     Set MyInsert = Create_SQLInsert
@@ -35,5 +37,6 @@ Function SQLlib_SQLInsert_RunAllTests()
     Values(1) = Array("'bar'", "'editor'")
     MyInsert.Values = Values
     Set Interfaced = MyInsert
-    AssertObjectStringEquals Interfaced, "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
+    Expected = "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
+    SQLlib_SQLInsert_RunAllTests = SQLlib_SQLInsert_RunAllTests And AssertObjectStringEquals(Interfaced, Expected)
 End Function
