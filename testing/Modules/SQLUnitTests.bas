@@ -1,13 +1,14 @@
 Attribute VB_Name = "SQLUnitTests"
 Public Function SQLlib_RunAllTests()
+    SQLlib_RunAllTests = True
     
-    RunAllModuleTests ("SQLlib_SQLDatabase")
+    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLDatabase")
     
-    RunAllModuleTests ("SQLlib_SQLInsert")
-
-    RunAllModuleTests ("SQLlib_SQLSelect")
+    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLInsert")
     
-    RunAllModuleTests ("SQLlib_SQLStatic")
+    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLSelect")
+    
+    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLStatic")
 
     Dim Interfaced As iSQLQuery
     '******************************Check Delete********************************
@@ -34,12 +35,6 @@ Public Function SQLlib_RunAllTests()
     Set Interfaced = MyUpdate
     AssertObjectStringEquals Interfaced, "UPDATE users SET username='admin'' WHERE id=1;DROP TABLE users;' WHERE id=1"
 
-    '*******************Check SubSelect****************************************
-    'Dim MySubselect As New SQLSubselect
-    'Set MySubselect.SelectSQL = MyOtherSelect
-    'MySubselect.SelectAs = "user_id"
-    'CheckSQLValue MySubselect, "(SELECT id FROM users WHERE name='admin') AS user_id"
-            
     '*****************Check Create*****************
     'Dim MyCreate As SQLCreate
     'Set MyCreate = Create_SQLCreate
@@ -50,7 +45,13 @@ Public Function SQLlib_RunAllTests()
     'Dim Interfaced As iSQLQuery
     'Set Interfaced = MyCreate
     'CheckSQLValue Interfaced, "CREATE TABLE users (id int, username varchar(50))"
-    
+
+    '*******************Check SubSelect****************************************
+    'Dim MySubselect As New SQLSubselect
+    'Set MySubselect.SelectSQL = MyOtherSelect
+    'MySubselect.SelectAs = "user_id"
+    'CheckSQLValue MySubselect, "(SELECT id FROM users WHERE name='admin') AS user_id"
+
     '****************Check Where Group*****************************************
     'Dim MyWhereGroup As New SQLWhereGroup
     'Dim MyOtherWhere As New SQLCondition
@@ -68,5 +69,4 @@ Public Function SQLlib_RunAllTests()
     'MyOtherWhereGroup.SetGroup MyWhere, MyThirdWhere, "OR"
     'MyWhereGroup.AddWhere MyOtherWhereGroup, "AND"
     'CheckSQLValue MyWhereGroup, "((id=2 AND type='toys') OR color='pink') AND (id=2 OR color='pink')"
-    SQLlib_RunAllTests = True
 End Function
