@@ -1,18 +1,7 @@
 Attribute VB_Name = "SQLUnitTests"
 Public Function SQLlib_RunAllTests()
-    Result = True
-    
-    Result = Result And RunAllModuleTests("SQLlib_SQLDatabase")
-    
-    Result = Result And RunAllModuleTests("SQLlib_SQLInsert")
-    
-    Result = Result And RunAllModuleTests("SQLlib_SQLSelect")
-    
-    Result = Result And RunAllModuleTests("SQLlib_SQLStatic")
-
-    Result = Result And RunAllModuleTests("SQLlib_SQLDelete")
-
-    Result = Result And RunAllModuleTests("SQLlib_SQLUpdate")
+    TestList = Array("SQLlib_SQLDatabase", "SQLlib_SQLInsert", "SQLlib_SQLSelect", "SQLlib_SQLStatic", "SQLlib_SQLDelete", "SQLlib_SQLUpdate")
+    SQLlib_RunAllTests = RunTestList(TestList)
 
     '*****************Check Create*****************
     'Dim MyCreate As SQLCreate
@@ -49,5 +38,4 @@ Public Function SQLlib_RunAllTests()
     'MyWhereGroup.AddWhere MyOtherWhereGroup, "AND"
     'CheckSQLValue MyWhereGroup, "((id=2 AND type='toys') OR color='pink') AND (id=2 OR color='pink')"
 
-    SQLlib_RunAllTests = Result
 End Function
