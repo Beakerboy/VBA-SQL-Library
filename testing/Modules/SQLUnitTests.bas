@@ -1,39 +1,18 @@
 Attribute VB_Name = "SQLUnitTests"
 Public Function SQLlib_RunAllTests()
-    SQLlib_RunAllTests = True
+    Result = True
     
-    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLDatabase")
+    Result = Result And RunAllModuleTests("SQLlib_SQLDatabase")
     
-    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLInsert")
+    Result = Result And RunAllModuleTests("SQLlib_SQLInsert")
     
-    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLSelect")
+    Result = Result And RunAllModuleTests("SQLlib_SQLSelect")
     
-    SQLlib_RunAllTests = SQLlib_RunAllTests And RunAllModuleTests("SQLlib_SQLStatic")
+    Result = Result And RunAllModuleTests("SQLlib_SQLStatic")
 
-    Dim Interfaced As iSQLQuery
-    '******************************Check Delete********************************
-    Dim MyDelete As SQLDelete
-    Set MyDelete = Create_SQLDelete()
-    MyDelete.Table = "users"
-    
-    Set Interfaced = MyDelete
-    AssertObjectStringEquals Interfaced, "DELETE FROM users"
-    
-    MyDelete.AddWhere "age", ":age", "<"
-    MyDelete.AddArgument ":age", 13
-    AssertObjectStringEquals Interfaced, "DELETE FROM users WHERE age<13"
+    Result = Result And RunAllModuleTests("SQLlib_SQLDelete")
 
-    '******************************Check Update********************************
-    Dim MyUpdate As SQLUpdate
-    Set MyUpdate = Create_SQLUpdate
-    With MyUpdate
-        .Table = "users"
-        .Fields = Array("username")
-        .Values = Array(str("admin' WHERE id=1;DROP TABLE users;"))
-        .AddWhere "id", 1
-    End With
-    Set Interfaced = MyUpdate
-    AssertObjectStringEquals Interfaced, "UPDATE users SET username='admin'' WHERE id=1;DROP TABLE users;' WHERE id=1"
+    Result = Result And RunAllModuleTests("SQLlib_SQLUpdate")
 
     '*****************Check Create*****************
     'Dim MyCreate As SQLCreate
@@ -69,4 +48,6 @@ Public Function SQLlib_RunAllTests()
     'MyOtherWhereGroup.SetGroup MyWhere, MyThirdWhere, "OR"
     'MyWhereGroup.AddWhere MyOtherWhereGroup, "AND"
     'CheckSQLValue MyWhereGroup, "((id=2 AND type='toys') OR color='pink') AND (id=2 OR color='pink')"
+
+    SQLlib_RunAllTests = Result
 End Function
