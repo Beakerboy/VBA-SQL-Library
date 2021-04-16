@@ -51,5 +51,9 @@ Function psqlTest()
 End Function
 
 Function iTestCase_GetAllTests()
-    GetAllTests = Array("mssqlTest", "psqlTest")
+    iTestCase_GetAllTests = Array("mssqlTest", "psqlTest")
+End Function
+
+Function iTestCase_GetObject()
+    Set iTestCase_GetObject = New SQLlibDatabaseTests
 End Function
