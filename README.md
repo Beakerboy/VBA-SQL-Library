@@ -31,7 +31,7 @@ This Library allows developers to create static or dynamic SQL statements using 
 
  Testing
  -----
-The unit tests demonstrate many ways to use each of the classes. To run the tests, Import all the modules from the testing directory into a spreadsheet, install the VBA-Unit-Testing library and type '=RunAllModuleTests("SQLLib")' in cell A1. Ensure the Setup steps have all been successfully completed.
+The unit tests demonstrate many ways to use each of the classes. To run the tests, Import all the modules from the testing directory into a spreadsheet, install the [VBA-Unit-Testing library](https://github.com/Beakerboy/VBA-Unit-Tester) and type '=RunTests()' in cell A1. Ensure the Setup steps have all been successfully completed.
  
  Usage
 -----
