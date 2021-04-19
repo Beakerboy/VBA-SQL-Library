@@ -16,6 +16,10 @@ Sub iTestCase_Setup()
     Set MyInsert = Create_SQLInsert
 End Sub
 
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function iTestCase_GetAllTests()
     iTestCase_GetAllTests = Array("SimpleInsertTest", "InsertSelectTest", "InsertMultipleTest")
 End Function
