@@ -16,6 +16,11 @@ Sub iTestCase_Setup()
     Set MyStatic = Create_SQLStaticQuery
     Set Interfaced = MyStatic
 End Sub
+
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function iTestCase_GetAllTests()
     iTestCase_GetAllTests = Array("NoArgumentTest", "AddargumentMissingColonTest", "CorrectUseTest", _
         "ChangeArgumentTest", "EscapeTextTest", "MultipleArgumentTest", "ClearArgumentsTest", _
