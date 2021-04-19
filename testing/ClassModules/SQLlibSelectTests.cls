@@ -14,6 +14,11 @@ Dim Interfaced As iSQLQuery
 Sub iTestCase_Setup()
 
 End Sub
+
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function iTestCase_GetAllTests()
     iTestCase_GetAllTests = Array("SimpleSelectTest", "GetByPropertyTest", "JoinTest", "DistinctTest")
 End Function
