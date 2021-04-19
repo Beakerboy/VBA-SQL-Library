@@ -33,6 +33,10 @@ Sub iTestCase_Setup()
     End With
 End Sub
 
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function mssqlTest()
     MyDatabase.DBType = "mssql"
         

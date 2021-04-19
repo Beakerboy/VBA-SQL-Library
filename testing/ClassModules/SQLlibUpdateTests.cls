@@ -8,9 +8,15 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Implements iTestCase
+
 Sub iTestCase_Setup()
 
 End Sub
+
+Sub iTestCase_TearDown()
+
+End Sub
+
 Function iTestCase_GetAllTests()
     iTestCase_GetAllTests = Array("SimpleUpdateTest")
 End Function
