@@ -10,6 +10,13 @@ Attribute VB_Exposed = False
 Implements iTestCase
 
 Dim Interfaced As iSQLQuery
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
 
 Sub iTestCase_Setup()
 
@@ -19,13 +26,6 @@ Sub iTestCase_TearDown()
 
 End Sub
 
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("SimpleSelectTest", "GetByPropertyTest", "JoinTest", "DistinctTest")
-End Function
-
-Function iTestCase_GetObject()
-    Set iTestCase_GetObject = New SQLlibSelectTests
-End Function
 Function SimpleSelectTest()
 
     Set MySelect = Create_SQLSelect
@@ -80,3 +80,15 @@ Function DistinctTest()
     Set Interfaced = MySelect
     DistinctTest = AssertObjectStringEquals(Interfaced, "SELECT DISTINCT c.country FROM customers c ORDER BY c.country ASC")
 End Function
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
