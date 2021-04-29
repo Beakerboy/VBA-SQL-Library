@@ -182,7 +182,6 @@ End Sub
 ' SELECT sField FROM sTableValue WHERE sProperty = vValue
 '
 ' Parameters:
-'
 '    sTableValue - The table to select the data from
 '    sField - The field name
 '    sProperty - The field to filter by
