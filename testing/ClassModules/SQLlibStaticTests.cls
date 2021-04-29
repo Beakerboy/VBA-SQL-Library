@@ -11,7 +11,14 @@ Implements iTestCase
 
 Dim Interfaced As iSQLQuery
 Dim MyStatic As SQLStaticQuery
-    
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
+
 Sub iTestCase_Setup()
     Set MyStatic = Create_SQLStaticQuery
     Set Interfaced = MyStatic
@@ -20,16 +27,6 @@ End Sub
 Sub iTestCase_TearDown()
 
 End Sub
-
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("NoArgumentTest", "AddargumentMissingColonTest", "CorrectUseTest", _
-        "ChangeArgumentTest", "EscapeTextTest", "MultipleArgumentTest", "ClearArgumentsTest", _
-        "InsertArgumentInValueTest", "InsertArgumentInStringTest")
-End Function
-
-Function iTestCase_GetObject()
-    Set iTestCase_GetObject = New SQLlibStaticTests
-End Function
 
 Function NoArgumentTest()
     MyStatic.Query = "DELETE FROM users"
@@ -93,3 +90,15 @@ Function InsertArgumentInStringTest()
     MyStatic.AddArgument ":id", "4"
     InsertArgumentInStringTest = AssertObjectStringEquals(Interfaced, "SELECT name FROM users WHERE id='4' AND type=':id'")
 End Function
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
