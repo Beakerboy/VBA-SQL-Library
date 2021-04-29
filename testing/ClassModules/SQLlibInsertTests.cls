@@ -11,6 +11,13 @@ Implements iTestCase
 
 Dim Interfaced As iSQLQuery
 Dim MyInsert As SQLInsert
+Dim TestCase As iTestCase
+
+' Constructor: Class_Initialize
+' Initialize class members
+Private Sub Class_Initialize()
+    Set TestCase = CreateTestCase()
+End Sub
 
 Sub iTestCase_Setup()
     Set MyInsert = Create_SQLInsert
@@ -19,14 +26,6 @@ End Sub
 Sub iTestCase_TearDown()
 
 End Sub
-
-Function iTestCase_GetAllTests()
-    iTestCase_GetAllTests = Array("SimpleInsertTest", "InsertSelectTest", "InsertMultipleTest")
-End Function
-
-Function iTestCase_GetObject()
-    Set iTestCase_GetObject = New SQLlibInsertTests
-End Function
 
 Function SimpleInsertTest()
     With MyInsert
@@ -73,3 +72,15 @@ Public Function InsertMultipleTest()
     Expected = "INSERT INTO users (name, type) VALUES ('foo', 'admin'), ('bar', 'editor')"
     InsertMultipleTest = AssertObjectStringEquals(Interfaced, Expected)
 End Function
+
+' Sub: iTestCase_RunTest
+' Run a specific test.
+Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)
+    TestCase.RunTest Test, Me
+End Sub
+
+' Sub: iTestCase_RunAllTests
+' Run all tests.
+Public Sub iTestCase_RunAllTests(Optional ByVal clsObj = Nothing)
+    TestCase.RunAllTests Me
+End Sub
