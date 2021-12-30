@@ -241,6 +241,22 @@ With MySelect
 End With
 ```
 
+#### Example 3
+We can include multiple tables without a join if you need to.
+```sql
+SELECT u.id, c.hex FROM users u, colors c WHERE u.favorite=c.name ORDER BY u.id DESC
+```
+```vb
+Set MySelect = Create_SQLSelect
+With MySelect
+    .Fields = Array("u.id", "c.hex")
+    .addTable "users", "u"
+    .addTable "colors", "c"
+    .AddWhere "u.favorite" "c.name"
+    .OrderBy "u.id", "DESC"
+End With
+```
+
 ### Update
 #### Example 1 
 To produce this SQL Statement:
