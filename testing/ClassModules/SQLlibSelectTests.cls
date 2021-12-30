@@ -81,6 +81,18 @@ Function DistinctTest()
     DistinctTest = AssertObjectStringEquals(Interfaced, "SELECT DISTINCT c.country FROM customers c ORDER BY c.country ASC")
 End Function
 
+Function MultipleTableTest()
+   'Distinct
+    Set MySelect = Create_SQLSelect
+    With MySelect
+        .AddTable "countries", "c"
+        .AddTable "users", "u"
+        .Fields = Array("u.uname", "c.capital")
+    End With
+    Set Interfaced = MySelect
+    MultipleTableTest = AssertObjectStringEquals(Interfaced, "SELECT u.uname, c.capital FROM countries c, users u")
+End Function
+
 ' Sub: iTestCase_RunTest
 ' Run a specific test.
 Public Sub iTestCase_RunTest(Test As String, Optional clsObj = Nothing)

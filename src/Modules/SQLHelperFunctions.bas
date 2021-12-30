@@ -74,3 +74,13 @@ Public Sub QuickSort(vArray As Variant, inLow As Long, inHi As Long)
         QuickSort vArray, tmpLow, inHi
     End If
 End Sub
+
+Public Function ArrayPush(vArray As Variant, newValue As Variant)
+    ArrLen = UBound(vArray)
+    If IsEmpty(vArray(0)) Then
+        ArrLen = -1
+    End If
+    ReDim Preserve vArray(0 To ArrLen + 1)
+    vArray(ArrLen + 1) = newValue
+    ArrayPush = vArray
+End Function

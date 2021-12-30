@@ -75,7 +75,7 @@ End Sub
 ' Sub: addTable
 ' Add a table to the query statement
 Public Sub addTable(sName As String, Optional sAlias As String = "")
-    aJoin(0) = Array("", sName, sAlias, "")
+    aJoin = ArrayPush(aJoin, Array("", sName, sAlias, ""))
 End Sub
 
 ' Sub: AddHaving
@@ -226,6 +226,8 @@ Private Function JoinString()
         Line = ""
         If LineArray(0) <> "" Then
             Line = LineArray(0) & " JOIN "
+        ElseIf R > 0 Then
+            Lines(R - 1) = Lines(R - 1) & ","
         End If
         Line = Line & LineArray(1)
         If LineArray(2) <> "" Then
