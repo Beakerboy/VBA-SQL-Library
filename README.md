@@ -19,6 +19,7 @@ Features
  * [Delete](#delete)
  * [Helper Functions](#helper-functions)
  * [Unit Tests](#unit-tests)
+ * [Documentation](#documentation)
  
  Setup
 -----
@@ -301,3 +302,6 @@ The library includes a handful of helper functions.
 
 ### Unit Tests
 If you would like to run the unit tests, import all the library files including the files in "testing" into an Excel workbook. In some cell, type "=RunUnitTests()". Any failures will open a messagebox stating the expected output and what was actually received by the library.
+
+### Documentation
+All classes are [documented](https://beakerboy.github.io/VBA-SQL-Library/) using Naturaldocs syntax.
