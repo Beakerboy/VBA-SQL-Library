@@ -1,4 +1,4 @@
-pname: Lint VBA
+name: Lint VBA
 
 on:
   push:
