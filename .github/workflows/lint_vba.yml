@@ -35,4 +35,4 @@ jobs:
           composer require --no-install --no-update beakerboy/vba_tokenizer:dev-master
           composer config repositories.beakerboy vcs https://github.com/Beakerboy/VBA_Tokenizer
           composer update
-          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Modules
+          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Modules src/ClassModules src/Forms
