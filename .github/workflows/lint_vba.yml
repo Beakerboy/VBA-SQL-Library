@@ -1,4 +1,4 @@
-name: Lint VBA
+pname: Lint VBA
 
 on:
   push:
@@ -31,9 +31,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: PHP Code Sniffer
+      - name: Setup PHP Code Sniffer
         run: |
           composer require --no-install --no-update beakerboy/vba_tokenizer:dev-master
           composer config repositories.beakerboy vcs https://github.com/Beakerboy/VBA_Tokenizer
           composer update
-          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Modules src/ClassModules src/Forms
+      - name Lint
+        run: |
+          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Modules
+          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/ClassModules
+          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Forms
