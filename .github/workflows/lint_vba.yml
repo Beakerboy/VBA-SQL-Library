@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - dev
-      - main
+      - master
 jobs:
   test-and-static-analysis:
     name: Test and Static Analysis
