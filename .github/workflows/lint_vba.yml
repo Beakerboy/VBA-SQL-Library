@@ -23,14 +23,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install antlr4-tools
-        wget https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vba.g4
-        wget https://raw.githubusercontent.com/antlr/grammars-v4/master/vb6/VisualBasic6Parser.g4
-        wget https://raw.githubusercontent.com/antlr/grammars-v4/master/vb6/VisualBasic6Lexer.g4
+        wget https://raw.githubusercontent.com/Beakerboy/VBA_Tokenizer/ANTLR/vba.g4
     - name: Lint with antlr
       run: |
         antlr4-parse vba.g4 startRule src/ClassModules/*.cls
         antlr4-parse vba.g4 startRule src/Modules/*.bas
-        antlr4-parse VisualBasic6Parser.g4 VisualBasic6Lexer.g4 startRule src/Forms/*.frm
+        antlr4-parse vba.g4 VisualBasic6Lexer.g4 startRule src/Forms/*.frm
     - name: Lint tests with antlr
       run: |
         antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
