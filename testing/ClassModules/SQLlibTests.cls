@@ -40,7 +40,7 @@ Private Sub Configure()
     Set TestRunner = CreateTestRunner()
     
     ' Pass this object to the runner so it has access to the necessary data
-    Set TestRunner.TestConfig = New MatrixTestConfig
+    Set TestRunner.TestConfig = New SQLlibTests
 End Sub
 
 Private Sub Run()
