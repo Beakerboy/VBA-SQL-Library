@@ -7,7 +7,7 @@ on:
       - master
   pull_request:
 jobs:
-  Lint Code:
+  test-and-static-analysis:
     name: Test and Static Analysis
     runs-on: ubuntu-latest
     strategy:
