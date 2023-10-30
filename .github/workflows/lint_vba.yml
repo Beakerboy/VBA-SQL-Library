@@ -33,7 +33,6 @@ jobs:
         foo = $(antlr4-parse ../../vba.g4 startRule "$x")
         if [[ $foo != "" ]]; then echo "$x $foo" 1>&2; exit 1; fi
         done
-        foo=$(antlr4-parse ../../vba.g4 startRule *.cls 2>&1)
         
     - name: Lint tests with antlr
       run: |
