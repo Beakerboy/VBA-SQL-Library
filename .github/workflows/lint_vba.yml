@@ -27,9 +27,9 @@ jobs:
     - name: Lint with antlr
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        antlr4-parse vba.g4 src/ClassModules/*.cls
-        antlr4-parse vba.g4 src/Modules/*.bas
-        antlr4-parse vba.g4 src/Forms/*.frm
-        antlr4-parse vba.g4 testing/ClassModules/*.cls
-        antlr4-parse vba.g4 testing/Modules/*.bas
+        antlr4-parse vba.g4 startRule src/ClassModules/*.cls
+        antlr4-parse vba.g4 startRule src/Modules/*.bas
+        antlr4-parse vba.g4 startRule src/Forms/*.frm
+        antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
+        antlr4-parse vba.g4 startRule testing/Modules/*.bas
         
