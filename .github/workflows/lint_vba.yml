@@ -26,7 +26,7 @@ jobs:
         wget https://raw.githubusercontent.com/Beakerboy/VBA_Tokenizer/ANTLR/vba.g4
     - name: Lint with antlr
       run: |
-        antlr4-parse vba.g4 startRule src/ClassModules/*.cls
+        >&2 antlr4-parse vba.g4 startRule src/ClassModules/*.cls
         antlr4-parse vba.g4 startRule src/Modules/*.bas
         antlr4-parse vba.g4 startRule src/Forms/*.frm
     - name: Lint tests with antlr
