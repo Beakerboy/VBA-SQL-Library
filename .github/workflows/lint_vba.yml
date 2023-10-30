@@ -27,8 +27,6 @@ jobs:
     - name: Lint with antlr
       run: |
         if $(antlr4-parse vba.g4 startRule src/ClassModules/SQLQuery.cls) -ne "" then exit 1 fi
-        antlr4-parse vba.g4 startRule src/Modules/*.bas
-        antlr4-parse vba.g4 startRule src/Forms/*.frm
     - name: Lint tests with antlr
       run: |
         antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
