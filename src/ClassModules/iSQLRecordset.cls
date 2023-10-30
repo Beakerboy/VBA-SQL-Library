@@ -37,6 +37,6 @@ Public Function State()
 End Function
 
 ' Property: EOB
-Public Property EOF()
+Public Property EOB()
 
 End Property
