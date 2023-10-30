@@ -23,6 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install antlr4-tools
+        wget https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vba.g4
     - name: Lint with antlr
       run: |
         # stop the build if there are Python syntax errors or undefined names
