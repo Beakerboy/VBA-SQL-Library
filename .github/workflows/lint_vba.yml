@@ -24,6 +24,7 @@ jobs:
       run: |
         python -m pip install antlr4-tools
         wget https://raw.githubusercontent.com/Beakerboy/VBA_Tokenizer/ANTLR/vba.g4
+        antlr4-parse
     - name: Lint with antlr
       run: |
         if [[ $(antlr4-parse vba.g4 startRule src/ClassModules/*.cls) -ne "" ]]; then exit 1; fi
