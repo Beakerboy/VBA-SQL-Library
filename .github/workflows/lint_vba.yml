@@ -30,7 +30,7 @@ jobs:
       run: |
         antlr4-parse vba.g4 startRule src/ClassModules/*.cls
         antlr4-parse vba.g4 startRule src/Modules/*.bas
-        antlr4-parse VisualBasic6Parser.g4 startRule src/Modules/*.frm
+        antlr4-parse VisualBasic6Parser.g4 startRule src/Forms/*.frm
     - name: Lint tests with antlr
       run: |
         antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
