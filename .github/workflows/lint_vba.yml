@@ -29,7 +29,7 @@ jobs:
     - name: Lint with antlr
       run: |
         cd src/ClassModules
-        foo=$(antlr4-parse vba.g4 startRule *.cls 2>&1)
+        foo=$(antlr4-parse ../../vba.g4 startRule *.cls 2>&1)
         if [[ $foo != "" ]]; then echo $foo 1>&2; exit 1; fi
     - name: Lint tests with antlr
       run: |
