@@ -35,3 +35,8 @@ End Function
 Public Function State()
 
 End Function
+
+' Property: EOF
+Property Get EOF()
+
+End Property
