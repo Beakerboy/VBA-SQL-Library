@@ -29,8 +29,12 @@ jobs:
     - name: Lint with antlr
       run: |
         cd src/ClassModules
+        for x in *.cls; do
+        foo = $(antlr4-parse ../../vba.g4 startRule "$x")
+        if [[ $foo != "" ]]; then echo "$x $foo" 1>&2; exit 1; fi
+        done
         foo=$(antlr4-parse ../../vba.g4 startRule *.cls 2>&1)
-        if [[ $foo != "" ]]; then echo $foo 1>&2; exit 1; fi
+        
     - name: Lint tests with antlr
       run: |
         antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
