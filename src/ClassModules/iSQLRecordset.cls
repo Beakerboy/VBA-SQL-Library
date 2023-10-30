@@ -35,8 +35,3 @@ End Function
 Public Function State()
 
 End Function
-
-' Property: EOB
-Public Property EOB()
-
-End Property
