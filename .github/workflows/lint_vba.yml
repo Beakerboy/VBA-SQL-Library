@@ -26,10 +26,11 @@ jobs:
         wget https://raw.githubusercontent.com/antlr/grammars-v4/master/vba/vba.g4
     - name: Lint with antlr
       run: |
-        # stop the build if there are Python syntax errors or undefined names
         antlr4-parse vba.g4 startRule src/ClassModules/*.cls
         antlr4-parse vba.g4 startRule src/Modules/*.bas
         antlr4-parse vba.g4 startRule src/Forms/*.frm
+    - name: Lint tests with antlr
+      run: |
         antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
         antlr4-parse vba.g4 startRule testing/Modules/*.bas
         
