@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v3
       - name: Install dependencies
         run: |
-          apt-get install -qq mono-complete
+          sudo apt-get install -qq mono-complete
           wget https://www.naturaldocs.org/download/natural_docs/2.3/Natural_Docs_2.3.zip -O /tmp/ND.zip
           unzip /tmp/ND.zip -d /tmp
       - name: Setuop Project for NaturalDocs
