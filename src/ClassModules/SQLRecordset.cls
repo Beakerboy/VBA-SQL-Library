@@ -39,6 +39,6 @@ Public Function iSQLRecordset_GetRows(num As Integer)
     iSQLRecordset_GetRows = orst.GetRows(num)
 End Function
 
-Public Property iSQLRecordset_EOF()
+Property Get iSQLRecordset_EOF()
     iSQLRecordset_EOF = orst.EOF
 End Function
