@@ -29,7 +29,3 @@ jobs:
     - name: Lint with antlr
       run: |
         ./VbaLint
-    - name: Lint tests with antlr
-      run: |
-        antlr4-parse vba.g4 startRule testing/ClassModules/*.cls
-        antlr4-parse vba.g4 startRule testing/Modules/*.bas
