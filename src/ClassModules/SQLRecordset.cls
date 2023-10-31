@@ -41,4 +41,4 @@ End Function
 
 Property Get iSQLRecordset_EOF()
     iSQLRecordset_EOF = orst.EOF
-End Function
+End Property
