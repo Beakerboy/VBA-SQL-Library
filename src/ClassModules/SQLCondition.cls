@@ -7,6 +7,8 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
+' Class: SQLCondition
+' A SQL Condition clause.
 Private sExpression1
 Private sExpression2
 Private sOperator As String
