@@ -1,3 +1,4 @@
+[![Lint VBA](https://github.com/Beakerboy/VBA-SQL-Library/actions/workflows/lint_vba.yml/badge.svg?branch=master)](https://github.com/Beakerboy/VBA-SQL-Library/actions/workflows/lint_vba.yml)
 <a href="https://beakerboy.github.io/VBA-SQL-Library/"><img src="https://img.shields.io/badge/code-documented-green.svg"/></a>
 
 VBA SQL Library
