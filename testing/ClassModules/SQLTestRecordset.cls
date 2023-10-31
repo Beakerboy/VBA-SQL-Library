@@ -27,3 +27,11 @@ Public Function iSQLRecordset_GetValue(MyFieldname)
     iSQLRecordset_GetValue = sQuery
 End Function
 
+Public Function iSQLRecordset_GetRows(num As Integer)
+    iSQLRecordset_GetRows = num
+End Function
+
+Property Get iSQLRecordset_EOF()
+    iSQLRecordset_EOF = False
+End Property
+

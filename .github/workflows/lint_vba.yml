@@ -11,29 +11,21 @@ jobs:
     name: Test and Static Analysis
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        php: ['8.2']
+        python-version: ["3.11"]
 
     steps:
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          tools: composer:v2
-
-      - name: Set up Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '14.x'
-
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-
-      - name: PHP Code Sniffer
-        run: |
-          composer require --no-install --no-update beakerboy/vba_tokenizer:dev-master
-          composer config repositories.beakerboy vcs https://github.com/Beakerboy/VBA_Tokenizer
-          composer update
-          vendor/bin/phpcs --extensions=cls/vba,bas/vba,frm/vba --standard=vendor/beakerboy/vba_tokenizer/src/Standards/VBA src/Modules src/ClassModules src/Forms
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install antlr4-tools
+        wget https://raw.githubusercontent.com/Beakerboy/VBA_Tokenizer/ANTLR/VbaLint
+        chmod +x VbaLint
+    - name: Lint with antlr
+      run: |
+        ./VbaLint
