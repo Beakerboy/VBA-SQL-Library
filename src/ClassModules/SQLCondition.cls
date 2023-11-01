@@ -31,6 +31,8 @@ Public Function Create(Expression1, Expression2, Optional Operator As String = "
     sOperator = Operator
 End Function
 
+' Function: toString
+' Render the object to a SQL string.
 Public Function toString() As String
     Dim OperatorString As String
     If sOperator = "IS" Then
