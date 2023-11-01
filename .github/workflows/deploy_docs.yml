@@ -4,7 +4,7 @@ name: Deploy static content to Pages
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: dev
+    branches: master
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,7 +32,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Build with NaturalDocs
-        uses: Vba-actions/NaturalDocs-build-pages@dev
+        uses: Vba-actions/NaturalDocs-build-pages@main
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
