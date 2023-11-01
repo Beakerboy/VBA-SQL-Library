@@ -13,6 +13,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Lint
-      uses: Vba-actions/lint-vba@Script
-      with:
-        path: "testing"
+      uses: Vba-actions/lint-vba@main
