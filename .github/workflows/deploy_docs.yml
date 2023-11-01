@@ -31,19 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Install dependencies
-        run: |
-          sudo apt-get install -qq mono-complete
-          wget https://www.naturaldocs.org/download/natural_docs/2.3/Natural_Docs_2.3.zip -O /tmp/ND.zip
-          unzip /tmp/ND.zip -d /tmp
-      - name: Setuop Project for NaturalDocs
-        run: |
-          mkdir ${GITHUB_WORKSPACE}/docs
-          mkdir ${GITHUB_WORKSPACE}/.ND_Config
-          cp .nd_project.txt ${GITHUB_WORKSPACE}/.ND_Config/Project.txt
       - name: Build with NaturalDocs
-        run: |
-          mono /tmp/Natural\ Docs/NaturalDocs.exe ${GITHUB_WORKSPACE}/.ND_Config
+        uses: Vba-actions/NaturalDocs-build-pages@main
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
