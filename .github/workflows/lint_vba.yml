@@ -21,11 +21,5 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install antlr4-tools
-        wget https://raw.githubusercontent.com/Beakerboy/VBA_Tokenizer/ANTLR/VbaLint
-        chmod +x VbaLint
-    - name: Lint with antlr
-      run: |
-        ./VbaLint
+    - name: Lint
+      uses: Vba-actions/lint-vba@main
