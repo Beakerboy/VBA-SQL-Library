@@ -15,4 +15,4 @@ jobs:
     - name: Lint
       uses: Vba-actions/lint-vba@dev
       with:
-          path: './src'
+        path: './src'
