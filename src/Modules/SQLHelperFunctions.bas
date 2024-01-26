@@ -11,9 +11,7 @@ Public Function str(vValue) As String
     str = "'" & Replace(vValue, "'", "''") & "'"
 End Function
 
-Function JoinArrayofArrays(ByVal vArray As Variant, _
-                Optional ByVal WordDelim As String = " ", _
-                Optional ByVal LineDelim As String = vbNewLine) As String
+Function JoinArrayofArrays(ByVal vArray As Variant, Optional ByVal WordDelim As String = " ", Optional ByVal LineDelim As String = vbNewLine) As String
     Dim R As Long, Lines() As String
     ReDim Lines(0 To UBound(vArray))
     For R = 0 To UBound(vArray)
