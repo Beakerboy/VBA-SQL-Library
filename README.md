@@ -24,7 +24,7 @@ Features
  Setup
 -----
 
-Open Microsoft Visual Basic For Applications and import each cls and bas and frm file into a new project. Name the project SQLlib and save it as an xlam file. Enable the addin. Within Microsoft Visual Basic For Applications, select Tools>References and ensure that  "Microsoft ActiveX Data Objects x.x Library", "Microsoft Scripting Runtime", and SQLlib is selected.
+Open Microsoft Visual Basic For Applications and import each cls and bas and frm file into a new project. Name the project SQLlib and save it as an xlam file. Enable the addin. Within Microsoft Visual Basic For Applications, select Tools>References and ensure that  "Microsoft ActiveX Data Objects x.x Library", "Microsoft Scripting Runtime", and SQLlib is selected. 
  
  Security
 -----
