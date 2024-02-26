@@ -27,7 +27,7 @@ Public Function GetValue(MyFieldname)
 End Function
 
 ' Function: GetValue
-Public Function GetRows(num as Integer)
+Public Function GetRows(num As Integer)
 
 End Function
 
