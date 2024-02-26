@@ -6,7 +6,7 @@ VBA SQL Library
 
 ### Object-Based Database Interaction for VBA
 
-Easily create SQL queries and execute them on a database. For an example on how to use this library with data objects, see the [VBA-Drupal-Library](https://github.com/Beakerboy/VBA-Drupal-Library). For other examples on using the library, refer to the unit tests.
+Easily create SQL queries and execute them on a database. For an example on how to use this library with data objects, see the [VBA-Drupal-Library](https://github.com/Beakerboy/VBA-Drupal-Library). For other examples on using the library, refer to the unit tests. 
 
 Features
 --------
