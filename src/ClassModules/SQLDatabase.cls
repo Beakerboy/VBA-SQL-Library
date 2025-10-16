@@ -72,7 +72,7 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     cnt.ConnectionString = MakeConnectionString()
     cnt.OpenConnection
     
-    rst.OpenwsRecordset sSQL, cnt              'Execute the query
+    rst.OpenRecordset sSQL, cnt              'Execute the query
     If return_column <> "" Then
         If rst.EOF Then
             Execute = False
@@ -123,3 +123,4 @@ Private Function PrepareInsert(ByVal oSQL As SQLInsert, return_column)
             Set PrepareInsert = MySQLGroup
     End Select
 End Function
+
