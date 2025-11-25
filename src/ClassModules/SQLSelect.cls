@@ -217,6 +217,7 @@ End Function
 
 Private Function JoinString()
     Dim R As Long
+    Dim I As Long
     Dim Lines() As String
     Dim Line As String
     Dim LineArray As Variant
@@ -236,7 +237,19 @@ Private Function JoinString()
         If LineArray(3) <> "" Then
             Line = Line & " ON " & LineArray(3)
         End If
-        Lines(R) = Line
+       'Add inicial open parenthesis as needed join
+        If R = 0 And UBound(aJoin) > 1 Then
+            For I = 2 To UBound(aJoin)
+                Line = " ( " & Line
+            Next I
+            Lines(R) = Line
+        'Add close parenthesis for join
+        ElseIf R > 0 And R < UBound(aJoin) And UBound(aJoin) > 1 Then
+            Lines(R) = Line & " ) "
+        Else
+            'Normal output
+            Lines(R) = Line
+        End If
     Next R
     JoinString = Join(Lines, " ")
 End Function
