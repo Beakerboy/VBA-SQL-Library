@@ -76,7 +76,7 @@ Public Function Execute(oSQL As iSQLQuery, Optional return_column = "")
     If return_column <> "" Then
         If rst.EOF Then
             Execute = False
-        Else			
+        Else
             Execute = rst.GetValue(return_column)
         End If
     Else

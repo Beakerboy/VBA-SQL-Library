@@ -12,8 +12,8 @@ Public Function str(vValue) As String
 End Function
 
 Function JoinArrayofArrays(ByVal vArray As Variant, _
-                Optional ByVal WordDelim As String = " ", _
-                Optional ByVal LineDelim As String = vbNewLine) As String
+        Optional ByVal WordDelim As String = " ", _
+        Optional ByVal LineDelim As String = vbNewLine) As String
     Dim R As Long, Lines() As String
     ReDim Lines(0 To UBound(vArray))
     For R = 0 To UBound(vArray)

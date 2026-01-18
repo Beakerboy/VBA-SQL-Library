@@ -200,8 +200,8 @@ Public Function iSQLQuery_ToString() As String
     If UBound(vFields) < 0 Then
         return_string = ""
     Else
-        return_string = "SELECT " & DistinctString & FieldList & " FROM " & _
-            JoinString & oSQL.WhereString & GroupByString & HavingString & OrderByString
+        return_string = "SELECT " & DistinctString & FieldList & " FROM " & JoinString & _
+            oSQL.WhereString & GroupByString & HavingString & OrderByString
     End If
     iSQLQuery_ToString = oSQL.ReplaceArguments(return_string)
 End Function
